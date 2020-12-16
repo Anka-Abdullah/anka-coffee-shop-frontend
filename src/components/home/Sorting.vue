@@ -1,0 +1,98 @@
+<template>
+  <div class="text-center">
+    <ul>
+      <li>
+        <label class="select"
+          >Favorite and Promo
+          <input type="radio" name="radio" checked="checked" hidden />
+          <span class="checkmark"></span>
+        </label>
+      </li>
+      <li>
+        <label class="select"
+          >Coffee
+          <input type="radio" name="radio" hidden />
+          <span class="checkmark"></span>
+        </label>
+      </li>
+
+      <li>
+        <label class="select"
+          >Non Coffee
+          <input type="radio" name="radio" hidden />
+          <span class="checkmark"></span>
+        </label>
+      </li>
+      <li>
+        <label class="select"
+          >Foods
+          <input type="radio" name="radio" hidden />
+          <span class="checkmark"></span>
+        </label>
+      </li>
+      <li>
+        <label class="select"
+          >Add-On
+          <input type="radio" name="radio" hidden />
+          <span class="checkmark"></span>
+        </label>
+      </li>
+      <li>
+        <label class="select"
+          >Sort By
+          <b-dropdown text="" variant="outline" dropleft>
+            <b-dropdown-item href="#">Name A-Z</b-dropdown-item>
+            <b-dropdown-item href="#">Name Z-A</b-dropdown-item>
+            <b-dropdown-item href="#">Highest Price</b-dropdown-item>
+            <b-dropdown-item href="#">Lowest Price</b-dropdown-item>
+          </b-dropdown>
+        </label>
+      </li>
+    </ul>
+  </div>
+</template>
+<style scoped>
+ul {
+  list-style-type: none;
+}
+li {
+  display: inline-block;
+}
+.select {
+  padding: 0 10px;
+  display: inline-block;
+  position: relative;
+  margin: 0 10px;
+  font-family: 'Patrick Hand', cursive;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: rgb(85, 84, 84);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkmark {
+  text-align: center;
+  position: absolute;
+  top: 27px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+}
+
+.select:hover input ~ .checkmark {
+  background-color: #6a4029;
+}
+.select:hover {
+  transform: scale(1.05);
+  background-color: rgb(255, 243, 177);
+  color: #6a4029;
+}
+.select input:checked ~ .checkmark {
+  background-color: #6a4029;
+}
+</style>
