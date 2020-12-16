@@ -74,7 +74,6 @@ export default {
         box-sizing: border-box;
         font-family: "Montserrat", sans-serif;
       }
-      
       nav {
         background: #171c24;
         display: flex;
@@ -211,7 +210,6 @@ export default {
           right: 0px;
           width: 0;
           height: 0;
-          z-index: -1;
           border: 10px solid transparent;
           border-bottom-color: #1e232b;
           margin: -20px 0 0;
