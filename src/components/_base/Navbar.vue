@@ -18,10 +18,10 @@
           />Coffee Shop
         </div>
         <div class="nav-items">
-          <li><router-link to="#" class="aktip">Home</router-link></li>
-          <li><router-link to="#">Product</router-link></li>
-          <li><router-link to="#">Your Cart</router-link></li>
-          <li><router-link to="#">History</router-link></li>
+          <li><router-link to="/" class="aktip">Home</router-link></li>
+          <li><router-link to="/product">Product</router-link></li>
+          <li><router-link to="/cart">Your Cart</router-link></li>
+          <li><router-link to="/history">History</router-link></li>
           <li class="responsive">
             <router-link to="#">Chat Room</router-link>
           </li>
@@ -65,7 +65,7 @@
             aria-hidden="true"
           ></b-icon
         ></router-link>
-        <router-link to="" class="desktop"
+        <router-link to="/profile" class="desktop"
           ><b-avatar src="https://placekitten.com/300/300"></b-avatar
         ></router-link>
       </nav>

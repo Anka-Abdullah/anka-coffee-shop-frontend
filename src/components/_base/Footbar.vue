@@ -16,37 +16,8 @@
               meals, and especially coffee. <br />
               We provide high quality beans
             </p>
-            <b-badge
-              ><b-icon
-                icon="facebook"
-                class="sosmed"
-                scale="1.5"
-                variant="warning"
-              ></b-icon
-            ></b-badge>
-
-            <b-badge
-              ><b-icon
-                icon="twitter"
-                class="sosmed"
-                scale="1.5"
-                variant="warning"
-              ></b-icon
-            ></b-badge>
-            <b-badge
-              ><b-icon
-                icon="instagram"
-                class="sosmed"
-                scale="1.5"
-                variant="warning"
-              ></b-icon
-            ></b-badge>
-            <div class="mb-3"></div>
-
-            <small class="text-muted ml-2"
-              >©2020CoffeeStore_AnkaAbdullah</small
-            ></b-col
-          >
+            <Element class="desktop mb-3" />
+          </b-col>
           <b-col lg="3" sm="12" class="mt-3 pl-4"
             ><h5>Product</h5>
             <a href="#">Download</a><br />
@@ -61,17 +32,25 @@
             <a href="#">FAQ</a><br />
             <a href="#">About US</a><br />
             <a href="#">Privacy Policy</a><br />
-            <a href="#">Terms of Service</a><br
-          /></b-col>
+            <a href="#">Terms of Service</a><br />
+            <b-row>
+              <Element class="responsive mt-3" />
+            </b-row>
+          </b-col>
         </b-row>
       </b-container>
     </footer>
   </div>
 </template>
-<style scoped>
-a {
-  color: #42200e;
+<script>
+import Element from './FootbarElement'
+export default {
+  components: {
+    Element
+  }
 }
+</script>
+<style scoped>
 .logo {
   font-family: 'Patrick Hand', cursive;
   font-size: 27px;
@@ -79,12 +58,7 @@ a {
   letter-spacing: 2px;
   color: black;
 }
-span {
-  width: 28px;
-  height: 28px;
-  margin-left: 20px;
-  line-height: 24px;
-  border-radius: 30px;
-  background-color: #6a4029;
+a {
+  color: #42200e;
 }
 </style>

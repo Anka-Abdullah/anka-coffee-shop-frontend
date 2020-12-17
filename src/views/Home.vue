@@ -59,7 +59,7 @@
                 @change="handelPageChange"
                 aria-controls="my-table"
               ></b-pagination>
-              <router-link to="" class="chocolate one mx-auto mb-3"
+              <router-link to="/add" class="chocolate one mx-auto mb-3"
                 >Add New Product</router-link
               >
             </b-row>

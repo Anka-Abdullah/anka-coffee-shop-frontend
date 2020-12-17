@@ -10,6 +10,15 @@
 * {
   font-family: 'Gamja Flower', cursive;
 }
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffa600;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6a4029;
+}
 body {
   overflow-x: hidden;
 }
@@ -32,7 +41,7 @@ button {
   border-radius: 10px;
 }
 button:focus {
-  outline: none;
+  outline: none !important;
 }
 .anka-card {
   margin: 20px;
