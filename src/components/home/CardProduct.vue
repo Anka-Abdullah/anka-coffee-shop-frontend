@@ -8,6 +8,12 @@
         alt="item"
       />
       <div class="card-item-discount">20%</div>
+      <b-badge variant="warning" style="margin-left: -125px;"
+        ><b-icon icon="trash-fill" scale="1.5" variant="dark"></b-icon
+      ></b-badge>
+      <b-badge variant="info" style="margin-left: -26px;"
+        ><b-icon icon="pencil-fill" scale="1.5" variant="dark"></b-icon
+      ></b-badge>
       <h4 class="card-item-title">{{ productName }}</h4>
       <h6 class="anka-title">IDR {{ productPrice }}</h6>
     </div>
@@ -19,6 +25,18 @@ export default {
 }
 </script>
 <style scoped>
+span {
+  position: absolute !important;
+  width: 32px;
+  height: 32px;
+  margin-top: 50px;
+  line-height: 28px;
+  border-radius: 30px;
+}
+
+span:hover {
+  transform: scale(1.2);
+}
 .card-item {
   padding: 5px;
   margin: 50px 0px 40px 0px;
@@ -31,7 +49,7 @@ export default {
     0 22.3px 17.9px rgba(0, 0, 0, 0.072);
 }
 .card-item:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 .card-item img {
   margin-top: -40px;

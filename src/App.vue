@@ -46,6 +46,42 @@ button:focus {
   font-weight: 600;
   font-family: 'Patrick Hand', cursive;
 }
+.chocolate {
+  border-radius: 20px;
+  margin: 0 20px;
+  color: white;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 5px 35px;
+  background-color: #6a4029;
+}
+.chocolate:hover {
+  background-color: #412719;
+  transform: scale(0.98);
+}
+.yellow {
+  font-weight: 700;
+  color: #6a4029;
+  background-color: #ffba33;
+}
+.yellow:hover {
+  transform: scale(0.98);
+  background-color: #c79227;
+}
+.putih {
+  font-weight: 700;
+  color: #6a4029;
+  background-color: #ffffff;
+  border: 1px solid #6a4029;
+  padding: 10px 35px;
+}
+.putih:hover {
+  color: #6a4029 !important;
+  transform: scale(0.98);
+  background-color: #c7c7c7;
+}
 .responsive {
   display: none;
 }

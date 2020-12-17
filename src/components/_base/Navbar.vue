@@ -122,7 +122,7 @@ nav {
   width: 100%;
   height: 100px;
   padding: 0 40px;
-  z-index: 1;
+  z-index: 2;
 }
 nav .logo {
   font-family: 'Patrick Hand', cursive;

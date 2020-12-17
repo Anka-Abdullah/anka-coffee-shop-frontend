@@ -9,9 +9,32 @@
           sm="12"
           class="border-right border-secondary"
           style="padding-top: 20px"
-          ><Coupon
+          ><div style="text-align: center">
+            <h4 class="anka-title">Promo Today</h4>
+            <p>Coupons will be updated every weeks.<br />Check them out!</p>
+          </div>
+          <Coupon />
+          <button class="chocolate one mt-3" style="width: 90%;">
+            Apply Coupon
+          </button>
+          <b-row
+            ><router-link to="" class="chocolate putih mx-auto mt-3"
+              >Add New Promo</router-link
+            ></b-row
+          >
+          <div class="my-4">
+            <ol>
+              <h6 class="anka-title">Terms and Condition</h6>
+              <li><p>You can only apply 1 coupon per day</p></li>
+              <li><p>It only for dine in</p></li>
+              <li><p>Buy 1 get 1 only for new user</p></li>
+              <li><p>Should make member card to apply coupon</p></li>
+            </ol>
+          </div>
+          <hr class="responsive"
         /></b-col>
-        <b-col lg="8" sm="12" style="padding-top: 20px"
+
+        <b-col lg="8" sm="12"
           ><Sorting />
           <b-container fuid style="padding-top: 20px">
             <b-row>
@@ -27,16 +50,20 @@
                     :productPrice="item.productPrice"/></b-row
               ></b-col>
             </b-row>
-            <b-row>
+            <b-row class="mb-4">
               <b-pagination
-                class="mx-auto"
+                class="paginations mx-auto"
                 v-model="currentPage"
                 :total-rows="totalRows"
                 :per-page="limit"
                 @change="handelPageChange"
                 aria-controls="my-table"
               ></b-pagination>
+              <router-link to="" class="chocolate one mx-auto mb-3"
+                >Add New Product</router-link
+              >
             </b-row>
+            <b-row> </b-row>
           </b-container>
         </b-col>
       </b-row>
@@ -101,3 +128,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+a.one:hover {
+  color: white !important;
+}
+.paginations {
+  color: #412719 !important;
+}
+</style>

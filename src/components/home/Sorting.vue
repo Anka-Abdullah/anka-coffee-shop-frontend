@@ -53,15 +53,18 @@
 </template>
 <style scoped>
 ul {
+  padding: 0 !important;
   list-style-type: none;
 }
 li {
   display: inline-block;
+  margin-top: 20px;
 }
 .select {
   padding: 0 10px;
   display: inline-block;
   position: relative;
+  z-index: 1;
   margin: 0 10px;
   font-family: 'Patrick Hand', cursive;
   letter-spacing: 1px;
@@ -94,5 +97,12 @@ li {
 }
 .select input:checked ~ .checkmark {
   background-color: #6a4029;
+}
+@media (max-width: 600px) {
+  li,
+  .select {
+    display: block;
+    margin: 10px 0;
+  }
 }
 </style>
