@@ -18,7 +18,7 @@
             Apply Coupon
           </button>
           <b-row
-            ><router-link to="" class="chocolate putih mx-auto mt-3"
+            ><router-link to="/addpromo" class="chocolate putih mx-auto mt-3"
               >Add New Promo</router-link
             ></b-row
           >
@@ -41,8 +41,8 @@
               <b-col
                 lg="3"
                 sm="12"
-                v-for="(item, index) in products"
-                :key="index"
+                v-for="item in products"
+                :key="item.productId"
                 ><b-row
                   ><CardProduct
                     class="mx-auto"
@@ -59,7 +59,7 @@
                 @change="handelPageChange"
                 aria-controls="my-table"
               ></b-pagination>
-              <router-link to="/add" class="chocolate one mx-auto mb-3"
+              <router-link to="/addproduct" class="chocolate one mx-auto mb-3"
                 >Add New Product</router-link
               >
             </b-row>
@@ -121,7 +121,6 @@ export default {
         })
     },
     handelPageChange(e) {
-      console.log(e)
       this.page = e
       this.getProduct()
     }

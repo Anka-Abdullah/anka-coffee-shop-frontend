@@ -55,6 +55,10 @@ button:focus {
   font-weight: 600;
   font-family: 'Patrick Hand', cursive;
 }
+.anka-text-shadow {
+  color: white;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8) !important;
+}
 .chocolate {
   border-radius: 20px;
   margin: 0 20px;

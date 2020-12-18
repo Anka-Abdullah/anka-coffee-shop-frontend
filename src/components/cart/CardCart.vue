@@ -20,6 +20,9 @@
     </div>
   </div>
 </template>
+<script>
+export default {}
+</script>
 <style scoped>
 img {
   border-radius: 50%;
