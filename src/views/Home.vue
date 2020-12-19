@@ -35,7 +35,85 @@
         /></b-col>
 
         <b-col lg="8" sm="12"
-          ><Sorting />
+          ><div class="text-center">
+            <ul>
+              <li>
+                <label class="select" @click="getProduct('', '', '')"
+                  >Favorite and Promo
+                  <input type="radio" name="radio" checked="checked" hidden />
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+              <li>
+                <label
+                  class="select"
+                  @click="getProduct('coffee-9jUsQS1', '', '')"
+                  >Coffee
+                  <input type="radio" value="value" name="radio" hidden />
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+
+              <li>
+                <label
+                  class="select"
+                  @click="getProduct('noncoffee-J95yQgd', '', '')"
+                  >Non Coffee
+                  <input
+                    type="radio"
+                    value="noncoffee-J95yQgd"
+                    name="radio"
+                    hidden
+                  />
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+              <li>
+                <label
+                  class="select"
+                  @click="getProduct('food-Z6RTUvh', '', '')"
+                  >Foods
+                  <input
+                    type="radio"
+                    value="food-Z6RTUvh"
+                    name="radio"
+                    hidden
+                  />
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+              <li>
+                <label class="select"
+                  >Add-On
+                  <input type="radio" name="radio" hidden />
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+              <li>
+                <label class="select"
+                  >Sort By
+                  <b-dropdown text="" variant="outline" dropleft>
+                    <b-dropdown-item
+                      @click="getProduct('', 'productName', 'asc')"
+                      >Name A-Z</b-dropdown-item
+                    >
+                    <b-dropdown-item
+                      @click="getProduct('', 'productName', 'desc')"
+                      >Name Z-A</b-dropdown-item
+                    >
+                    <b-dropdown-item
+                      @click="getProduct('', 'productPrice', 'desc')"
+                      >Highest Price</b-dropdown-item
+                    >
+                    <b-dropdown-item
+                      @click="getProduct('', 'productPrice', 'asc')"
+                      >Lowest Price</b-dropdown-item
+                    >
+                  </b-dropdown>
+                </label>
+              </li>
+            </ul>
+          </div>
           <b-container fuid style="padding-top: 20px">
             <b-row>
               <b-col
@@ -82,7 +160,7 @@ import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Coupon from '../components/home/Coupon'
-import Sorting from '../components/home/Sorting'
+// import Sorting from '../components/home/Sorting'
 import CardProduct from '../components/home/CardProduct'
 // import FormInput from '../components/_base/FormInput'
 export default {
@@ -92,7 +170,7 @@ export default {
       roleId: 1,
       products: [],
       contohNama: 'wahyudi',
-      search: '',
+      // search: '',
       currentPage: 1,
       totalRows: null,
       limit: 5,
@@ -103,21 +181,24 @@ export default {
     Navbar,
     Footbar,
     Coupon,
-    Sorting,
+    // Sorting,
     CardProduct
     // FormInput
   },
   created() {
-    this.getProduct()
+    this.getProduct('', '', '')
   },
   methods: {
-    getProduct() {
+    getProduct(search, sort, asc) {
       axios
         .get(
-          `http://localhost:3765/product?search${this.search}&page=${this.page}&limit=${this.limit}`
+          `http://localhost:3765/product?${sort !== '' ? 'sort=' + sort : ''}${
+            asc !== '' ? '&asc=' + asc : ''
+          }${search !== '' ? '&search=' + search : ''}&page=${
+            this.page
+          }&limit=${this.limit}`
         )
         .then(response => {
-          console.log(response)
           this.totalRows = response.data.pagination.totalData
           this.products = response.data.data
         })
@@ -142,5 +223,58 @@ a.one:hover {
 }
 .paginations {
   color: #412719 !important;
+}
+ul {
+  padding: 0 !important;
+  list-style-type: none;
+}
+li {
+  display: inline-block;
+  margin-top: 20px;
+}
+.select {
+  padding: 0 10px;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  margin: 0 10px;
+  font-family: 'Patrick Hand', cursive;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  color: rgb(85, 84, 84);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkmark {
+  text-align: center;
+  position: absolute;
+  top: 27px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+}
+
+.select:hover input ~ .checkmark {
+  background-color: #6a4029;
+}
+.select:hover {
+  transform: scale(1.05);
+  background-color: rgb(255, 243, 177);
+  color: #6a4029;
+}
+.select input:checked ~ .checkmark {
+  background-color: #6a4029;
+}
+@media (max-width: 600px) {
+  li,
+  .select {
+    display: block;
+    margin: 10px 0;
+  }
 }
 </style>

@@ -30,78 +30,90 @@
               <hr class="responsive" />
             </b-col>
             <b-col lg="6" sm="12">
-              <form>
-                <h5 class="anka-title mt-5">Name :</h5>
-                <input
-                  type="text"
-                  class="formadd"
-                  placeholder="Type product name min. 50 characters"
-                />
-                <h5 class="anka-title mt-5">Description :</h5>
-                <input
-                  type="text"
-                  class="formadd"
-                  placeholder="Describe your product min. 150 characters"
-                />
-                <h5 class="anka-title mt-5">Coupon Usage Code :</h5>
-                <input
-                  type="text"
-                  class="formadd"
-                  placeholder="Type the code"
-                />
-                <b-row>
-                  <b-col lg="6" sm="12"
-                    ><h5 class="anka-title mt-5">Minimum Purchase :</h5>
-                    <input type="number" class="formadd" placeholder="200000"
-                  /></b-col>
-                  <b-col lg="6" sm="12"
-                    ><h5 class="anka-title mt-5">Maximal Discount :</h5>
-                    <input type="number" class="formadd" placeholder="50000"
-                  /></b-col>
-                  <b-col lg="6" sm="12"></b-col>
-                </b-row>
-                <h5 class="anka-title mt-5">Expire Date :</h5>
-                <b-row>
-                  <b-col lg="6" sm="12">
-                    <input type="date" class="formadd" placeholder="start date"
-                  /></b-col>
-                  <b-col lg="6" sm="12">
-                    <input type="date" class="formadd" placeholder="end date"
-                  /></b-col>
-                  <b-col lg="6" sm="12"></b-col>
-                </b-row>
-                <b-row>
-                  <b-col lg="6" sm="12">
-                    <h5 class="anka-title mt-5">Category:</h5>
-                    <select name="category" id="category" class="mx-auto">
-                      <option>Select Category</option>
-                      <option value="1">Coffee</option>
-                      <option value="2">Non-Coffee</option>
-                      <option value="3">Food</option>
-                    </select>
-                  </b-col>
-                  <b-col lg="6" sm="12">
-                    <h5 class="anka-title mt-5">Discount:</h5>
-                    <select name="discount" id="discount" class="mx-auto">
-                      <option>Select Discount</option>
-                      <option value="10">10%</option>
-                      <option value="20">20%</option>
-                      <option value="30">30%</option>
-                      <option value="40">40%</option>
-                      <option value="50">50%</option>
-                    </select>
-                  </b-col>
-                </b-row>
-                <button class="chocolate mt-5 p-3" style="width: 90%">
-                  Save Promo
-                </button>
-                <button
-                  class="chocolate mt-2 putih p-3 mb-5"
-                  style="width: 90%"
+              <h5 class="anka-title mt-5">Name :</h5>
+              <input
+                type="text"
+                class="formadd"
+                placeholder="Type product name min. 50 characters"
+                v-model="form.promoName"
+              />
+              <h5 class="anka-title mt-5">Description :</h5>
+              <input
+                type="text"
+                class="formadd"
+                placeholder="Describe your product min. 150 characters"
+                v-model="form.promoDescription"
+              />
+              <h5 class="anka-title mt-5">Coupon Usage Code :</h5>
+              <input
+                type="text"
+                class="formadd"
+                placeholder="Type the code"
+                v-model="form.promoCode"
+              />
+              <b-row>
+                <b-col lg="6" sm="12"
+                  ><h5 class="anka-title mt-5">Minimum Purchase :</h5>
+                  <input
+                    type="number"
+                    class="formadd"
+                    placeholder="200000"
+                    v-model="form.promoMinPurchase"
+                /></b-col>
+                <b-col lg="6" sm="12"
+                  ><h5 class="anka-title mt-5">Maximal Discount :</h5>
+                  <input
+                    type="number"
+                    class="formadd"
+                    placeholder="50000"
+                    v-model="form.promoMaxLimit"
+                /></b-col>
+                <b-col lg="6" sm="12"></b-col>
+              </b-row>
+              <h5 class="anka-title mt-5">Expire Date :</h5>
+              <b-row>
+                <b-col lg="6" sm="12">
+                  <input
+                    type="date"
+                    class="formadd"
+                    placeholder="start date"
+                    v-model="form.expireStartDate"
+                /></b-col>
+                <b-col lg="6" sm="12">
+                  <input
+                    type="date"
+                    class="formadd"
+                    placeholder="end date"
+                    v-model="form.expireEndDate"
+                /></b-col>
+                <b-col lg="6" sm="12"></b-col>
+              </b-row>
+              <b-col lg="6" sm="12">
+                <h5 class="anka-title mt-5">Discount:</h5>
+                <select
+                  name="discount"
+                  id="discount"
+                  class="mx-auto"
+                  v-model="form.promoPercent"
                 >
-                  Cancel
-                </button>
-              </form>
+                  <option value="">Select Discount</option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                </select>
+              </b-col>
+              <button
+                class="chocolate mt-5 p-3"
+                style="width: 90%"
+                @click="postCoupon"
+              >
+                Save Promo
+              </button>
+              <button class="chocolate mt-2 putih p-3 mb-5" style="width: 90%">
+                Cancel
+              </button>
             </b-col>
           </b-row>
         </h5>
@@ -121,7 +133,22 @@ export default {
   },
   data() {
     return {
-      form: {}
+      form: {
+        promoName: '',
+        promoPercent: '',
+        promoMinPurchase: '',
+        promoMaxLimit: '',
+        promoCode: '',
+        expireStartDate: '',
+        expireEndDate: '',
+        promoDescription: 'Description',
+        promoImage: 'image.jpg'
+      }
+    }
+  },
+  methods: {
+    postCoupon() {
+      console.log(this.form)
     }
   }
 }

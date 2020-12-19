@@ -49,9 +49,10 @@
             type="text"
             class="search-data"
             placeholder="Search"
+            v-model="searchData"
             required
           />
-          <button type="submit">
+          <button type="submit" @click="searchProduct(searchData)">
             <b-icon icon="search" variant="dark" aria-hidden="true"></b-icon>
           </button>
         </form>
@@ -73,8 +74,10 @@
 </template>
 <script>
 export default {
+  props: ['value'],
   data() {
     return {
+      searchData: '',
       menuBtn: document.querySelector('.menu-icon'),
       searchBtn: document.querySelector('.search-icon'),
       cancelBtn: document.querySelector('.cancel-icon'),
