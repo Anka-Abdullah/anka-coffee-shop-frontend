@@ -123,6 +123,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -148,7 +149,14 @@ export default {
   },
   methods: {
     postCoupon() {
-      console.log(this.form)
+      axios
+        .post('http://localhost:3765/promo', this.form)
+        .then(response => {
+          console.log(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

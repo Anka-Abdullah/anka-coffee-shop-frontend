@@ -183,7 +183,7 @@
             <button
               class="chocolate mt-5 p-3"
               style="width: 90%"
-              @click="patchProduct()"
+              @click="postProduct()"
             >
               Save Product
             </button>
@@ -198,6 +198,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -229,8 +230,15 @@ export default {
     }
   },
   methods: {
-    patchProduct() {
-      console.log(this.form)
+    postProduct() {
+      axios
+        .post('http://localhost:3765/product', this.form)
+        .then(response => {
+          console.log(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
