@@ -11,7 +11,13 @@
       <li>
         <label class="select"
           >Coffee
-          <input type="radio" name="radio" hidden />
+          <input
+            type="radio"
+            v-model="searchCategory"
+            value="value"
+            name="radio"
+            hidden
+          />
           <span class="checkmark"></span>
         </label>
       </li>
@@ -19,14 +25,26 @@
       <li>
         <label class="select"
           >Non Coffee
-          <input type="radio" name="radio" hidden />
+          <input
+            type="radio"
+            v-model="searchCategory"
+            value="noncoffee-J95yQgd"
+            name="radio"
+            hidden
+          />
           <span class="checkmark"></span>
         </label>
       </li>
       <li>
         <label class="select"
           >Foods
-          <input type="radio" name="radio" hidden />
+          <input
+            type="radio"
+            v-model="searchCategory"
+            value="food-Z6RTUvh"
+            name="radio"
+            hidden
+          />
           <span class="checkmark"></span>
         </label>
       </li>
@@ -51,6 +69,18 @@
     </ul>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      searchCategory: ''
+    }
+  },
+  created() {
+    console.log(this.searchCategory)
+  }
+}
+</script>
 <style scoped>
 ul {
   padding: 0 !important;

@@ -19,7 +19,6 @@
         </div>
         <div class="nav-items">
           <li><router-link to="/" class="aktip">Home</router-link></li>
-          <li><router-link to="/product">Product</router-link></li>
           <li><router-link to="/cart">Your Cart</router-link></li>
           <li><router-link to="/history">History</router-link></li>
           <li class="responsive">
@@ -133,6 +132,7 @@ nav .logo {
   color: black;
 }
 nav .nav-items {
+  margin-left: 70px;
   display: flex;
   flex: 1;
   padding: 0 0 0 40px;
@@ -224,6 +224,7 @@ nav .search-icon {
     background: #dadada;
     display: inline-block;
     transition: left 0.3s ease;
+    margin-left: 0;
   }
   nav .nav-items.active {
     left: 0px;

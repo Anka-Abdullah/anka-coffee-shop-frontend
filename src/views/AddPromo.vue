@@ -118,6 +118,11 @@ export default {
   components: {
     Navbar,
     Footbar
+  },
+  data() {
+    return {
+      form: {}
+    }
   }
 }
 </script>

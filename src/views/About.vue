@@ -107,7 +107,7 @@ export default {
         productStock: '',
         deliveryStartHour: '',
         deliveryEndHour: '',
-        productStatus: '',
+        productDiscount: '',
         productSizeR250: '',
         productSizeL300: '',
         productSizeXL500: '',

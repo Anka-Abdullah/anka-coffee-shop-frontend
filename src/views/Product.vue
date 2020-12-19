@@ -18,8 +18,8 @@
           </p>
         </b-col>
         <b-col lg="6" sm="12">
-          <h1 class="name mt-5">Cold Brew</h1>
-          <h1 class="m-0 price">IDR 30.000</h1>
+          <h1 class="name mt-5">{{ product.productName }}</h1>
+          <h1 class="m-0 price">IDR {{ product.productPrice }}</h1>
           <p class="m-4" style="font-size: 19px">
             Cold brewing is a method of brewing that combines ground coffee and
             cool water and uses time instead of heat to extract the flavor. It
@@ -64,6 +64,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -71,6 +72,30 @@ export default {
   components: {
     Navbar,
     Footbar
+  },
+  data() {
+    return {
+      product: [],
+      productId: ''
+    }
+  },
+  created() {
+    this.productId = this.$route.params.id
+    console.log(this.$route.params.id)
+    this.getProductById(this.$route.params.id)
+  },
+  methods: {
+    getProductById(id) {
+      axios
+        .get(`http://localhost:3765/product/${id}`)
+        .then(response => {
+          console.log(response.data.data[0])
+          this.product = response.data.data[0]
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

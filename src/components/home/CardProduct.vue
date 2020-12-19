@@ -8,23 +8,50 @@
         alt="item"
       />
       <div class="card-item-discount">20%</div>
-      <b-badge variant="warning" style="margin-left: -125px;"
-        ><b-icon icon="trash-fill" scale="1.5" variant="dark"></b-icon
-      ></b-badge>
-      <b-badge variant="info" style="margin-left: -26px;"
-        ><b-icon icon="pencil-fill" scale="1.5" variant="dark"></b-icon
-      ></b-badge>
-      <h4 class="card-item-title">{{ productName }}</h4>
+      <a @click="deleteProduct"
+        ><b-badge variant="warning" style="margin-left: -125px;"
+          ><b-icon
+            icon="trash-fill"
+            scale="1.5"
+            variant="dark"
+          ></b-icon></b-badge
+      ></a>
+      <a @click="setProduct"
+        ><b-badge variant="info" style="margin-left: -26px;"
+          ><b-icon
+            icon="pencil-fill"
+            scale="1.5"
+            variant="dark"
+          ></b-icon></b-badge
+      ></a>
+
+      <h4 class="card-item-title" @click="$emit('emit-product')">
+        {{ productName }}
+      </h4>
       <h6 class="anka-title">IDR {{ productPrice }}</h6>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ['productName', 'productPrice']
+  props: ['productName', 'productPrice', 'productId', 'form'],
+  created() {
+    // this.setProduct()
+  },
+  methods: {
+    setProduct() {
+      console.log(this.form)
+    },
+    deleteProduct() {
+      console.log('delete' + this.productId)
+    }
+  }
 }
 </script>
 <style scoped>
+.card-item-title:hover {
+  background-color: #ffba33;
+}
 span {
   position: absolute !important;
   width: 32px;

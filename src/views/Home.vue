@@ -46,8 +46,11 @@
                 ><b-row
                   ><CardProduct
                     class="mx-auto"
+                    :form="item"
                     :productName="item.productName"
-                    :productPrice="item.productPrice"/></b-row
+                    :productPrice="item.productPrice"
+                    :productId="item.productId"
+                    @emit-product="detailProduct(item.productId)"/></b-row
               ></b-col>
             </b-row>
             <b-row class="mb-4">
@@ -86,8 +89,10 @@ export default {
   name: 'Home',
   data() {
     return {
+      roleId: 1,
       products: [],
       contohNama: 'wahyudi',
+      search: '',
       currentPage: 1,
       totalRows: null,
       limit: 5,
@@ -109,7 +114,7 @@ export default {
     getProduct() {
       axios
         .get(
-          `http://localhost:3765/product?page=${this.page}&limit=${this.limit}`
+          `http://localhost:3765/product?search${this.search}&page=${this.page}&limit=${this.limit}`
         )
         .then(response => {
           console.log(response)
@@ -123,6 +128,10 @@ export default {
     handelPageChange(e) {
       this.page = e
       this.getProduct()
+    },
+    detailProduct(productId) {
+      console.log(productId)
+      this.$router.push({ name: 'Product', params: { id: productId } })
     }
   }
 }

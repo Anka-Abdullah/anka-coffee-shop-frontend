@@ -9,14 +9,18 @@
           ><b-icon icon="pencil-fill" scale="1.5" variant="dark"></b-icon
         ></b-badge>
         <h6 class="anka-title m-0 mt-1">
-          Get a cup of coffee for free <br />
-          on sunday morning
+          Code : uIjgiu12
         </h6>
-        <p>Only at 7 to 9 AM</p>
+        <b>Promo Name</b><br />
+        <b>Minimum order: 8627798729</b><br />
+        <b>Maksimum Discount: 8627798729</b>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {}
+</script>
 <style scoped>
 span {
   position: absolute !important;
