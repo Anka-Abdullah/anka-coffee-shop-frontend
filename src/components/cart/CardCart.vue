@@ -9,11 +9,15 @@
       </div>
       <div class="txt-card">
         <h6 class="anka-title m-0 mt-1">
-          Hazelnut Latte
+          {{ name }}
         </h6>
         <b-row class="pl-3" style="width: 250px">
-          <h6><b>X 1</b></h6>
-          <h6 class="ml-auto"><b>IDR 24.0</b></h6>
+          <h6>
+            <b>X {{ qty }}</b>
+          </h6>
+          <h6 class="ml-auto">
+            <b>IDR {{ price }}</b>
+          </h6>
         </b-row>
         <h6><b>Regular</b></h6>
       </div>
@@ -21,7 +25,9 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  props: ['name', 'price', 'qty']
+}
 </script>
 <style scoped>
 img {

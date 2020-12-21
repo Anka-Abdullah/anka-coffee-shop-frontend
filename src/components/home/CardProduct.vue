@@ -7,8 +7,10 @@
         class="rounded-pill"
         alt="item"
       />
-      <div class="card-item-discount">20%</div>
-      <a @click="deleteProduct"
+      <div class="card-item-discount" v-show="discount > 0">
+        {{ discount }}%
+      </div>
+      <a @click="showModal" v-show="this.roleId === '2'"
         ><b-badge variant="warning" style="margin-left: -125px;"
           ><b-icon
             icon="trash-fill"
@@ -16,7 +18,7 @@
             variant="dark"
           ></b-icon></b-badge
       ></a>
-      <a @click="setProduct"
+      <a @click="setProduct" v-show="this.roleId === '2'"
         ><b-badge variant="info" style="margin-left: -26px;"
           ><b-icon
             icon="pencil-fill"
@@ -30,20 +32,55 @@
       </h4>
       <h6 class="anka-title">IDR {{ productPrice }}</h6>
     </div>
+    <b-modal ref="my-modal" hide-footer title="Delete Prduct">
+      <div class="d-block text-center">
+        <h1 class="anka-title mb-5">remove this prduct?</h1>
+      </div>
+      <b-row>
+        <button
+          class="chocolate putih mx-auto"
+          block
+          @click="hideModal"
+          style="padding: 5px 25px"
+        >
+          Cancel
+        </button>
+        <button class="chocolate mx-auto" @click="deleteProduct">Delete</button>
+      </b-row>
+    </b-modal>
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
-  props: ['productName', 'productPrice', 'productId', 'form'],
-  created() {
-    // this.setProduct()
+  props: ['productName', 'productPrice', 'productId', 'discount', 'form'],
+  data() {
+    return {
+      roleId: localStorage.getItem('role')
+    }
   },
   methods: {
     setProduct() {
       console.log(this.form)
+      this.$router.push({ name: 'AddProduct', query: { data: this.form } })
     },
     deleteProduct() {
-      console.log('delete' + this.productId)
+      axios
+        .delete(
+          `http://${process.env.VUE_APP_ROOT_URL}/product/` + this.productId
+        )
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
     }
   }
 }

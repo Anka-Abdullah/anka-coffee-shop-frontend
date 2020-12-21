@@ -167,25 +167,34 @@
             <p class="m-0">Click methods you want to use for this product</p>
 
             <label class="selectsize" style="padding-left: 150px;">
-              <input type="checkbox" v-model="form.productDelivery" value="3" />
+              <input type="checkbox" v-model="form.productDelivery" />
               <span class="checkmark" style="font-size: 17px"
                 >Home Delivery</span
               >
             </label>
             <label class="selectsize" style="padding-left: 100px;">
-              <input type="checkbox" v-model="form.productDinein" value="1" />
+              <input type="checkbox" v-model="form.productDinein" />
               <span class="checkmark" style="font-size: 17px">Dine in</span>
             </label>
             <label class="selectsize" style="padding-left: 150px;">
-              <input type="checkbox" v-model="form.productTakeAway" value="1" />
+              <input type="checkbox" v-model="form.productTakeAway" />
               <span class="checkmark" style="font-size: 17px">Take Away</span>
             </label>
             <button
+              v-show="this.productId == null"
               class="chocolate mt-5 p-3"
               style="width: 90%"
               @click="postProduct()"
             >
               Save Product
+            </button>
+            <button
+              v-show="this.productId > 0"
+              class="chocolate mt-5 p-3"
+              style="width: 90%"
+              @click="patchProduct()"
+            >
+              Update Product
             </button>
             <button class="chocolate mt-2 putih p-3 mb-5" style="width: 90%">
               Cancel
@@ -229,16 +238,29 @@ export default {
       }
     }
   },
+  created() {
+    this.form = this.$route.query.data || []
+    let getData = this.$route.query.data
+    if (getData) {
+      this.productId = this.$route.query.data.productId
+    } else {
+      this.productId = null
+    }
+  },
   methods: {
     postProduct() {
       axios
-        .post('http://localhost:3765/product', this.form)
+        .post(`http://${process.env.VUE_APP_ROOT_URL}/product`, this.form)
         .then(response => {
           console.log(response.data.message)
+          alert(response.data.message)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    patchProduct() {
+      console.log(this.form)
     }
   }
 }

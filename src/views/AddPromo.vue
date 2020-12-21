@@ -105,11 +105,20 @@
                 </select>
               </b-col>
               <button
+                v-show="this.promoId == null"
                 class="chocolate mt-5 p-3"
                 style="width: 90%"
-                @click="postCoupon"
+                @click="postCoupon()"
               >
-                Save Promo
+                Save Coupon
+              </button>
+              <button
+                v-show="this.promoId > 0"
+                class="chocolate mt-5 p-3"
+                style="width: 90%"
+                @click="patchCoupon()"
+              >
+                Update Coupon
               </button>
               <button class="chocolate mt-2 putih p-3 mb-5" style="width: 90%">
                 Cancel
@@ -134,6 +143,7 @@ export default {
   },
   data() {
     return {
+      promoId: null,
       form: {
         promoName: '',
         promoPercent: '',
@@ -147,16 +157,31 @@ export default {
       }
     }
   },
+  created() {
+    this.form = this.$route.query.data || []
+    let getData = this.$route.query.data
+    if (getData) {
+      this.promoId = this.$route.query.data.promoId
+    } else {
+      this.promoId = null
+    }
+
+    console.log(this.promoId)
+  },
   methods: {
     postCoupon() {
       axios
-        .post('http://localhost:3765/promo', this.form)
+        .post(`http://${process.env.VUE_APP_ROOT_URL}/promo`, this.form)
         .then(response => {
           console.log(response.data.message)
+          alert(response.data.message)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    patchCoupon() {
+      console.log(this.form)
     }
   }
 }

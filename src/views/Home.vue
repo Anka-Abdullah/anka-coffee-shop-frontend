@@ -13,22 +13,33 @@
             <h4 class="anka-title">Promo Today</h4>
             <p>Coupons will be updated every weeks.<br />Check them out!</p>
           </div>
-          <Coupon />
+          <Coupon
+            v-for="coupon in coupons"
+            :key="coupon.promoId"
+            :patch="coupon"
+            :promoCode="coupon.promoCode"
+            :promoName="coupon.promoName"
+            :promoMinPurchase="coupon.promoMinPurchase"
+            :promoMaxLimit="coupon.promoMaxLimit"
+            :promoId="coupon.promoId"/>
           <button class="chocolate one mt-3" style="width: 90%;">
             Apply Coupon
           </button>
           <b-row
-            ><router-link to="/addpromo" class="chocolate putih mx-auto mt-3"
+            ><router-link
+              to="/addpromo"
+              class="chocolate putih mx-auto mt-3"
+              v-show="this.roleId === '2'"
               >Add New Promo</router-link
             ></b-row
           >
           <div class="my-4">
             <ol>
               <h6 class="anka-title">Terms and Condition</h6>
-              <li><p>You can only apply 1 coupon per day</p></li>
-              <li><p>It only for dine in</p></li>
-              <li><p>Buy 1 get 1 only for new user</p></li>
-              <li><p>Should make member card to apply coupon</p></li>
+              <p class="m-0">You can only apply 1 coupon per day</p>
+              <p class="m-0">It only for dine in</p>
+              <p class="m-0">Buy 1 get 1 only for new user</p>
+              <p class="m-0">Should make member card to apply coupon</p>
             </ol>
           </div>
           <hr class="responsive"
@@ -114,6 +125,14 @@
               </li>
             </ul>
           </div>
+          <b-row>
+            <div class="mx-auto">
+              <input type="text" v-model="cari" />
+              <b-button size="sm" class="my-2 my-sm-0" @click="set()"
+                >Search</b-button
+              >
+            </div>
+          </b-row>
           <b-container fuid style="padding-top: 20px">
             <b-row>
               <b-col
@@ -128,6 +147,7 @@
                     :productName="item.productName"
                     :productPrice="item.productPrice"
                     :productId="item.productId"
+                    :discount="item.productDiscount"
                     @emit-product="detailProduct(item.productId)"/></b-row
               ></b-col>
             </b-row>
@@ -140,7 +160,10 @@
                 @change="handelPageChange"
                 aria-controls="my-table"
               ></b-pagination>
-              <router-link to="/addproduct" class="chocolate one mx-auto mb-3"
+              <router-link
+                to="/addproduct"
+                class="chocolate one mx-auto mb-3"
+                v-show="this.roleId === '2'"
                 >Add New Product</router-link
               >
             </b-row>
@@ -167,13 +190,13 @@ export default {
   name: 'Home',
   data() {
     return {
-      roleId: 1,
+      roleId: localStorage.getItem('role'),
       products: [],
-      contohNama: 'wahyudi',
-      // search: '',
+      coupons: [],
+      cari: '',
       currentPage: 1,
       totalRows: null,
-      limit: 5,
+      limit: 7,
       page: 1
     }
   },
@@ -186,19 +209,22 @@ export default {
     // FormInput
   },
   created() {
-    this.getProduct('', '', '')
+    this.getProduct('', '', ''), this.getCoupon()
+    localStorage.setItem('role', '2')
+    console.log(this.roleId)
   },
   methods: {
     getProduct(search, sort, asc) {
       axios
         .get(
-          `http://localhost:3765/product?${sort !== '' ? 'sort=' + sort : ''}${
-            asc !== '' ? '&asc=' + asc : ''
-          }${search !== '' ? '&search=' + search : ''}&page=${
-            this.page
-          }&limit=${this.limit}`
+          `http://${process.env.VUE_APP_ROOT_URL}/product?${
+            sort !== '' ? 'sort=' + sort : ''
+          }${asc !== '' ? '&asc=' + asc : ''}${
+            search !== '' ? '&search=' + search : ''
+          }&page=${this.page}&limit=${this.limit}`
         )
         .then(response => {
+          console.log(response.data.pagination.totalData)
           this.totalRows = response.data.pagination.totalData
           this.products = response.data.data
         })
@@ -206,13 +232,28 @@ export default {
           console.log(error)
         })
     },
+    getCoupon() {
+      axios
+        .get(`http://${process.env.VUE_APP_ROOT_URL}/promo`)
+        .then(response => {
+          response.data.data
+          this.coupons = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     handelPageChange(e) {
       this.page = e
-      this.getProduct()
+      this.getProduct('', '', '')
     },
     detailProduct(productId) {
       console.log(productId)
       this.$router.push({ name: 'Product', params: { id: productId } })
+    },
+    set() {
+      console.log(this.cari)
+      this.getProduct(this.cari, '', '')
     }
   }
 }

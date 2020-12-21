@@ -43,18 +43,29 @@
           <b-row>
             <b-col lg="5" sm="12" class="p-0">
               <div class="count">
-                <button>+</button><span>0</span><button>-</button>
+                <button @click="plus()">+</button><span>{{ count }}</span
+                ><button @click="min()" v-show="count > 1">-</button
+                ><button v-show="count === 1">-</button>
               </div>
             </b-col>
             <b-col lg="7" sm="12"
-              ><button class="chocolate yellow p-2" style="width: 100%">
+              ><button
+                class="chocolate yellow p-2"
+                style="width: 100%"
+                @click="addToCart(product)"
+              >
                 Add To Cart
               </button></b-col
             >
           </b-row>
           <b-row>
-            <button class="chocolate p-2 mt-3 mx-auto" style="width: 100%">
-              Checkout
+            <button
+              class="chocolate p-2 mt-3 mx-auto"
+              style="width: 100%; padding: 0;"
+            >
+              <router-link to="/cart" class="text-white" style="font-size: 24px"
+                >Checkout</router-link
+              >
             </button>
           </b-row>
         </b-col>
@@ -76,25 +87,49 @@ export default {
   data() {
     return {
       product: [],
-      productId: ''
+      productId: '',
+      count: 1,
+      cart: []
     }
   },
   created() {
     this.productId = this.$route.params.id
-    console.log(this.$route.params.id)
     this.getProductById(this.$route.params.id)
+    let getCart = localStorage.getItem('cart')
+    getCart = JSON.parse(getCart)
+    if (getCart) {
+      this.cart = getCart
+    } else {
+      this.cart = []
+    }
   },
   methods: {
     getProductById(id) {
       axios
-        .get(`http://localhost:3765/product/${id}`)
+        .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${id}`)
         .then(response => {
-          console.log(response.data.data[0])
           this.product = response.data.data[0]
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    addToCart(data) {
+      const setCart = {
+        productId: data.productId,
+        productName: data.productName,
+        quantity: this.count,
+        productTotal: data.productPrice * this.count
+      }
+      this.cart = [...this.cart, setCart]
+      localStorage.setItem('cart', JSON.stringify(this.cart))
+      console.log(this.cart)
+    },
+    plus() {
+      this.count++
+    },
+    min() {
+      this.count--
     }
   }
 }

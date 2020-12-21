@@ -14,24 +14,33 @@
             <b-card no-body class="cardcart mx-auto">
               <h2 class="anka-title text-center mb-0">Order Summary</h2>
               <div class="cart-scroll">
-                <b-row>
-                  <Card class="mx-auto" />
+                <b-row v-for="(item, index) in dataCarts" :key="index">
+                  <Card
+                    class="mx-auto"
+                    :name="item.productName"
+                    :qty="item.quantity"
+                    :price="item.productTotal"
+                  />
                 </b-row>
               </div>
-              <b-row class="px-4">
+              <b-row class="px-5">
                 <h5><b>Subtotal</b></h5>
                 <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
               </b-row>
-              <b-row class="px-4">
+              <b-row class="px-5">
                 <h5><b>Tax and Fees</b></h5>
                 <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
               </b-row>
-              <b-row class="px-4">
+              <b-row class="px-5">
                 <h5><b>Subtotal</b></h5>
                 <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
               </b-row>
-              <b-row class="px-4">
-                <h4 class="anka-title"><b>Subtotal</b></h4>
+              <b-row class="px-5">
+                <h5><b>Discounts</b></h5>
+                <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
+              </b-row>
+              <b-row class="px-5">
+                <h4 class="anka-title"><b>Total</b></h4>
                 <h4 class="anka-title ml-auto"><b>IDR 1.000.000</b></h4>
               </b-row>
             </b-card>
@@ -52,6 +61,14 @@
                 >
                 <b-list-group-item>+62 81348287878</b-list-group-item>
               </b-list-group>
+            </b-col>
+            <h4 class="anka-text-shadow mt-5">Input Coupon Code</h4>
+            <b-col xl="12">
+              <input
+                type="text"
+                style="width: 100%"
+                placeholder="Input Coupon Code"
+              />
             </b-col>
             <h3 class="anka-text-shadow mt-5">Payment Method</h3>
             <b-col xl="12">
@@ -112,6 +129,7 @@
               <button
                 class="chocolate p-2 my-5 mx-auto"
                 style="width: 100%; border: 1px solid white"
+                @click="confirmAndPay()"
               >
                 Confirm and Pay
               </button>
@@ -133,6 +151,19 @@ export default {
     Navbar,
     Footbar,
     Card
+  },
+  data() {
+    return {
+      dataCarts: JSON.parse(localStorage.getItem('cart'))
+    }
+  },
+  created() {
+    console.log(this.dataCarts)
+  },
+  methods: {
+    confirmAndPay() {
+      localStorage.removeItem('cart')
+    }
   }
 }
 </script>
