@@ -73,18 +73,10 @@
               <h5 class="anka-title mt-5">Expire Date :</h5>
               <b-row>
                 <b-col lg="6" sm="12">
-                  <input
-                    type="date"
-                    class="formadd"
-                    placeholder="start date"
-                    v-model="form.expireStartDate"
+                  <input type="date" class="formadd" placeholder="start date"
                 /></b-col>
                 <b-col lg="6" sm="12">
-                  <input
-                    type="date"
-                    class="formadd"
-                    placeholder="end date"
-                    v-model="form.expireEndDate"
+                  <input type="date" class="formadd" placeholder="end date"
                 /></b-col>
                 <b-col lg="6" sm="12"></b-col>
               </b-row>
@@ -150,19 +142,18 @@ export default {
         promoMinPurchase: '',
         promoMaxLimit: '',
         promoCode: '',
-        expireStartDate: '',
-        expireEndDate: '',
         promoDescription: 'Description',
         promoImage: 'image.jpg'
       }
     }
   },
   created() {
-    this.form = this.$route.query.data || []
     let getData = this.$route.query.data
     if (getData) {
+      this.form = this.$route.query.data
       this.promoId = this.$route.query.data.promoId
     } else {
+      this.form = []
       this.promoId = null
     }
 
@@ -181,7 +172,18 @@ export default {
         })
     },
     patchCoupon() {
-      console.log(this.form)
+      axios
+        .patch(
+          `http://${process.env.VUE_APP_ROOT_URL}/promo/${this.promoId}`,
+          this.form
+        )
+        .then(response => {
+          console.log(response.data.message)
+          alert(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

@@ -260,7 +260,18 @@ export default {
         })
     },
     patchProduct() {
-      console.log(this.form)
+      axios
+        .patch(
+          `http://${process.env.VUE_APP_ROOT_URL}/product/${this.productId}`,
+          this.form
+        )
+        .then(response => {
+          console.log(response.data.message)
+          alert(response.data.message)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
