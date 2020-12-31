@@ -239,10 +239,10 @@ export default {
     }
   },
   created() {
-    this.form = this.$route.query.data || []
     let getData = this.$route.query.data
     if (getData) {
       this.productId = this.$route.query.data.productId
+      this.form = this.$route.query.data
     } else {
       this.productId = null
     }

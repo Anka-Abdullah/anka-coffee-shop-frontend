@@ -124,6 +124,7 @@ export default {
       this.cart = [...this.cart, setCart]
       localStorage.setItem('cart', JSON.stringify(this.cart))
       console.log(this.cart)
+      alert('product added to cart')
     },
     plus() {
       this.count++

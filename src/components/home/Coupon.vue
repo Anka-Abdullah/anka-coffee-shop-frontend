@@ -44,7 +44,7 @@
         >
           Cancel
         </button>
-        <button class="chocolate mx-auto" @click="deletePromo">Delete</button>
+        <button class="chocolate mx-auto" @click="deletePromo()">Delete</button>
       </b-row>
     </b-modal>
   </div>
@@ -84,6 +84,7 @@ export default {
         .delete(`http://${process.env.VUE_APP_ROOT_URL}/promo/` + this.promoId)
         .then(response => {
           console.log(response)
+          alert('promo deleted')
         })
         .catch(error => {
           console.log(error)

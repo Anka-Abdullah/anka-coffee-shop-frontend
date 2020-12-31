@@ -163,6 +163,7 @@ export default {
   methods: {
     confirmAndPay() {
       localStorage.removeItem('cart')
+      this.$router.push({ name: 'Home' })
     }
   }
 }

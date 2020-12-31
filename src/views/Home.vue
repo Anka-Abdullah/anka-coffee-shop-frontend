@@ -210,7 +210,7 @@ export default {
   },
   created() {
     this.getProduct('', '', ''), this.getCoupon()
-    localStorage.setItem('role', '2')
+    localStorage.setItem('role', '1')
     console.log(this.roleId)
   },
   methods: {

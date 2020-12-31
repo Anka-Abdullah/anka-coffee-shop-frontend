@@ -152,9 +152,6 @@ export default {
     if (getData) {
       this.form = this.$route.query.data
       this.promoId = this.$route.query.data.promoId
-    } else {
-      this.form = []
-      this.promoId = null
     }
 
     console.log(this.promoId)
