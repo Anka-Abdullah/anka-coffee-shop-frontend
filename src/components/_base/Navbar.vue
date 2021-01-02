@@ -68,11 +68,13 @@
         <router-link to="/profile" class="desktop"
           ><b-avatar src="https://placekitten.com/300/300"></b-avatar
         ></router-link>
+        <button class="chocolate p-0" @click="logout">logout</button>
       </nav>
     </nav>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: ['value'],
   data() {
@@ -86,6 +88,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['logout']),
     menu() {
       document.querySelector('.nav-items').classList.add('active')
       document.querySelector('.menu-icon').classList.add('hide')
@@ -127,7 +130,7 @@ nav {
   z-index: 2;
 }
 nav .logo {
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
   font-size: 27px;
   font-weight: 500;
   letter-spacing: 2px;

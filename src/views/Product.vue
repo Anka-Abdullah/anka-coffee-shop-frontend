@@ -150,7 +150,7 @@ select {
   border-radius: 10px;
 }
 h1.name {
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
   font-weight: 900;
   font-size: 60px;
   letter-spacing: 4px;

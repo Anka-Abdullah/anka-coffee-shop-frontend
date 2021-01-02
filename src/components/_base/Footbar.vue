@@ -52,7 +52,7 @@ export default {
 </script>
 <style scoped>
 .logo {
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
   font-size: 27px;
   font-weight: 500;
   letter-spacing: 2px;

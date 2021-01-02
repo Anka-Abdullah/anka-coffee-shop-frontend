@@ -3,12 +3,36 @@
     <router-view />
   </div>
 </template>
-
+<script>
+import { mapActions } from 'vuex'
+export default {
+  name: 'App',
+  created() {
+    this.interceptorsRequest()
+    this.interceptorsResponse()
+  },
+  methods: {
+    ...mapActions(['interceptorsRequest', 'interceptorsResponse'])
+  }
+}
+</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@font-face {
+  font-family: 'patrick_handregular';
+  src: url('./assets/font/patrickhand-regular-webfont.woff2') format('woff2'),
+    url('./assets/font/patrickhand-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'amatic_scbold';
+  src: url('./assets/font/amaticsc-bold-webfont.woff2') format('woff2'),
+    url('./assets/font/amaticsc-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 * {
-  font-family: 'Gamja Flower', cursive;
+  font-family: 'amatic_scbold', cursive;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -53,7 +77,7 @@ button:focus {
   color: #6a4029;
   letter-spacing: 1px;
   font-weight: 600;
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
 }
 .anka-text-shadow {
   color: white;
@@ -63,7 +87,7 @@ button:focus {
   border-radius: 20px;
   margin: 0 20px;
   color: white;
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 1px;

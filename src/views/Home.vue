@@ -279,7 +279,7 @@ li {
   position: relative;
   z-index: 1;
   margin: 0 10px;
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'patrick_handregular', cursive;
   letter-spacing: 1px;
   font-weight: 700;
   font-size: 18px;
