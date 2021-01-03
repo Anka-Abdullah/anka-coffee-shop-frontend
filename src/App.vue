@@ -25,14 +25,15 @@ export default {
   font-style: normal;
 }
 @font-face {
-  font-family: 'amatic_scbold';
-  src: url('./assets/font/amaticsc-bold-webfont.woff2') format('woff2'),
-    url('./assets/font/amaticsc-bold-webfont.woff') format('woff');
+  font-family: 'caveatregular';
+  src: url('./assets/font/caveat-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./assets/font/caveat-variablefont_wght-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 * {
-  font-family: 'amatic_scbold', cursive;
+  font-family: 'patrick_handregular', cursive;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -67,6 +68,9 @@ button {
 button:focus {
   outline: none !important;
 }
+.caveat {
+  font-family: 'caveatregular';
+}
 .anka-card {
   margin: 20px;
   padding: 10px 20px;
@@ -77,11 +81,11 @@ button:focus {
   color: #6a4029;
   letter-spacing: 1px;
   font-weight: 600;
-  font-family: 'patrick_handregular', cursive;
+  font-family: 'caveatregular', cursive;
 }
 .anka-text-shadow {
   color: white;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8) !important;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 1), 2px -10px 35px rgba(0, 0, 0, 1) !important;
 }
 .chocolate {
   border-radius: 20px;
@@ -118,6 +122,27 @@ button:focus {
   color: #6a4029 !important;
   transform: scale(0.98);
   background-color: #c7c7c7;
+}
+input.b-input {
+  border: none;
+  width: 95%;
+  border-bottom: 1px solid #6a4029;
+}
+input.b-input:focus {
+  outline: none;
+  border-bottom: 3px solid #ffba33;
+}
+.logo {
+  font-family: 'caveatregular', cursive;
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: black;
+}
+.authbg {
+  background-image: url('./assets/background3.png');
+  background-size: 50%;
+  background-attachment: fixed;
 }
 .responsive {
   display: none;

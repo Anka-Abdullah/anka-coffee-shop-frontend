@@ -29,7 +29,7 @@
             ><router-link
               to="/addpromo"
               class="chocolate putih mx-auto mt-3"
-              v-show="this.roleId === '2'"
+              v-show="this.roleId == '1'"
               >Add New Promo</router-link
             ></b-row
           >
@@ -163,7 +163,7 @@
               <router-link
                 to="/addproduct"
                 class="chocolate one mx-auto mb-3"
-                v-show="this.roleId === '2'"
+                v-show="this.roleId == '1'"
                 >Add New Product</router-link
               >
             </b-row>
@@ -190,7 +190,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      roleId: localStorage.getItem('role'),
+      roleId: 1,
       products: [],
       coupons: [],
       cari: '',
@@ -210,7 +210,6 @@ export default {
   },
   created() {
     this.getProduct('', '', ''), this.getCoupon()
-    localStorage.setItem('role', '1')
     console.log(this.roleId)
   },
   methods: {
@@ -279,7 +278,7 @@ li {
   position: relative;
   z-index: 1;
   margin: 0 10px;
-  font-family: 'patrick_handregular', cursive;
+  font-family: 'caveatregular', cursive;
   letter-spacing: 1px;
   font-weight: 700;
   font-size: 18px;

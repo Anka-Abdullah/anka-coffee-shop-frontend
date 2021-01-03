@@ -79,21 +79,21 @@
             <h5 class="anka-title mt-5">Name:</h5>
             <input
               type="text"
-              class="formadd"
+              class="b-input"
               placeholder="Type product name min. 50 characters"
               v-model="form.productName"
             />
             <h5 class="anka-title mt-5">Price:</h5>
             <input
               type="number"
-              class="formadd"
+              class="b-input"
               placeholder="Type the price"
               v-model="form.productPrice"
             />
             <h5 class="anka-title mt-5">Description:</h5>
             <input
               type="text"
-              class="formadd"
+              class="b-input"
               placeholder="Describe your product min. 150 characters"
               v-model="form.productDescription"
             />
@@ -292,15 +292,7 @@ input.stock:focus {
   outline: none;
   border: 3px solid #ffba33;
 }
-input.formadd {
-  border: none;
-  width: 95%;
-  border-bottom: 1px solid #6a4029;
-}
-input.formadd:focus {
-  outline: none;
-  border-bottom: 3px solid #ffba33;
-}
+
 span.camera {
   width: 200px;
   height: 200px;

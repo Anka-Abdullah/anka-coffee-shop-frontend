@@ -129,14 +129,6 @@ nav {
   padding: 0 40px;
   z-index: 2;
 }
-nav .logo {
-  font-family: 'patrick_handregular', cursive;
-  font-size: 27px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  margin-left: 10px;
-  color: black;
-}
 nav .nav-items {
   margin-left: 70px;
   display: flex;

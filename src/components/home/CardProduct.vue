@@ -133,7 +133,7 @@ span:hover {
 .card-item-title {
   font-size: 25px;
   font-weight: 800;
-  font-family: 'patrick_handregular', cursive;
+  font-family: 'caveatregular', cursive;
   margin-top: 12px;
 }
 </style>
