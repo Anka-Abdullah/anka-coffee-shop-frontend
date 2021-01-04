@@ -3,14 +3,14 @@
     <footer class="bg-light">
       <b-container>
         <b-row>
-          <b-col lg="6" sm="12"
-            ><div class="logo mt-3">
+          <b-col lg="6" sm="12">
+            <div class="logo mt-3">
               <img
                 src="../../assets/Coffee-icon.png"
                 style="margin: -7px 4px 0 0;"
               />Coffee Shop
             </div>
-            <p class="ml-2 mt-3">
+            <p class="ml-2 mt-2">
               Coffee Shop is a store <br />
               that sells some good <br />
               meals, and especially coffee. <br />

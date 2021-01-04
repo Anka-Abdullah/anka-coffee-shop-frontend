@@ -65,9 +65,6 @@ export default {
       roleId: localStorage.getItem('role')
     }
   },
-  created() {
-    console.log(this.patch)
-  },
   methods: {
     showModal() {
       this.$refs['my-modal'].show()

@@ -54,6 +54,13 @@ const routes = [
       import(/* webpackChunkName: "addproduct" */ '../views/AddProduct.vue')
   },
   {
+    path: '/dashboard',
+    name: 'DashBoard',
+    meta: { requiresAuth: true },
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ '../views/DashBoard.vue')
+  },
+  {
     path: '/addpromo',
     name: 'AddPromo',
     meta: { requiresAuth: true },

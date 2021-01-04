@@ -10,7 +10,6 @@
             aria-hidden="true"
           ></b-icon>
         </div>
-
         <div class="logo">
           <img
             src="../../assets/Coffee-icon.png"
@@ -25,7 +24,7 @@
             <router-link to="#">Chat Room</router-link>
           </li>
           <li class="responsive">
-            <router-link to="#">My Profile</router-link>
+            <router-link to="/profile">My Profile</router-link>
           </li>
         </div>
         <div class="search-icon" @click="search()">
@@ -68,13 +67,11 @@
         <router-link to="/profile" class="desktop"
           ><b-avatar src="https://placekitten.com/300/300"></b-avatar
         ></router-link>
-        <button class="chocolate p-0" @click="logout">logout</button>
       </nav>
     </nav>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
 export default {
   props: ['value'],
   data() {
@@ -88,7 +85,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['logout']),
     menu() {
       document.querySelector('.nav-items').classList.add('active')
       document.querySelector('.menu-icon').classList.add('hide')

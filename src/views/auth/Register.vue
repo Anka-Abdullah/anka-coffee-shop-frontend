@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="register">
     <b-container fluid>
       <b-row>
         <b-col lg="6" sm="12" class="desktop authbg">
@@ -40,8 +40,10 @@
             </b-row>
             <b-row>
               <button
+                type="button"
                 class="chocolate yellow w-75 mx-auto"
-                @click.prevent="onSubmit"
+                data-toggle="modal"
+                data-target="#exampleModal"
               >
                 Sign Up
               </button>
@@ -66,8 +68,43 @@
         </b-col>
       </b-row>
     </b-container>
-
     <Footbar />
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -75,7 +112,7 @@ import { mapActions } from 'vuex'
 import Navbar from './component/NavbarAuth'
 import Footbar from '../../components/_base/Footbar'
 export default {
-  name: 'Login',
+  name: 'Register',
   components: {
     Navbar,
     Footbar
@@ -90,16 +127,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
-    onSubmit() {
-      this.login(this.form)
-        .then(result => {
-          alert(result.data.message)
-        })
-        .catch(err => {
-          alert(err.data.message)
-        })
-    }
+    ...mapActions(['register'])
+    // onSubmit() {
+    //   this.login(this.form)
+    //     .then(result => {
+    //       alert(result.data.message)
+    //     })
+    //     .catch(err => {
+    //       alert(err.data.message)
+    //     })
+    // }
   }
 }
 </script>

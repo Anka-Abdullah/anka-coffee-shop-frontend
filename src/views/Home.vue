@@ -133,6 +133,7 @@
               >
             </div>
           </b-row>
+          <p>{{ user }}</p>
           <b-container fuid style="padding-top: 20px">
             <b-row>
               <b-col
@@ -172,8 +173,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- <FormInput :dataName="contohNama" @changeName="contohNama = $event" />
-    <label for="">{{ contohNama }}</label> -->
     <Footbar />
   </div>
 </template>
@@ -183,9 +182,8 @@ import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Coupon from '../components/home/Coupon'
-// import Sorting from '../components/home/Sorting'
 import CardProduct from '../components/home/CardProduct'
-// import FormInput from '../components/_base/FormInput'
+import { mapState } from 'vuex'
 export default {
   name: 'Home',
   data() {
@@ -204,13 +202,13 @@ export default {
     Navbar,
     Footbar,
     Coupon,
-    // Sorting,
     CardProduct
-    // FormInput
   },
   created() {
     this.getProduct('', '', ''), this.getCoupon()
-    console.log(this.roleId)
+  },
+  computed: {
+    ...mapState(['user'])
   },
   methods: {
     getProduct(search, sort, asc) {
@@ -223,7 +221,6 @@ export default {
           }&page=${this.page}&limit=${this.limit}`
         )
         .then(response => {
-          console.log(response.data.pagination.totalData)
           this.totalRows = response.data.pagination.totalData
           this.products = response.data.data
         })

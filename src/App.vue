@@ -134,10 +134,9 @@ input.b-input:focus {
 }
 .logo {
   font-family: 'caveatregular', cursive;
-  font-size: 27px;
-  font-weight: 500;
+  font-size: 30px;
   letter-spacing: 1px;
-  color: black;
+  color: rgb(100, 100, 100);
 }
 .authbg {
   background-image: url('./assets/background3.png');

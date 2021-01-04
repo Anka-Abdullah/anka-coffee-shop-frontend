@@ -1,7 +1,7 @@
 <template>
   <div class="addproduct">
     <Navbar />
-    <b-container style="padding-top: 100px" class="mt-4">
+    <b-container style="padding-top: 120px">
       <h5 style="color: rgb(124, 124, 124)">
         Favorite and Promo <span style="color: #6a4029">> Add New Product</span>
         <b-row>

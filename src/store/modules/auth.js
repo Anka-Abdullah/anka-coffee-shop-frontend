@@ -31,6 +31,18 @@ export default {
           })
       })
     },
+    register(payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`http://${process.env.VUE_APP_ROOT_URL}/user/register`, payload)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
+    },
     logout(context) {
       localStorage.removeItem('token')
       localStorage.removeItem('cart')
