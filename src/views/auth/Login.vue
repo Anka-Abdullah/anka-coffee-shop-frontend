@@ -58,43 +58,22 @@
       </b-row>
     </b-container>
     <Footbar />
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
+    <b-modal ref="my-modal" centered hide-footer hide-header>
+      <div class="d-block text-center">
+        <h2 class="my-5">
+          <strong>{{ message }}</strong>
+        </h2>
       </div>
-    </div>
+      <b-row>
+        <router-link
+          class="chocolate mx-auto w-75 text-center"
+          to="/"
+          v-show="this.status == 200"
+        >
+          Click Here
+        </router-link>
+      </b-row>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -109,6 +88,8 @@ export default {
   },
   data() {
     return {
+      message: '',
+      status: '',
       form: {
         userEmail: '',
         userPassword: ''
@@ -121,11 +102,13 @@ export default {
     onSubmit() {
       this.login(this.form)
         .then(result => {
-          console.log(result)
-          this.$router.push('/')
+          this.message = result.data.message
+          this.status = result.data.status
+          this.showModal()
         })
         .catch(err => {
-          alert(err.data.message)
+          this.message = err.data.message + '..!!'
+          this.showModal()
         })
     },
     onReset() {
@@ -133,6 +116,12 @@ export default {
         userEmail: '',
         userPassword: ''
       }
+    },
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
     }
   }
 }

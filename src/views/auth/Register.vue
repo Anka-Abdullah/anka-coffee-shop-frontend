@@ -23,31 +23,47 @@
           ><Navbar :link="'/login'" :text="'Login'" />
           <b-container class="px-5">
             <h1 class="anka-title text-center my-5">Sign Up</h1>
-            <h5 class="anka-title">Email Address :</h5>
-            <input type="email" class="b-input" v-model="form.userEmail" />
-            <h5 class="anka-title mt-4">Phone Number :</h5>
-            <input type="number" class="b-input" v-model="form.userPhone" />
-            <h5 class="anka-title mt-4">Password :</h5>
-            <input
-              type="password"
-              class="b-input"
-              v-model="form.userPassword"
-            />
-            <b-row>
-              <button class="ml-auto mr-3 mt-3" @click.prevent="onReset">
-                <h6 class="border-bottom border-dark">reset</h6>
-              </button>
-            </b-row>
-            <b-row>
-              <button
-                type="button"
-                class="chocolate yellow w-75 mx-auto"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                Sign Up
-              </button>
-            </b-row>
+            <form>
+              <h5 class="anka-title">Email Address :</h5>
+              <input
+                type="email"
+                class="b-input"
+                v-model="form.userEmail"
+                required
+              />
+              <h5 class="anka-title mt-4">Phone Number :</h5>
+              <input
+                type="number"
+                class="b-input"
+                v-model="form.userPhone"
+                required
+              />
+              <h5 class="anka-title mt-4">Password :</h5>
+              <input
+                type="password"
+                class="b-input"
+                v-model="form.userPassword"
+                minlength="8"
+                required
+              />
+              <small class="text-secondary">min 8 characters</small>
+
+              <b-row>
+                <button class="ml-auto mr-3 mt-3" @click.prevent="onReset">
+                  <h6 class="border-bottom border-dark">reset</h6>
+                </button>
+              </b-row>
+              <b-row>
+                <button
+                  type="submit"
+                  class="chocolate yellow w-75 mx-auto"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Sign Up
+                </button>
+              </b-row>
+            </form>
             <b-row>
               <button class="chocolate putih mt-3 mb-5 w-75 mx-auto p-1">
                 <img src="../../assets/google.png" />
@@ -69,42 +85,22 @@
       </b-row>
     </b-container>
     <Footbar />
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
+    <b-modal ref="my-modal" centered hide-footer hide-header>
+      <div class="d-block text-center">
+        <h2 class="my-5">
+          <strong>{{ message }}</strong>
+        </h2>
       </div>
-    </div>
+      <b-row>
+        <router-link
+          class="chocolate mx-auto w-75 text-center"
+          to="/"
+          v-show="this.status == 200"
+        >
+          Login Here
+        </router-link>
+      </b-row>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -119,6 +115,8 @@ export default {
   },
   data() {
     return {
+      message: '',
+      status: '',
       form: {
         userEmail: '',
         userPassword: '',
@@ -127,16 +125,31 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['register'])
-    // onSubmit() {
-    //   this.login(this.form)
-    //     .then(result => {
-    //       alert(result.data.message)
-    //     })
-    //     .catch(err => {
-    //       alert(err.data.message)
-    //     })
-    // }
+    ...mapActions(['register']),
+    onSubmit() {
+      this.register(this.form)
+        .then(result => {
+          this.message = result.data.message
+          this.status = result.data.status
+          this.showModal()
+        })
+        .catch(err => {
+          this.message = err.data.message + '..!!'
+          this.showModal()
+        })
+    },
+    onReset() {
+      this.form = {
+        userEmail: '',
+        userPassword: ''
+      }
+    },
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
+    }
   }
 }
 </script>
