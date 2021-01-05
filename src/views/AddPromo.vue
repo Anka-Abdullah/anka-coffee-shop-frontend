@@ -151,8 +151,6 @@ export default {
       this.form = this.$route.query.data
       this.promoId = this.$route.query.data.promoId
     }
-
-    console.log(this.promoId)
   },
   methods: {
     postCoupon() {

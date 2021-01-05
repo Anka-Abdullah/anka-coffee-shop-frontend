@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar :url="'home'" />
 
     <b-container fluid style="padding-top: 100px">
       <b-row>
@@ -16,11 +16,7 @@
           <Coupon
             v-for="coupon in coupons"
             :key="coupon.promoId"
-            :patch="coupon"
-            :promoCode="coupon.promoCode"
-            :promoName="coupon.promoName"
-            :promoMinPurchase="coupon.promoMinPurchase"
-            :promoMaxLimit="coupon.promoMaxLimit"
+            :data="coupon"
             :promoId="coupon.promoId"/>
           <button class="chocolate one mt-3" style="width: 90%;">
             Apply Coupon
@@ -125,14 +121,6 @@
               </li>
             </ul>
           </div>
-          <b-row>
-            <div class="mx-auto">
-              <input type="text" />
-              <b-button size="sm" class="my-2 my-sm-0" @click="set()"
-                >Search</b-button
-              >
-            </div>
-          </b-row>
           <b-container fuid style="padding-top: 20px">
             <b-row>
               <b-col
@@ -177,7 +165,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Coupon from '../components/home/Coupon'
@@ -188,13 +175,7 @@ export default {
   data() {
     return {
       roleId: 1,
-      // products: [],
-      coupons: [],
-      // cari: '',
       currentPage: 1
-      // totalRows: null,
-      // limit: 7,
-      // page: 1
     }
   },
   components: {
@@ -204,61 +185,41 @@ export default {
     CardProduct
   },
   created() {
-    // this.getProduct('', '', '')
     this.getProducts()
-    this.getCoupon()
+    this.getCoupons()
   },
   computed: {
     ...mapGetters({
       products: 'dataProducts',
+      coupons: 'dataCoupons',
       page: 'pageProducts',
       limit: 'pageLimit',
-      totalRows: 'pagetotalRows'
+      totalRows: 'pagetotalRows',
+      search: 'setSearch',
+      sort: 'setSort',
+      asc: 'setAsc'
     })
   },
   methods: {
-    ...mapActions(['getProducts']),
-    ...mapMutations(['setPage']),
-    // getProduct(search, sort, asc) {
-    // axios
-    //   .get(
-    //     `http://${process.env.VUE_APP_ROOT_URL}/product?${
-    //       sort !== '' ? 'sort=' + sort : ''
-    //     }${asc !== '' ? '&asc=' + asc : ''}${
-    //       search !== '' ? '&search=' + search : ''
-    //     }&page=${this.page}&limit=${this.limit}`
-    //   )
-    //   .then(response => {
-    //     this.totalRows = response.data.pagination.totalData
-    //     this.products = response.data.data
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    // },
-    getCoupon() {
-      axios
-        .get(`http://${process.env.VUE_APP_ROOT_URL}/promo`)
-        .then(response => {
-          response.data.data
-          this.coupons = response.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    ...mapActions(['getProducts', 'getCoupons']),
+    ...mapMutations(['setPage', 'setSearch', 'setSort', 'setAsc']),
+    getProduct(search, sort, asc) {
+      this.setSearch(search)
+      this.setSort(sort)
+      this.setAsc(asc)
+      this.getProducts()
     },
     handelPageChange(e) {
       this.setPage(e)
+      this.setSearch(this.search)
+      this.setSort(this.sort)
+      this.setAsc(this.asc)
       this.getProducts()
     },
     detailProduct(productId) {
       console.log(productId)
       this.$router.push({ name: 'Product', params: { id: productId } })
     }
-    // set() {
-    //   console.log(this.cari)
-    //   this.getProduct(this.cari, '', '')
-    // }
   }
 }
 </script>

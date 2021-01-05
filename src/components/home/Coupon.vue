@@ -6,7 +6,7 @@
           <img src="../../assets/sunday.png" alt="sunday" />
         </div>
         <div class="txt-card">
-          <a @click="showModal" v-show="this.roleId === '2'"
+          <a @click="showModal" v-show="this.roleId == '1'"
             ><b-badge variant="warning" style="margin-left: -100px;"
               ><b-icon
                 icon="trash-fill"
@@ -14,7 +14,7 @@
                 variant="dark"
               ></b-icon></b-badge
           ></a>
-          <a @click="setPromo" v-show="this.roleId === '2'"
+          <a @click="setPromo" v-show="this.roleId == '1'"
             ><b-badge variant="info"
               ><b-icon
                 icon="pencil-fill"
@@ -22,12 +22,12 @@
                 variant="dark"
               ></b-icon></b-badge
           ></a>
-          <h6 class="anka-title m-0 mt-1">Code: {{ promoCode }}</h6>
-          <b>{{ promoName }}</b
+          <h6 class="anka-title m-0 mt-1">Code: {{ data.promoCode }}</h6>
+          <b>{{ data.promoName }}</b
           ><br />
-          <b>Minimum order: IDR {{ promoMinPurchase }}</b
+          <b>Minimum order: IDR {{ data.promoMinPurchase }}</b
           ><br />
-          <b>Maksimum Discount: IDR {{ promoMaxLimit }}</b>
+          <b>Maksimum Discount: IDR {{ data.promoMaxLimit }}</b>
         </div>
       </div>
     </div>
@@ -44,28 +44,30 @@
         >
           Cancel
         </button>
-        <button class="chocolate mx-auto" @click="deletePromo()">Delete</button>
+        <button class="chocolate mx-auto" @click="deleteCoupon(data.promoId)">
+          Delete
+        </button>
       </b-row>
     </b-modal>
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
 export default {
   props: [
     'promoCode',
     'promoName',
     'promoMinPurchase',
     'promoMaxLimit',
-    'promoId',
-    'patch'
+    'data'
   ],
   data() {
     return {
-      roleId: localStorage.getItem('role')
+      roleId: 1
     }
   },
   methods: {
+    ...mapActions(['deleteCoupon', 'getProducts']),
     showModal() {
       this.$refs['my-modal'].show()
     },
@@ -73,19 +75,12 @@ export default {
       this.$refs['my-modal'].hide()
     },
     setPromo() {
-      console.log(this.patch)
-      this.$router.push({ name: 'AddPromo', query: { data: this.patch } })
+      this.$router.push({ name: 'AddPromo', query: { data: this.data } })
     },
     deletePromo() {
-      axios
-        .delete(`http://${process.env.VUE_APP_ROOT_URL}/promo/` + this.promoId)
-        .then(response => {
-          console.log(response)
-          alert('promo deleted')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      console.log(this.data.promoId)
+      this.deleteCoupon(this.data.promoId)
+      // this.getProducts()
     }
   }
 }

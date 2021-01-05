@@ -18,6 +18,15 @@ export default {
     },
     setPage(state, payload) {
       state.page = payload
+    },
+    setSearch(state, payload) {
+      state.search = payload
+    },
+    setSort(state, payload) {
+      state.sort = payload
+    },
+    setAsc(state, payload) {
+      state.asc = payload
     }
   },
   actions: {
@@ -33,16 +42,26 @@ export default {
                 : ''
             }&page=${context.state.page}&limit=${context.state.limit}`
           )
-          .then(response => {
-            resolve(response)
-            console.log(response)
-            context.commit('setProducts', response.data)
-            // this.totalRows = response.data.pagination.totalData
-            // this.products = response.data.data
+          .then(result => {
+            resolve(result)
+            context.commit('setProducts', result.data)
           })
-          .catch(error => {
-            reject(error)
-            console.log(error)
+          .catch(err => {
+            reject(err)
+            console.log(err)
+          })
+      })
+    },
+    createProduct(payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(`http://${process.env.VUE_APP_ROOT_URL}/product`, payload)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(err => {
+            reject(err)
+            console.log(err)
           })
       })
     }
@@ -59,6 +78,15 @@ export default {
     },
     pagetotalRows(state) {
       return state.totalRows
+    },
+    setSearch(state) {
+      return state.search
+    },
+    setSort(state) {
+      return state.sort
+    },
+    setAsc(state) {
+      return state.asc
     }
   }
 }

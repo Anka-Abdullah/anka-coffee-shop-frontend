@@ -27,7 +27,7 @@
             <router-link to="/profile">My Profile</router-link>
           </li>
         </div>
-        <div class="search-icon" @click="search()">
+        <div class="search-icon" @click="search()" v-show="url == 'home'">
           <b-icon
             icon="search"
             scale="1.5"
@@ -43,7 +43,7 @@
             aria-hidden="true"
           ></b-icon>
         </div>
-        <form action="#">
+        <form action="#" v-show="url == 'home'">
           <input
             type="text"
             class="search-data"
@@ -51,7 +51,7 @@
             v-model="searchData"
             required
           />
-          <button type="submit" @click="searchProduct(searchData)">
+          <button type="submit" @click="getProduct()">
             <b-icon icon="search" variant="dark" aria-hidden="true"></b-icon>
           </button>
         </form>
@@ -72,8 +72,9 @@
   </div>
 </template>
 <script>
+import { mapActions, mapMutations } from 'vuex'
 export default {
-  props: ['value'],
+  props: ['url'],
   data() {
     return {
       searchData: '',
@@ -85,6 +86,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getProducts']),
+    ...mapMutations(['setSearch']),
+    getProduct() {
+      this.setSearch(this.searchData)
+      this.getProducts()
+    },
     menu() {
       document.querySelector('.nav-items').classList.add('active')
       document.querySelector('.menu-icon').classList.add('hide')
