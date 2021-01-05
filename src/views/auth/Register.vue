@@ -85,9 +85,9 @@
       </b-row>
     </b-container>
     <Footbar />
-    <b-modal ref="my-modal" centered hide-footer hide-header>
-      <div class="d-block text-center">
-        <h2 class="my-5">
+    <b-modal ref="my-modal" size="lg" centered hide-footer hide-header>
+      <div class="d-block text-center p-3">
+        <h2 class="m-5">
           <strong>{{ message }}</strong>
         </h2>
       </div>

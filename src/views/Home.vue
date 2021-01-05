@@ -127,13 +127,12 @@
           </div>
           <b-row>
             <div class="mx-auto">
-              <input type="text" v-model="cari" />
+              <input type="text" />
               <b-button size="sm" class="my-2 my-sm-0" @click="set()"
                 >Search</b-button
               >
             </div>
           </b-row>
-          <p>{{ user }}</p>
           <b-container fuid style="padding-top: 20px">
             <b-row>
               <b-col
@@ -183,19 +182,19 @@ import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Coupon from '../components/home/Coupon'
 import CardProduct from '../components/home/CardProduct'
-import { mapState } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'Home',
   data() {
     return {
       roleId: 1,
-      products: [],
+      // products: [],
       coupons: [],
-      cari: '',
-      currentPage: 1,
-      totalRows: null,
-      limit: 7,
-      page: 1
+      // cari: '',
+      currentPage: 1
+      // totalRows: null,
+      // limit: 7,
+      // page: 1
     }
   },
   components: {
@@ -205,29 +204,38 @@ export default {
     CardProduct
   },
   created() {
-    this.getProduct('', '', ''), this.getCoupon()
+    // this.getProduct('', '', '')
+    this.getProducts()
+    this.getCoupon()
   },
   computed: {
-    ...mapState(['user'])
+    ...mapGetters({
+      products: 'dataProducts',
+      page: 'pageProducts',
+      limit: 'pageLimit',
+      totalRows: 'pagetotalRows'
+    })
   },
   methods: {
-    getProduct(search, sort, asc) {
-      axios
-        .get(
-          `http://${process.env.VUE_APP_ROOT_URL}/product?${
-            sort !== '' ? 'sort=' + sort : ''
-          }${asc !== '' ? '&asc=' + asc : ''}${
-            search !== '' ? '&search=' + search : ''
-          }&page=${this.page}&limit=${this.limit}`
-        )
-        .then(response => {
-          this.totalRows = response.data.pagination.totalData
-          this.products = response.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    ...mapActions(['getProducts']),
+    ...mapMutations(['setPage']),
+    // getProduct(search, sort, asc) {
+    // axios
+    //   .get(
+    //     `http://${process.env.VUE_APP_ROOT_URL}/product?${
+    //       sort !== '' ? 'sort=' + sort : ''
+    //     }${asc !== '' ? '&asc=' + asc : ''}${
+    //       search !== '' ? '&search=' + search : ''
+    //     }&page=${this.page}&limit=${this.limit}`
+    //   )
+    //   .then(response => {
+    //     this.totalRows = response.data.pagination.totalData
+    //     this.products = response.data.data
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // },
     getCoupon() {
       axios
         .get(`http://${process.env.VUE_APP_ROOT_URL}/promo`)
@@ -240,17 +248,17 @@ export default {
         })
     },
     handelPageChange(e) {
-      this.page = e
-      this.getProduct('', '', '')
+      this.setPage(e)
+      this.getProducts()
     },
     detailProduct(productId) {
       console.log(productId)
       this.$router.push({ name: 'Product', params: { id: productId } })
-    },
-    set() {
-      console.log(this.cari)
-      this.getProduct(this.cari, '', '')
     }
+    // set() {
+    //   console.log(this.cari)
+    //   this.getProduct(this.cari, '', '')
+    // }
   }
 }
 </script>

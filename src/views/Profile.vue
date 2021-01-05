@@ -6,11 +6,17 @@
       <b-card class="bg-white"
         ><b-row>
           <b-col lg="4" sm="12" class="text-center">
-            <img src="../assets/39.png" width="200" class="rounded-circle" />
+            <img
+              src="../assets/39.png"
+              width="200"
+              class="rounded-circle"
+              id="user-image"
+            />
             <h2 class="m-0"><strong>namanya</strong></h2>
             <h3 class="m-0">emailnya</h3>
-            <button class="chocolate yellow mt-5">
-              Choose Photo</button
+            <input type="file" id="file-image" @change="handleFile()" hidden />
+            <label for="file-image" class="chocolate yellow mt-5">
+              Choose Photo</label
             ><br />
             <button class="chocolate mt-3">Remove Photo</button><br />
             <button class="chocolate putih my-4">
@@ -83,7 +89,16 @@ export default {
     return {}
   },
   methods: {
-    ...mapActions(['logout'])
+    ...mapActions(['logout']),
+    handleFile(input) {
+      if (input.files && input.files[0]) {
+        let reader = new FileReader()
+        reader.onload = function(e) {
+          this.$id['user-image'].attr('src', e.target.result)
+        }
+        reader.readAsDataURL(input.files[0])
+      }
+    }
   }
 }
 </script>

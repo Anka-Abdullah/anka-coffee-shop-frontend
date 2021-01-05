@@ -58,9 +58,15 @@
       </b-row>
     </b-container>
     <Footbar />
-    <b-modal ref="my-modal" centered hide-footer hide-header>
-      <div class="d-block text-center">
-        <h2 class="my-5">
+    <b-modal
+      ref="my-modal"
+      size="lg"
+      body-bg-variant="warning"
+      centered
+      hide-footer
+    >
+      <div class="d-block text-center p-2">
+        <h2 class="m-5">
           <strong>{{ message }}</strong>
         </h2>
       </div>
@@ -101,10 +107,8 @@ export default {
     ...mapActions(['login']),
     onSubmit() {
       this.login(this.form)
-        .then(result => {
-          this.message = result.data.message
-          this.status = result.data.status
-          this.showModal()
+        .then(() => {
+          this.$router.push('/')
         })
         .catch(err => {
           this.message = err.data.message + '..!!'
@@ -119,9 +123,6 @@ export default {
     },
     showModal() {
       this.$refs['my-modal'].show()
-    },
-    hideModal() {
-      this.$refs['my-modal'].hide()
     }
   }
 }
