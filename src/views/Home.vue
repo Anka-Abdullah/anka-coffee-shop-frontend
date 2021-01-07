@@ -16,8 +16,7 @@
           <Coupon
             v-for="coupon in coupons"
             :key="coupon.promoId"
-            :data="coupon"
-            :promoId="coupon.promoId"/>
+            :dataPromo="coupon"/>
           <button class="chocolate one mt-3" style="width: 90%;">
             Apply Coupon
           </button>

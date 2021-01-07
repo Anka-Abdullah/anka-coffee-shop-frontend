@@ -22,12 +22,12 @@
                 variant="dark"
               ></b-icon></b-badge
           ></a>
-          <h6 class="anka-title m-0 mt-1">Code: {{ data.promoCode }}</h6>
-          <b>{{ data.promoName }}</b
+          <h6 class="anka-title m-0 mt-1">Code: {{ dataPromo.promoCode }}</h6>
+          <b>{{ dataPromo.promoName }}</b
           ><br />
-          <b>Minimum order: IDR {{ data.promoMinPurchase }}</b
+          <b>Minimum order: IDR {{ dataPromo.promoMinPurchase }}</b
           ><br />
-          <b>Maksimum Discount: IDR {{ data.promoMaxLimit }}</b>
+          <b>Maksimum Discount: IDR {{ dataPromo.promoMaxLimit }}</b>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
         >
           Cancel
         </button>
-        <button class="chocolate mx-auto" @click="deleteCoupon(data.promoId)">
+        <button class="chocolate mx-auto" @click="deletePromo">
           Delete
         </button>
       </b-row>
@@ -53,21 +53,21 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+// import axios from 'axios'
 export default {
-  props: [
-    'promoCode',
-    'promoName',
-    'promoMinPurchase',
-    'promoMaxLimit',
-    'data'
-  ],
+  props: {
+    dataPromo: Object
+  },
   data() {
     return {
       roleId: 1
     }
   },
+  created() {
+    this.getCoupons()
+  },
   methods: {
-    ...mapActions(['deleteCoupon', 'getProducts']),
+    ...mapActions(['deleteCoupon', 'getCoupons', 'getProducts']),
     showModal() {
       this.$refs['my-modal'].show()
     },
@@ -75,12 +75,15 @@ export default {
       this.$refs['my-modal'].hide()
     },
     setPromo() {
-      this.$router.push({ name: 'AddPromo', query: { data: this.data } })
+      this.$router.push({
+        name: 'AddPromo',
+        query: { data: this.dataPromo }
+      })
     },
     deletePromo() {
-      console.log(this.data.promoId)
-      this.deleteCoupon(this.data.promoId)
-      // this.getProducts()
+      this.deleteCoupon(this.dataPromo.promoId)
+      this.getCoupons()
+      this.getProducts()
     }
   }
 }

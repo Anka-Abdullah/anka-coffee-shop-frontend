@@ -49,6 +49,7 @@
             class="search-data"
             placeholder="Search"
             v-model="searchData"
+            @keyup.prevent="getProduct()"
             required
           />
           <button type="submit" @click="getProduct()">
@@ -72,7 +73,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   props: ['url'],
   data() {
@@ -85,10 +86,14 @@ export default {
       form: document.querySelector('form')
     }
   },
+  computed: {
+    ...mapGetters({ page: 'pageProducts' })
+  },
   methods: {
     ...mapActions(['getProducts']),
     ...mapMutations(['setSearch']),
     getProduct() {
+      this.page = 1
       this.setSearch(this.searchData)
       this.getProducts()
     },

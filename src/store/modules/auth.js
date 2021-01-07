@@ -31,7 +31,7 @@ export default {
           })
       })
     },
-    register(payload) {
+    register(context, payload) {
       return new Promise((resolve, reject) => {
         axios
           .post(`http://${process.env.VUE_APP_ROOT_URL}/user/register`, payload)
@@ -57,7 +57,6 @@ export default {
           return config
         },
         function(error) {
-          // Do something with request error
           return Promise.reject(error)
         }
       )
@@ -84,6 +83,9 @@ export default {
     }
   },
   getters: {
+    setUser(state) {
+      return state.user
+    },
     isLogin(state) {
       return state.token !== null
     }

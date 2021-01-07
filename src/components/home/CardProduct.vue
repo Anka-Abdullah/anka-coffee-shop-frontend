@@ -10,7 +10,7 @@
       <div class="card-item-discount" v-show="discount > 0">
         {{ discount }}%
       </div>
-      <a @click="showModal" v-show="this.roleId === '2'"
+      <a @click="showModal" v-show="this.roleId == '1'"
         ><b-badge variant="warning" style="margin-left: -125px;"
           ><b-icon
             icon="trash-fill"
@@ -18,7 +18,7 @@
             variant="dark"
           ></b-icon></b-badge
       ></a>
-      <a @click="setProduct" v-show="this.roleId === '2'"
+      <a @click="setProduct" v-show="this.roleId == '1'"
         ><b-badge variant="info" style="margin-left: -26px;"
           ><b-icon
             icon="pencil-fill"
@@ -56,7 +56,7 @@ export default {
   props: ['productName', 'productPrice', 'productId', 'discount', 'form'],
   data() {
     return {
-      roleId: localStorage.getItem('role')
+      roleId: 1
     }
   },
   methods: {

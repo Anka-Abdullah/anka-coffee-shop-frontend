@@ -59,6 +59,7 @@
                   class="chocolate yellow w-75 mx-auto"
                   data-toggle="modal"
                   data-target="#exampleModal"
+                  @click.prevent="onSubmit"
                 >
                   Sign Up
                 </button>
@@ -77,7 +78,7 @@
               <router-link
                 to="/login"
                 class="chocolate w-75 text-center mx-auto mt-3 mb-5"
-                >Login Here</router-link
+                ><h4 class="text-white">Login Here</h4></router-link
               >
             </b-row>
           </b-container>

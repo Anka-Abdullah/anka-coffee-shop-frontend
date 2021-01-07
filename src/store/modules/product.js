@@ -52,10 +52,72 @@ export default {
           })
       })
     },
-    createProduct(payload) {
+    deleteProduct(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://${process.env.VUE_APP_ROOT_URL}/product/${payload}`)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+            console.log(error)
+          })
+      })
+    },
+    deleteImage(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(
+            `http://${process.env.VUE_APP_ROOT_URL}/product/image/${payload}`
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+            console.log(error)
+          })
+      })
+    },
+    createProduct(context, payload) {
       return new Promise((resolve, reject) => {
         axios
           .post(`http://${process.env.VUE_APP_ROOT_URL}/product`, payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(err => {
+            reject(err)
+            console.log(err)
+          })
+      })
+    },
+    updateProduct(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/product/${payload.id}`,
+            payload.data
+          )
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(err => {
+            reject(err)
+            console.log(err)
+          })
+      })
+    },
+    updateImage(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/product/image/${payload.id}`,
+            payload.data
+          )
           .then(result => {
             resolve(result)
           })

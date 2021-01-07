@@ -33,14 +33,14 @@
             <input
               type="text"
               class="b-input"
-              placeholder="Type product name min. 50 characters"
+              placeholder="Type Promo name min. 50 characters"
               v-model="form.promoName"
             />
             <h5 class="anka-title mt-5">Description :</h5>
             <input
               type="text"
               class="b-input"
-              placeholder="Describe your product min. 150 characters"
+              placeholder="Describe your Promo min. 150 characters"
               v-model="form.promoDescription"
             />
             <h5 class="anka-title mt-5">Coupon Usage Code :</h5>
@@ -99,7 +99,7 @@
               v-show="this.promoId == null"
               class="chocolate mt-5 p-3"
               style="width: 90%"
-              @click="postCoupon()"
+              @click="postCoupon"
             >
               Save Coupon
             </button>
@@ -107,7 +107,7 @@
               v-show="this.promoId > 0"
               class="chocolate mt-5 p-3"
               style="width: 90%"
-              @click="patchCoupon()"
+              @click="patchCoupon"
             >
               Update Coupon
             </button>
@@ -122,7 +122,8 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
+// import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -141,7 +142,7 @@ export default {
         promoMaxLimit: '',
         promoCode: '',
         promoDescription: 'Description',
-        promoImage: 'image.jpg'
+        promoImage: ''
       }
     }
   },
@@ -153,30 +154,23 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['createCoupon', 'updateCoupon']),
     postCoupon() {
-      axios
-        .post(`http://${process.env.VUE_APP_ROOT_URL}/promo`, this.form)
-        .then(response => {
-          console.log(response.data.message)
-          alert(response.data.message)
+      this.createCoupon(this.form)
+        .then(() => {
+          this.$router.replace('/')
         })
-        .catch(error => {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     },
     patchCoupon() {
-      axios
-        .patch(
-          `http://${process.env.VUE_APP_ROOT_URL}/promo/${this.promoId}`,
-          this.form
-        )
-        .then(response => {
-          console.log(response.data.message)
-          alert(response.data.message)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      const data = {
+        data: this.form,
+        id: this.promoId
+      }
+      this.updateCoupon(data)
+      this.$router.replace('/')
     }
   }
 }

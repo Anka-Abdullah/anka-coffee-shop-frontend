@@ -13,13 +13,6 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/about',
-    name: 'About',
-    meta: { requiresAuth: true },
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
     path: '/profile',
     name: 'Profile',
     meta: { requiresAuth: true },
@@ -89,6 +82,12 @@ const routes = [
       import(
         /* webpackChunkName: "forgotpassword" */ '../views/auth/ForgotPassWord.vue'
       )
+  },
+  {
+    path: '/landingpage',
+    name: 'LandingPage',
+    component: () =>
+      import(/* webpackChunkName: "landingpage" */ '../views/LandingPage.vue')
   }
 ]
 
