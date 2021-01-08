@@ -24,7 +24,7 @@
             ><router-link
               to="/addpromo"
               class="chocolate putih mx-auto mt-3"
-              v-show="this.roleId == '1'"
+              v-show="this.user.roleId === 1"
               >Add New Promo</router-link
             ></b-row
           >
@@ -130,11 +130,7 @@
                 ><b-row
                   ><CardProduct
                     class="mx-auto"
-                    :form="item"
-                    :productName="item.productName"
-                    :productPrice="item.productPrice"
-                    :productId="item.productId"
-                    :discount="item.productDiscount"
+                    :data="item"
                     @emit-product="detailProduct(item.productId)"/></b-row
               ></b-col>
             </b-row>
@@ -150,7 +146,7 @@
               <router-link
                 to="/addproduct"
                 class="chocolate one mx-auto mb-3"
-                v-show="this.roleId == '1'"
+                v-show="this.user.roleId === 1"
                 >Add New Product</router-link
               >
             </b-row>
@@ -173,7 +169,6 @@ export default {
   name: 'Home',
   data() {
     return {
-      roleId: 1,
       currentPage: 1
     }
   },
@@ -186,6 +181,7 @@ export default {
   created() {
     this.getProducts()
     this.getCoupons()
+    console.log(this.user.roleId)
   },
   computed: {
     ...mapGetters({
@@ -196,7 +192,8 @@ export default {
       totalRows: 'pagetotalRows',
       search: 'setSearch',
       sort: 'setSort',
-      asc: 'setAsc'
+      asc: 'setAsc',
+      user: 'setUser'
     })
   },
   methods: {

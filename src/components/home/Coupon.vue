@@ -6,7 +6,7 @@
           <img src="../../assets/sunday.png" alt="sunday" />
         </div>
         <div class="txt-card">
-          <a @click="showModal" v-show="this.roleId == '1'"
+          <a @click="showModal" v-show="this.user.roleId === 1"
             ><b-badge variant="warning" style="margin-left: -100px;"
               ><b-icon
                 icon="trash-fill"
@@ -14,7 +14,7 @@
                 variant="dark"
               ></b-icon></b-badge
           ></a>
-          <a @click="setPromo" v-show="this.roleId == '1'"
+          <a @click="setPromo" v-show="this.user.roleId === 1"
             ><b-badge variant="info"
               ><b-icon
                 icon="pencil-fill"
@@ -52,19 +52,16 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
-// import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   props: {
     dataPromo: Object
   },
-  data() {
-    return {
-      roleId: 1
-    }
-  },
   created() {
     this.getCoupons()
+  },
+  computed: {
+    ...mapGetters({ user: 'setUser' })
   },
   methods: {
     ...mapActions(['deleteCoupon', 'getCoupons', 'getProducts']),

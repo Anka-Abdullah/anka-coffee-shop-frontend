@@ -16,7 +16,12 @@
                 ></b-icon
               ></b-badge>
             </b-row>
-            <!-- <img :src="form.image" width="200" class="rounded-circle" /> -->
+            <img
+              v-show="form.image !== ''"
+              :src="`http://localhost:3765/${form.image}`"
+              width="200"
+              class="rounded-circle"
+            />
             <form>
               <b-row>
                 <input
@@ -192,18 +197,20 @@
                 <span class="checkmark" style="font-size: 17px">Take Away</span>
               </label>
               <button
+                type="submit"
                 v-show="this.productId == null"
                 class="chocolate mt-5 p-3"
                 style="width: 90%"
-                @click.prevent="postProduct()"
+                @click="postProduct"
               >
                 Save Product
               </button>
               <button
+                type="submit"
                 v-show="this.productId > 0"
                 class="chocolate mt-5 p-3"
                 style="width: 90%"
-                @click.prevent="patchProduct()"
+                @click="patchProduct"
               >
                 Update Product
               </button>
@@ -261,7 +268,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createProduct', 'updateProduct']),
+    ...mapActions(['createProduct', 'updateProduct', 'getProducts']),
     postProduct() {
       let formData = new FormData()
       formData.append('productName', this.form.productName)
@@ -284,6 +291,12 @@ export default {
         console.log(pair[0] + ', ' + pair[1])
       }
       this.createProduct(formData)
+        .then(() => {
+          this.getProducts()
+        })
+        .catch(err => {
+          console.log(err)
+        })
       this.$router.replace('/')
     },
     patchProduct() {
@@ -308,7 +321,7 @@ export default {
         id: this.productId
       }
       this.updateProduct(data)
-      this.$router.replace('/')
+      this.$router.go('/')
     },
     handleFile(e) {
       console.log(e.target.files[0].name)

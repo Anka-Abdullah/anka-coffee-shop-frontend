@@ -1,16 +1,11 @@
 <template>
   <div>
     <div class="card-item">
-      <img
-        src="../../assets/latte.png"
-        width="120"
-        class="rounded-pill"
-        alt="item"
-      />
-      <div class="card-item-discount" v-show="discount > 0">
-        {{ discount }}%
+      <img :src="url" width="120" class="rounded-pill" alt="item" />
+      <div class="card-item-discount" v-show="data.productDiscount > 0">
+        {{ data.productDiscount }}%
       </div>
-      <a @click="showModal" v-show="this.roleId == '1'"
+      <a @click="showModal" v-show="this.user.roleId === 1"
         ><b-badge variant="warning" style="margin-left: -125px;"
           ><b-icon
             icon="trash-fill"
@@ -18,7 +13,7 @@
             variant="dark"
           ></b-icon></b-badge
       ></a>
-      <a @click="setProduct" v-show="this.roleId == '1'"
+      <a @click="setProduct" v-show="this.user.roleId === 1"
         ><b-badge variant="info" style="margin-left: -26px;"
           ><b-icon
             icon="pencil-fill"
@@ -28,9 +23,9 @@
       ></a>
 
       <h4 class="card-item-title" @click="$emit('emit-product')">
-        {{ productName }}
+        {{ data.productName }}
       </h4>
-      <h6 class="anka-title">IDR {{ productPrice }}</h6>
+      <h6 class="anka-title">IDR {{ data.productPrice }}</h6>
     </div>
     <b-modal ref="my-modal" hide-footer title="Delete Prduct">
       <div class="d-block text-center">
@@ -45,37 +40,33 @@
         >
           Cancel
         </button>
-        <button class="chocolate mx-auto" @click="deleteProduct">Delete</button>
+        <button class="chocolate mx-auto" @click="del">Delete</button>
       </b-row>
     </b-modal>
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: ['productName', 'productPrice', 'productId', 'discount', 'form'],
-  data() {
-    return {
-      roleId: 1
-    }
+  props: {
+    data: Object
   },
+  data() {
+    return { url: `http://localhost:3765/${this.data.image}` }
+  },
+  created() {
+    console.log(this.data.productId + ' : ' + this.data.image)
+  },
+  computed: { ...mapGetters({ user: 'setUser' }) },
   methods: {
+    ...mapActions(['deleteProduct', 'getProducts']),
     setProduct() {
-      console.log(this.form)
-      this.$router.push({ name: 'AddProduct', query: { data: this.form } })
+      console.log(this.data)
+      this.$router.push({ name: 'AddProduct', query: { data: this.data } })
     },
-    deleteProduct() {
-      axios
-        .delete(
-          `http://${process.env.VUE_APP_ROOT_URL}/product/` + this.productId
-        )
-        .then(response => {
-          console.log(response)
-          alert('product deleted')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    del() {
+      this.deleteProduct(this.data.productId)
+      this.getProducts()
     },
     showModal() {
       this.$refs['my-modal'].show()
