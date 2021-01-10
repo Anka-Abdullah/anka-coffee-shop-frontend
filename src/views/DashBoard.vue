@@ -5,17 +5,19 @@
       <b-row>
         <b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
-            <h5>today's income</h5>
+            <h4 class="anka-title">today's income</h4>
+            <h4>
+              <strong>IDR {{ price.toLocaleString() }}</strong>
+            </h4>
+          </b-card></b-col
+        ><b-col lg="4" sm="6"
+          ><b-card class="shadow bg-white">
+            <h5 class="anka-title">this month's income</h5>
             <h4>IDR 100000000</h4>
           </b-card></b-col
         ><b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
-            <h5>this month's income</h5>
-            <h4>IDR 100000000</h4>
-          </b-card></b-col
-        ><b-col lg="4" sm="6"
-          ><b-card class="shadow bg-white">
-            <h5>this year's income</h5>
+            <h5 class="anka-title">this year's income</h5>
             <h4>IDR 100000000</h4>
           </b-card></b-col
         >
@@ -48,13 +50,10 @@ export default {
   },
   data() {
     return {
-      chart: true
+      chart: true,
+      price: 1000000
     }
   },
-  methods: {
-    month() {
-      this.chart === 'month'
-    }
-  }
+  methods: {}
 }
 </script>

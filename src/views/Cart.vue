@@ -14,7 +14,7 @@
             <b-card no-body class="cardcart mx-auto">
               <h2 class="anka-title text-center mb-0">Order Summary</h2>
               <div class="cart-scroll">
-                <b-row v-for="(item, index) in dataCarts" :key="index">
+                <b-row v-for="(item, index) in cartProduct" :key="index">
                   <Card
                     class="mx-auto"
                     :name="item.productName"
@@ -70,6 +70,13 @@
                 placeholder="Input Coupon Code"
               />
             </b-col>
+            <h5 class="anka-title mt-5">Delivery Method :</h5>
+            <select name="method" id="method">
+              <option>Select delivery method</option>
+              <option value="1">Dine in</option>
+              <option value="2">Door Delivery</option>
+              <option value="3">Pick Up</option>
+            </select>
             <h3 class="anka-text-shadow mt-5">Payment Method</h3>
             <b-col xl="12">
               <b-list-group class="mt-2">
@@ -142,6 +149,7 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Card from '../components/cart/CardCart'
@@ -152,18 +160,24 @@ export default {
     Footbar,
     Card
   },
-  data() {
-    return {
-      dataCarts: JSON.parse(localStorage.getItem('cart'))
-    }
+  computed: {
+    ...mapGetters({
+      cartProduct: 'setProductCart'
+    })
   },
   created() {
-    console.log(this.dataCarts)
+    console.log(this.cartProduct)
   },
   methods: {
+    ...mapActions(['createInvoice']),
     confirmAndPay() {
-      localStorage.removeItem('cart')
-      this.$router.push({ name: 'Home' })
+      this.cartProduct.map(this.post)
+      // this.cart = []
+      // this.$router.push({ name: 'Home' })
+    },
+    post(x) {
+      // this.createInvoice(x)
+      console.log(x)
     }
   }
 }

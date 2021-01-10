@@ -98,26 +98,12 @@ export default {
     }
   },
   getters: {
-    pageProducts(state) {
-      return state.page
-    },
-    dataProducts(state) {
-      return state.products
-    },
-    pageLimit(state) {
-      return state.limit
-    },
-    pagetotalRows(state) {
-      return state.totalRows
-    },
-    setSearch(state) {
-      return state.search
-    },
-    setSort(state) {
-      return state.sort
-    },
-    setAsc(state) {
-      return state.asc
-    }
+    pageProducts: state => state.page,
+    dataProducts: state => state.products,
+    pageLimit: state => state.limit,
+    pagetotalRows: state => state.totalRows,
+    setSearch: state => state.search,
+    setSort: state => state.sort,
+    setAsc: state => state.asc
   }
 }

@@ -3,42 +3,45 @@
     <Navbar />
     <b-container style="padding-top: 100px">
       <h5 style="color: rgb(124, 124, 124)" class="mt-3">
-        favorite promo <span style="color: #6a4029">> Cold Brew</span>
+        favorite promo
+        <span style="color: #6a4029">> {{ product.productName }}</span>
       </h5>
       <b-row>
-        <b-col lg="6" sm="12">
+        <b-col lg="6" sm="12" class="text-center">
           <b-row>
             <div class="productimg mx-auto">
-              <img src="../assets/kopiteko.png" alt="" />
+              <img :src="url" alt="" />
             </div>
           </b-row>
           <p style="font-size: 20px" class="text-center mb-3">
-            Delivery only on <br /><b>Monday to friday</b> at
+            Delivery only on <br /><b>Monday to Sarturday</b> at
             <b>1 - 7 pm</b>
           </p>
         </b-col>
         <b-col lg="6" sm="12">
           <h1 class="name mt-5">{{ product.productName }}</h1>
-          <h1 class="m-0 price">IDR {{ product.productPrice }}</h1>
+          <h1 class="m-0 price">
+            IDR {{ displayPrice(product.productPrice) }}
+          </h1>
           <p class="m-4" style="font-size: 19px">
             Cold brewing is a method of brewing that combines ground coffee and
             cool water and uses time instead of heat to extract the flavor. It
             is brewed in small batches and steeped for as long as 48 hours.
           </p>
-          <h5 class="anka-title mt-5">Size :</h5>
-          <select name="size" id="size">
-            <option>Select size</option>
-            <option value="1">R</option>
-            <option value="2">L</option>
-            <option value="3">XL</option>
+          <h3 class="anka-title mt-5">Size :</h3>
+          <select name="size" v-model="size" v-if="product.categoryId === 1">
+            <option value="">Select size</option>
+            <option value="R">R</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
           </select>
-          <h5 class="anka-title mt-5">Delivery Method :</h5>
-          <select name="method" id="method">
-            <option>Select delivery method</option>
-            <option value="1">Dine in</option>
-            <option value="2">Door Delivery</option>
-            <option value="3">Pick Up</option>
+          <select name="size" v-model="size" v-if="product.categoryId !== 1">
+            <option value="">Select size</option>
+            <option value="250 gr">250 gr</option>
+            <option value="300 gr">300 gr</option>
+            <option value="500 gr">500 gr</option>
           </select>
+
           <div class="my-5"></div>
           <b-row>
             <b-col lg="5" sm="12" class="p-0">
@@ -51,8 +54,8 @@
             <b-col lg="7" sm="12"
               ><button
                 class="chocolate yellow p-2"
-                style="width: 100%"
-                @click="addToCart(product)"
+                style="width: 98%"
+                @click="toCart({ ...product, qty: count, size: size })"
               >
                 Add To Cart
               </button></b-col
@@ -76,6 +79,7 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -87,44 +91,39 @@ export default {
   data() {
     return {
       product: [],
-      productId: '',
+      url: '',
       count: 1,
-      cart: []
+      size: ''
     }
   },
   created() {
-    this.productId = this.$route.params.id
     this.getProductById(this.$route.params.id)
-    let getCart = localStorage.getItem('cart')
-    getCart = JSON.parse(getCart)
-    if (getCart) {
-      this.cart = getCart
-    } else {
-      this.cart = []
-    }
+  },
+  computed: {
+    ...mapGetters({
+      cart: 'setProductCart'
+    })
   },
   methods: {
+    ...mapActions(['addToCart']),
+    toCart(payload) {
+      this.addToCart(payload)
+    },
     getProductById(id) {
       axios
         .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${id}`)
         .then(response => {
+          console.log(response)
           this.product = response.data.data[0]
+          this.url = 'http://localhost:3765/' + response.data.data[0].image
         })
         .catch(error => {
           console.log(error)
         })
     },
-    addToCart(data) {
-      const setCart = {
-        productId: data.productId,
-        productName: data.productName,
-        quantity: this.count,
-        productTotal: data.productPrice * this.count
-      }
-      this.cart = [...this.cart, setCart]
-      localStorage.setItem('cart', JSON.stringify(this.cart))
-      console.log(this.cart)
-      alert('product added to cart')
+    displayPrice(price) {
+      let output = price * this.count
+      return output.toLocaleString()
     },
     plus() {
       this.count++
@@ -148,6 +147,9 @@ select {
   height: 50px;
   padding: 10px;
   border-radius: 10px;
+}
+select:focus {
+  outline: none;
 }
 h1.name {
   font-family: 'caveatregular', cursive;

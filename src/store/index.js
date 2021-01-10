@@ -2,15 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedstate from 'vuex-persistedstate'
 import Product from './modules/product'
+import Cart from './modules/cart'
 import Coupon from './modules/coupon'
 import Auth from './modules/auth'
-import Cart from './modules/cart'
 import History from './modules/history'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: { Auth, Product, Coupon, Cart, History },
+  modules: { Auth, Product, Coupon, History, Cart },
   state: {},
   mutations: {},
   actions: {},
@@ -18,6 +18,9 @@ export default new Vuex.Store({
   plugins: [
     createPersistedstate({
       paths: ['Auth.user']
+    }),
+    createPersistedstate({
+      paths: ['Cart.cart']
     })
   ]
 })

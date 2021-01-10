@@ -70,8 +70,6 @@ export default {
     }
   },
   getters: {
-    dataCoupons(state) {
-      return state.coupons
-    }
+    dataCoupons: state => state.coupons
   }
 }
