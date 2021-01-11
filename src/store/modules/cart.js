@@ -25,6 +25,7 @@ export default {
       } else {
         carts.push(payload)
       }
+      console.log(carts)
       commit('setCarts', carts)
     },
     deleteCartItem({ commit, state }, index) {

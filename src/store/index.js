@@ -20,7 +20,7 @@ export default new Vuex.Store({
       paths: ['Auth.user']
     }),
     createPersistedstate({
-      paths: ['Cart.cart']
+      paths: ['Cart.carts']
     })
   ]
 })

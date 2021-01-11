@@ -55,7 +55,7 @@
               ><button
                 class="chocolate yellow p-2"
                 style="width: 98%"
-                @click="toCart({ ...product, qty: count, size: size })"
+                @click="addToCart({ ...product, qty: count, size: size })"
               >
                 Add To Cart
               </button></b-col
@@ -106,9 +106,6 @@ export default {
   },
   methods: {
     ...mapActions(['addToCart']),
-    toCart(payload) {
-      this.addToCart(payload)
-    },
     getProductById(id) {
       axios
         .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${id}`)
