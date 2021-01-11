@@ -3,6 +3,8 @@
     <div
       class="sunday anka-card"
       style=" display: flex; margin: 0; padding: 10px"
+      v-for="(item, index) in cart"
+      :key="index"
     >
       <div class="img-card">
         <img src="../../assets/latte.png" width="62" class="mr-2" />
@@ -25,8 +27,14 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: ['name', 'price', 'qty']
+  props: ['name', 'price', 'qty'],
+  computed: {
+    ...mapGetters({
+      cart: 'setProductCart'
+    })
+  }
 }
 </script>
 <style scoped>

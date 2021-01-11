@@ -14,13 +14,8 @@
             <b-card no-body class="cardcart mx-auto">
               <h2 class="anka-title text-center mb-0">Order Summary</h2>
               <div class="cart-scroll">
-                <b-row v-for="(item, index) in cartProduct" :key="index">
-                  <Card
-                    class="mx-auto"
-                    :name="item.productName"
-                    :qty="item.quantity"
-                    :price="item.productTotal"
-                  />
+                <b-row>
+                  <Card class="mx-auto" />
                 </b-row>
               </div>
               <b-row class="px-5">
@@ -136,7 +131,6 @@
               <button
                 class="chocolate p-2 my-5 mx-auto"
                 style="width: 100%; border: 1px solid white"
-                @click="confirmAndPay()"
               >
                 Confirm and Pay
               </button>
@@ -149,7 +143,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Card from '../components/cart/CardCart'
@@ -160,25 +154,8 @@ export default {
     Footbar,
     Card
   },
-  computed: {
-    ...mapGetters({
-      cartProduct: 'setProductCart'
-    })
-  },
-  created() {
-    console.log(this.cartProduct)
-  },
   methods: {
-    ...mapActions(['createInvoice']),
-    confirmAndPay() {
-      this.cartProduct.map(this.post)
-      // this.cart = []
-      // this.$router.push({ name: 'Home' })
-    },
-    post(x) {
-      // this.createInvoice(x)
-      console.log(x)
-    }
+    ...mapActions(['createInvoice'])
   }
 }
 </script>

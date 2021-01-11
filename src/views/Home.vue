@@ -181,7 +181,6 @@ export default {
   created() {
     this.getProducts()
     this.getCoupons()
-    console.log(this.user.roleId)
   },
   computed: {
     ...mapGetters({

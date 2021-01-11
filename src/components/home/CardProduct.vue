@@ -54,14 +54,10 @@ export default {
   data() {
     return { url: `http://localhost:3765/${this.data.image}` }
   },
-  created() {
-    console.log(this.data.productId + ' : ' + this.data.image)
-  },
   computed: { ...mapGetters({ user: 'setUser' }) },
   methods: {
     ...mapActions(['deleteProduct', 'getProducts']),
     setProduct() {
-      console.log(this.data)
       this.$router.push({ name: 'AddProduct', query: { data: this.data } })
     },
     del() {

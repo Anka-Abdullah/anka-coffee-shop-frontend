@@ -79,7 +79,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -98,11 +98,6 @@ export default {
   },
   created() {
     this.getProductById(this.$route.params.id)
-  },
-  computed: {
-    ...mapGetters({
-      cart: 'setProductCart'
-    })
   },
   methods: {
     ...mapActions(['addToCart']),
