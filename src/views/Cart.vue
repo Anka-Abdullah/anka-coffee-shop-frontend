@@ -174,7 +174,6 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-// import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Card from '../components/cart/CardCart'

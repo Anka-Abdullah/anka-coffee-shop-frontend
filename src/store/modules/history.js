@@ -1,10 +1,9 @@
-// import axios from 'axios'
-
 import axios from 'axios'
 
 export default {
   modules: {},
   state: {
+    history: [],
     invoices: [],
     chart: [],
     dashboard: []
@@ -12,16 +11,32 @@ export default {
   mutations: {
     setInvoices(state, payload) {
       state.invoices = payload.data
+    },
+    setHistory(state, payload) {
+      state.history = payload.data
     }
   },
   actions: {
-    getInvoices({ commit }) {
+    getInvoices({ commit }, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/history/`)
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/history/${payload}`)
           .then(result => {
             resolve(result)
             commit('setInvoices', result.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+    getHistory({ commit }) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/history/b`)
+          .then(result => {
+            resolve(result)
+            commit('setHistory', result.data)
           })
           .catch(err => {
             reject(err)
@@ -76,6 +91,7 @@ export default {
     }
   },
   getters: {
+    setHistory: state => state.history,
     setInvoices: state => state.invoices,
     setChart: state => state.chart,
     setDashboard: state => state.dashboard

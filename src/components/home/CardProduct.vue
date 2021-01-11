@@ -85,7 +85,6 @@ span {
   line-height: 28px;
   border-radius: 30px;
 }
-
 span:hover {
   transform: scale(1.2);
 }
