@@ -3,41 +3,55 @@
     <div
       class="sunday anka-card"
       style=" display: flex; margin: 0; padding: 10px"
-      v-for="(item, index) in cart"
-      :key="index"
     >
       <div class="img-card">
-        <img src="../../assets/latte.png" width="62" class="mr-2" />
+        <img :src="url(data.image)" width="62" class="mr-2" />
       </div>
       <div class="txt-card">
-        <h6 class="anka-title m-0 mt-1">
-          {{ name }}
-        </h6>
+        <b-row class="pl-3">
+          <h6 class="anka-title m-0 mt-1">
+            {{ data.productName }}
+          </h6>
+          <button @click="deleteCartItem(index)" class="ml-5">
+            <small class="text-danger"><strong>X delete</strong></small>
+          </button>
+        </b-row>
         <b-row class="pl-3" style="width: 250px">
           <h6>
-            <b>X {{ qty }}</b>
+            <b>X {{ data.qty }}</b>
           </h6>
           <h6 class="ml-auto">
-            <b>IDR {{ price }}</b>
+            <b>IDR {{ data.productPrice * data.qty }}</b>
           </h6>
         </b-row>
-        <h6><b>Regular</b></h6>
+        <h6>
+          <b>size : {{ data.size }}</b>
+        </h6>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
-  props: ['name', 'price', 'qty'],
-  computed: {
-    ...mapGetters({
-      cart: 'setProductCart'
-    })
+  props: {
+    data: Object,
+    index: Number
+  },
+  methods: {
+    ...mapActions(['deleteCartItem']),
+    url(x) {
+      return 'http://localhost:3765/' + x
+    }
   }
 }
 </script>
 <style scoped>
+button:hover {
+  background-color: rgb(223, 223, 223);
+}
+
 img {
   border-radius: 50%;
 }

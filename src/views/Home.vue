@@ -24,7 +24,7 @@
             ><router-link
               to="/addpromo"
               class="chocolate putih mx-auto mt-3"
-              v-show="this.user.roleId === 1"
+              v-if="this.user.roleId === 1"
               >Add New Promo</router-link
             ></b-row
           >
@@ -181,6 +181,7 @@ export default {
   created() {
     this.getProducts()
     this.getCoupons()
+    console.log(this.user)
   },
   computed: {
     ...mapGetters({
@@ -192,7 +193,7 @@ export default {
       search: 'setSearch',
       sort: 'setSort',
       asc: 'setAsc',
-      user: 'setUser'
+      user: 'dataUser'
     })
   },
   methods: {

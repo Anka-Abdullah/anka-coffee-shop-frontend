@@ -83,7 +83,7 @@ export default {
     }
   },
   getters: {
-    setUser: state => state.user,
+    dataUser: state => state.user,
     isLogin: state => state.token !== null
   }
 }

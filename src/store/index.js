@@ -17,10 +17,7 @@ export default new Vuex.Store({
   getters: {},
   plugins: [
     createPersistedstate({
-      paths: ['Auth.user']
-    }),
-    createPersistedstate({
-      paths: ['Cart.carts']
+      paths: ['Auth.user', 'Cart.carts']
     })
   ]
 })

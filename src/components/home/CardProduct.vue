@@ -54,7 +54,7 @@ export default {
   data() {
     return { url: `http://localhost:3765/${this.data.image}` }
   },
-  computed: { ...mapGetters({ user: 'setUser' }) },
+  computed: { ...mapGetters({ user: 'dataUser' }) },
   methods: {
     ...mapActions(['deleteProduct', 'getProducts']),
     setProduct() {

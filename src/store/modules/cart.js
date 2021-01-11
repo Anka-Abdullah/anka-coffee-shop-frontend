@@ -32,6 +32,10 @@ export default {
       const carts = [...state.carts]
       carts.splice(index, 1)
       commit('setCarts', carts)
+    },
+    emptyCart({ commit }) {
+      const cart = []
+      commit('setCarts', cart)
     }
   },
   getters: { dataCarts: state => state.carts }

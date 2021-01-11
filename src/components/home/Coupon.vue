@@ -61,7 +61,7 @@ export default {
     this.getCoupons()
   },
   computed: {
-    ...mapGetters({ user: 'setUser' })
+    ...mapGetters({ user: 'dataUser' })
   },
   methods: {
     ...mapActions(['deleteCoupon', 'getCoupons', 'getProducts']),

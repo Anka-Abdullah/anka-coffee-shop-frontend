@@ -41,8 +41,7 @@
             <option value="300 gr">300 gr</option>
             <option value="500 gr">500 gr</option>
           </select>
-
-          <div class="my-5"></div>
+          <div class="mb-5"></div>
           <b-row>
             <b-col lg="5" sm="12" class="p-0">
               <div class="count">
@@ -52,10 +51,14 @@
               </div>
             </b-col>
             <b-col lg="7" sm="12"
-              ><button
+              ><h4 class="text-danger m-0" v-if="size === ''">
+                <strong>Don't forget to choose a SIZE!!</strong>
+              </h4>
+              <button
                 class="chocolate yellow p-2"
                 style="width: 98%"
-                @click="addToCart({ ...product, qty: count, size: size })"
+                @click="toCart"
+                v-if="size !== ''"
               >
                 Add To Cart
               </button></b-col
@@ -63,14 +66,16 @@
           </b-row>
           <b-row>
             <button
-              class="chocolate p-2 mt-3 mx-auto"
+              class="chocolate p-2 mt-3  mx-auto"
               style="width: 100%; padding: 0;"
+              v-show="show"
             >
               <router-link to="/cart" class="text-white" style="font-size: 24px"
                 >Checkout</router-link
               >
             </button>
           </b-row>
+          <div class="mb-5"></div>
         </b-col>
       </b-row>
     </b-container>
@@ -93,7 +98,8 @@ export default {
       product: [],
       url: '',
       count: 1,
-      size: ''
+      size: '',
+      show: false
     }
   },
   created() {
@@ -112,6 +118,10 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    toCart() {
+      this.addToCart({ ...this.product, qty: this.count, size: this.size })
+      this.show = true
     },
     displayPrice(price) {
       let output = price * this.count

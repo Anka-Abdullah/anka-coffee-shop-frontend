@@ -30,21 +30,19 @@ export default {
     }
   },
   actions: {
-    getProducts(context) {
+    getProducts({ commit, state }) {
       return new Promise((resolve, reject) => {
         axios
           .get(
             `http://${process.env.VUE_APP_ROOT_URL}/product?${
-              context.state.sort !== '' ? 'sort=' + context.statesort : ''
-            }${context.state.asc !== '' ? '&asc=' + context.state.asc : ''}${
-              context.state.search !== ''
-                ? '&search=' + context.state.search
-                : ''
-            }&page=${context.state.page}&limit=${context.state.limit}`
+              state.sort !== '' ? 'sort=' + state.sort : ''
+            }${state.asc !== '' ? '&asc=' + state.asc : ''}${
+              state.search !== '' ? '&search=' + state.search : ''
+            }&page=${state.page}&limit=${state.limit}`
           )
           .then(result => {
             resolve(result)
-            context.commit('setProducts', result.data)
+            commit('setProducts', result.data)
           })
           .catch(err => {
             reject(err)

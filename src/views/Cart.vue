@@ -15,28 +15,38 @@
               <h2 class="anka-title text-center mb-0">Order Summary</h2>
               <div class="cart-scroll">
                 <b-row>
-                  <Card class="mx-auto" />
+                  <Card
+                    class="mx-auto"
+                    v-for="(item, index) in cart"
+                    :key="index"
+                    :data="item"
+                    :index="index"
+                  />
                 </b-row>
               </div>
               <b-row class="px-5">
                 <h5><b>Subtotal</b></h5>
-                <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
+                <h5 class="ml-auto">
+                  <b>{{ subTotal }}</b>
+                </h5>
               </b-row>
               <b-row class="px-5">
                 <h5><b>Tax and Fees</b></h5>
-                <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
-              </b-row>
-              <b-row class="px-5">
-                <h5><b>Subtotal</b></h5>
-                <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
+                <h5 class="ml-auto">
+                  <b>{{ tax }}</b>
+                </h5>
               </b-row>
               <b-row class="px-5">
                 <h5><b>Discounts</b></h5>
-                <h5 class="ml-auto"><b>IDR 1.000.000</b></h5>
+                <h5 class="ml-auto">
+                  <b>{{ discount }}</b>
+                </h5>
               </b-row>
               <b-row class="px-5">
                 <h4 class="anka-title"><b>Total</b></h4>
-                <h4 class="anka-title ml-auto"><b>IDR 1.000.000</b></h4>
+                <h4 class="anka-title ml-auto">
+                  <b>IDR {{ total }}</b>
+                </h4>
               </b-row>
             </b-card>
           </b-row>
@@ -65,18 +75,25 @@
                 placeholder="Input Coupon Code"
               />
             </b-col>
-            <h5 class="anka-title mt-5">Delivery Method :</h5>
-            <select name="method" id="method">
-              <option>Select delivery method</option>
-              <option value="1">Dine in</option>
-              <option value="2">Door Delivery</option>
-              <option value="3">Pick Up</option>
-            </select>
+            <h5 class="anka-text-shadow mt-3">Delivery Method :</h5>
+            <b-col xl="12">
+              <select name="method" v-model="deliveryMethod">
+                <option value="">Select delivery method</option>
+                <option value="Dine in">Dine in</option>
+                <option value="Door Delivery">Door Delivery</option>
+                <option value="Pick Up">Pick Up</option>
+              </select>
+            </b-col>
             <h3 class="anka-text-shadow mt-5">Payment Method</h3>
             <b-col xl="12">
               <b-list-group class="mt-2">
                 <b-list-group-item
-                  ><input type="radio" name="payment" id="card" /><label for=""
+                  ><input
+                    type="radio"
+                    name="payment"
+                    value="Card"
+                    v-model="paymentMethod"
+                  /><label for=""
                     ><div class="navbar">
                       <span
                         class="badge badge-danger mr-2"
@@ -92,7 +109,13 @@
                   </label></b-list-group-item
                 >
                 <b-list-group-item
-                  ><input type="radio" name="payment" id="bank" />
+                  ><input
+                    type="radio"
+                    name="payment"
+                    id="bank"
+                    value="Bank Account"
+                    v-model="paymentMethod"
+                  />
                   <label for=""
                     ><div class="navbar">
                       <span
@@ -109,7 +132,12 @@
                   </label></b-list-group-item
                 >
                 <b-list-group-item
-                  ><input type="radio" name="payment" id="bank" />
+                  ><input
+                    type="radio"
+                    name="payment"
+                    value="Cash On Delivery"
+                    v-model="paymentMethod"
+                  />
                   <label for=""
                     ><div class="navbar">
                       <span
@@ -131,6 +159,8 @@
               <button
                 class="chocolate p-2 my-5 mx-auto"
                 style="width: 100%; border: 1px solid white"
+                @click="confirmAndPay"
+                :disabled="cart.length < 1"
               >
                 Confirm and Pay
               </button>
@@ -143,7 +173,8 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+// import axios from 'axios'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import Card from '../components/cart/CardCart'
@@ -154,8 +185,73 @@ export default {
     Footbar,
     Card
   },
+  data() {
+    return {
+      subTotal: null,
+      discount: 0,
+      tax: null,
+      total: null,
+      paymentMethod: '',
+      deliveryMethod: '',
+      postKey: null
+    }
+  },
+  created() {
+    this.countTotal()
+    console.log(this.user)
+  },
+  computed: { ...mapGetters({ user: 'dataUser', cart: 'dataCarts' }) },
   methods: {
-    ...mapActions(['createInvoice'])
+    ...mapActions(['createInvoice', 'getPostKey', 'postHistory', 'emptyCart']),
+    countTotal() {
+      let x = 0
+      for (var i in this.cart) {
+        x += this.cart[i].productPrice * this.cart[i].qty
+      }
+      this.subTotal = x
+      this.tax = x * 0.1
+      this.total = x - this.discount + this.tax
+    },
+    confirmAndPay() {
+      if (this.paymentMethod === '' && this.deliveryMethod === '') {
+        alert(`Don't forget to choose a Payment Method!! & Delivery Method`)
+      } else {
+        this.getPostKey()
+          .then(result => {
+            for (var i in this.cart) {
+              console.log('data ke: ' + [i])
+              const dataInvoice = {
+                historyId: result,
+                productId: this.cart[i].productId,
+                productQty: this.cart[i].qty,
+                size: this.cart[i].size
+              }
+              console.log(dataInvoice)
+              this.createInvoice(dataInvoice)
+            }
+            const id = result
+            const dataHistory = {
+              userId: this.user.userId,
+              discount: this.discount,
+              tax: this.tax,
+              subTotal: this.subTotal,
+              total: this.total,
+              paymentMethod: this.paymentMethod,
+              deliveryMethod: this.deliveryMethod
+            }
+            const payload = {
+              id,
+              dataHistory
+            }
+            console.log(payload)
+            this.postHistory(payload)
+            this.emptyCart()
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    }
   }
 }
 </script>
@@ -229,6 +325,21 @@ input[type='radio']:checked:after {
   display: inline-block;
   visibility: visible;
   border: 2px solid #6a4029;
+}
+input[type='text'] {
+  border: none;
+  padding: 3px;
+}
+select {
+  border: none;
+  padding: 10px;
+}
+select:focus {
+  outline: none;
+}
+input[type='text']:focus {
+  outline: none;
+  background-color: #ffca38;
 }
 section.cart .badge-danger {
   width: 35px;
