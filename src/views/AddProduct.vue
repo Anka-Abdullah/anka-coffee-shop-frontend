@@ -293,11 +293,11 @@ export default {
       this.createProduct(formData)
         .then(() => {
           this.getProducts()
+          this.$router.replace('/')
         })
         .catch(err => {
           console.log(err)
         })
-      this.$router.replace('/')
     },
     patchProduct() {
       let formData = new FormData()

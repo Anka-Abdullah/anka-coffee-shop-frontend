@@ -80,6 +80,22 @@ export default {
           return Promise.reject(error)
         }
       )
+    },
+    updateProfile(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `http://${process.env.VUE_APP_ROOT_URL}/prfile/${payload.id}`,
+            payload.data
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+            console.log(error)
+          })
+      })
     }
   },
   getters: {

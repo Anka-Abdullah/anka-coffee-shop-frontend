@@ -11,13 +11,23 @@
               width="200"
               class="rounded-circle"
               id="user-image"
+              v-show="form.image === ''"
+            />
+            <img
+              v-show="form.image !== ''"
+              :src="`http://localhost:3765/${form.image}`"
+              width="200"
+              class="rounded-circle"
             />
             <h2 class="m-0"><strong>namanya</strong></h2>
             <h3 class="m-0">emailnya</h3>
-            <input type="file" id="file-image" @change="handleFile()" hidden />
-            <label for="file-image" class="chocolate yellow mt-5">
-              Choose Photo</label
-            ><br />
+            <form>
+              <input type="file" id="file-image" @change="handleFile" hidden />
+              <label for="file-image" class="chocolate yellow mt-5">
+                Choose Photo</label
+              >
+            </form>
+            <br />
             <button class="chocolate mt-3">Remove Photo</button><br />
             <button class="chocolate putih my-4">
               Edit Password</button
@@ -40,33 +50,35 @@
           <b-col lg="8" sm="12">
             <b-card class="shadow border-0">
               <h3 class="mb-2"><strong>Contacts</strong></h3>
-              <b-row>
-                <b-col lg="7" sm="12">
-                  <h5 class="text-secondary mt-5">Email adress :</h5>
-                  <input type="text" class="b-input"/>
-                  <h5 class="text-secondary mt-5">Delivery Address :</h5>
-                  <input type="text" class="b-input"
-                /></b-col>
-                <b-col lg="5" sm="12">
-                  <h5 class="text-secondary mt-5">Mobile number :</h5>
-                  <input type="number" class="b-input"
-                /></b-col>
-              </b-row>
-              <h3 class="mt-5 mb-3"><strong>Details</strong></h3>
-              <b-row>
-                <b-col lg="7" sm="12">
-                  <h5 class="text-secondary mt-5">Display name :</h5>
-                  <input type="text" class="b-input"/>
-                  <h5 class="text-secondary mt-5">First name :</h5>
-                  <input type="text" class="b-input"/>
-                  <h5 class="text-secondary mt-5">Last name :</h5>
-                  <input type="text" class="b-input"
-                /></b-col>
-                <b-col lg="5" sm="12">
-                  <h5 class="text-secondary mt-5">DD/MM/YY</h5>
-                  <input type="date" class="b-input"
-                /></b-col>
-              </b-row>
+              <form>
+                <b-row>
+                  <b-col lg="7" sm="12">
+                    <h5 class="text-secondary mt-5">Email adress :</h5>
+                    <input type="text" class="b-input"/>
+                    <h5 class="text-secondary mt-5">Delivery Address :</h5>
+                    <input type="text" class="b-input"
+                  /></b-col>
+                  <b-col lg="5" sm="12">
+                    <h5 class="text-secondary mt-5">Mobile number :</h5>
+                    <input type="number" class="b-input"
+                  /></b-col>
+                </b-row>
+                <h3 class="mt-5 mb-3"><strong>Details</strong></h3>
+                <b-row>
+                  <b-col lg="7" sm="12">
+                    <h5 class="text-secondary mt-5">Display name :</h5>
+                    <input type="text" class="b-input"/>
+                    <h5 class="text-secondary mt-5">First name :</h5>
+                    <input type="text" class="b-input"/>
+                    <h5 class="text-secondary mt-5">Last name :</h5>
+                    <input type="text" class="b-input"
+                  /></b-col>
+                  <b-col lg="5" sm="12">
+                    <h5 class="text-secondary mt-5">DD/MM/YY</h5>
+                    <input type="date" class="b-input"
+                  /></b-col>
+                </b-row>
+              </form>
               <div class="my-5"></div>
             </b-card>
           </b-col> </b-row
@@ -86,7 +98,17 @@ export default {
     Footbar
   },
   data() {
-    return {}
+    return {
+      userId: null,
+      form: {
+        firstName: '',
+        lastName: '',
+        userEmail: '',
+        userAddress: '',
+        userPhone: '',
+        image: ''
+      }
+    }
   },
   methods: {
     ...mapActions(['logout']),
