@@ -2,24 +2,7 @@
   <div class="login">
     <b-container fluid>
       <b-row>
-        <b-col lg="6" sm="12" class="desktop authbg">
-          <div style="margin: 210px 0 0 220px; position: fixed">
-            <div class="text-center mx-auto">
-              <strong
-                ><h1 class="caveat text-white">
-                  Coffee Shop
-                </h1></strong
-              >
-              <h5 class="mt-2">
-                Coffee Shop is a store <br />
-                that sells some good <br />
-                meals, and especially coffee. <br />
-                We provide high quality beans
-              </h5>
-            </div>
-          </div>
-        </b-col>
-        <b-col lg="6" sm="12" class="px-0"
+        <b-col lg="6" sm="12" class=" form px-0 mx-auto shadow"
           ><Navbar :link="'/register'" :text="'Sign Up'" />
           <b-container class="px-5">
             <h1 class="anka-title text-center my-5">Login</h1>
@@ -33,11 +16,13 @@
             />
             <b-row>
               <button class="ml-auto mr-3 mt-3" @click.prevent="onReset">
-                <h6 class="border-bottom border-dark">reset</h6>
+                <h6 class="text-secondary">reset</h6>
               </button>
             </b-row>
             <router-link to="/forgotpassword"
-              ><h6 class="anka-title mb-5">Forgot PassWord?</h6></router-link
+              ><h6 class="text-secondary mb-5">
+                Forgot PassWord.?
+              </h6></router-link
             >
             <b-row>
               <button
@@ -57,40 +42,16 @@
         </b-col>
       </b-row>
     </b-container>
-    <Footbar />
-    <b-modal
-      ref="my-modal"
-      size="lg"
-      body-bg-variant="warning"
-      centered
-      hide-footer
-    >
-      <div class="d-block text-center p-2">
-        <h2 class="m-5">
-          <strong>{{ message }}</strong>
-        </h2>
-      </div>
-      <b-row>
-        <router-link
-          class="chocolate mx-auto w-75 text-center"
-          to="/"
-          v-show="this.status == 200"
-        >
-          Click Here
-        </router-link>
-      </b-row>
-    </b-modal>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
+import Swal from 'sweetalert2'
 import Navbar from './component/NavbarAuth'
-import Footbar from '../../components/_base/Footbar'
 export default {
   name: 'Login',
   components: {
-    Navbar,
-    Footbar
+    Navbar
   },
   data() {
     return {
@@ -103,16 +64,22 @@ export default {
     }
   },
   methods: {
-    //   mapActions mapMutations
     ...mapActions(['login']),
     onSubmit() {
       this.login(this.form)
         .then(() => {
-          this.$router.push('/')
+          Swal.fire({
+            icon: 'success',
+            title: 'Enjoy Your Coffee'
+          })
+          setTimeout(this.$router.push('/'), 1000)
         })
         .catch(err => {
-          this.message = err.data.message + '..!!'
-          this.showModal()
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.data.message
+          })
         })
     },
     onReset() {
@@ -120,10 +87,23 @@ export default {
         userEmail: '',
         userPassword: ''
       }
-    },
-    showModal() {
-      this.$refs['my-modal'].show()
     }
   }
 }
 </script>
+<style scoped>
+.login {
+  background-image: url('../../assets/nani.png');
+  background-size: cover;
+}
+.form {
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.795);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 29px 0;
+}
+input {
+  background: none;
+}
+</style>

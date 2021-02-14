@@ -15,12 +15,14 @@
             />
             <img
               v-show="form.image !== ''"
-              :src="`http://localhost:3765/${form.image}`"
+              :src="`http://localhost:3765/${user.image}`"
               width="200"
               class="rounded-circle"
             />
-            <h2 class="m-0"><strong>namanya</strong></h2>
-            <h3 class="m-0">emailnya</h3>
+            <h2 class="m-0">
+              <strong>{{ form.firstName + ' ' + form.lastName }}</strong>
+            </h2>
+            <h3 class="m-0">{{ form.userEmail }}</h3>
             <form>
               <input type="file" id="file-image" @change="handleFile" hidden />
               <label for="file-image" class="chocolate yellow mt-5">
@@ -39,7 +41,7 @@
               >
             </h3>
 
-            <button class="chocolate yellow mt-5">
+            <button class="chocolate yellow mt-5" @click="patchUser">
               Save cahnge</button
             ><br />
             <button class="chocolate my-3 w-50">Cancel</button><br />
@@ -54,24 +56,39 @@
                 <b-row>
                   <b-col lg="7" sm="12">
                     <h5 class="text-secondary mt-5">Email adress :</h5>
-                    <input type="text" class="b-input"/>
+                    <input
+                      type="text"
+                      class="b-input"
+                      v-model="form.userEmail"/>
                     <h5 class="text-secondary mt-5">Delivery Address :</h5>
-                    <input type="text" class="b-input"
+                    <input
+                      type="text"
+                      class="b-input"
+                      v-model="form.userAddress"
                   /></b-col>
                   <b-col lg="5" sm="12">
                     <h5 class="text-secondary mt-5">Mobile number :</h5>
-                    <input type="number" class="b-input"
+                    <input
+                      type="number"
+                      class="b-input"
+                      v-model="form.userPhone"
                   /></b-col>
                 </b-row>
                 <h3 class="mt-5 mb-3"><strong>Details</strong></h3>
                 <b-row>
                   <b-col lg="7" sm="12">
                     <h5 class="text-secondary mt-5">Display name :</h5>
-                    <input type="text" class="b-input"/>
+                    <input
+                      type="text"
+                      class="b-input"
+                      :value="form.firstName + ' ' + form.lastName"/>
                     <h5 class="text-secondary mt-5">First name :</h5>
-                    <input type="text" class="b-input"/>
+                    <input
+                      type="text"
+                      class="b-input"
+                      v-model="form.firstName"/>
                     <h5 class="text-secondary mt-5">Last name :</h5>
-                    <input type="text" class="b-input"
+                    <input type="text" class="b-input" v-model="form.lastName"
                   /></b-col>
                   <b-col lg="5" sm="12">
                     <h5 class="text-secondary mt-5">DD/MM/YY</h5>
@@ -88,7 +105,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -110,16 +127,42 @@ export default {
       }
     }
   },
+  created() {
+    this.form = this.user
+    console.log(this.form)
+  },
+  computed: {
+    ...mapGetters({ user: 'dataUser' })
+  },
   methods: {
-    ...mapActions(['logout']),
-    handleFile(input) {
-      if (input.files && input.files[0]) {
-        let reader = new FileReader()
-        reader.onload = function(e) {
-          this.$id['user-image'].attr('src', e.target.result)
-        }
-        reader.readAsDataURL(input.files[0])
+    ...mapActions(['logout', 'updateProfile']),
+    patchUser() {
+      let formData = new FormData()
+      formData.append('firstName', this.form.firstName)
+      formData.append('lastName', this.form.lastName)
+      formData.append('userEmail', this.form.userEmail)
+      formData.append('userAddress', this.form.userAddress)
+      formData.append('userPhone', this.form.userPhone)
+      formData.append('image', this.form.image)
+
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
       }
+      const payload = {
+        data: formData,
+        id: this.user.userId
+      }
+      this.updateProfile(payload)
+        .then(() => {
+          this.$router.replace('/')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    handleFile(e) {
+      console.log(e.target.files[0].name)
+      this.form.image = e.target.files[0]
     }
   }
 }

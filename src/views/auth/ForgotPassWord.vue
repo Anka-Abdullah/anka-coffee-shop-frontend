@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <b-container class="text-center" style="margin-bottom: 100px">
+    <b-container class="text-center">
       <h1 class="anka-text-shadow">Forgot Your Password?</h1>
       <h4 class="anka-text-shadow m-0 mb-5">
         Don’t worry, we got your back!
@@ -8,9 +8,14 @@
       <input
         type="text"
         placeholder="Enter Your Email Address"
-        class="w-50 p-3"
         v-model="userEmail"
-      /><button class="chocolate yellow p-3 px-5" @click="countDownTimer">
+        class="w-100 p-2 rounded-pill"
+        style="max-width: 400px"
+      /><button
+        class="chocolate yellow mt-3"
+        style="max-width: 200px"
+        @click="sendEmail"
+      >
         Send
       </button>
       <h4 class="m-0 mt-5 anka-text-shadow text-center">
@@ -18,18 +23,17 @@
         in <strong class="countdown">{{ countDown }}</strong> seconds
       </h4>
       <b-row>
-        <button class="chocolate p-3 w-25 mx-auto my-3">Resend Link</button>
+        <button class="chocolate mx-auto my-3" style="max-width: 300px">
+          Resend Link
+        </button>
       </b-row>
     </b-container>
-    <Footbar />
   </div>
 </template>
 <script>
-import Footbar from '../../components/_base/Footbar'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
-  components: {
-    Footbar
-  },
   data() {
     return {
       userEmail: '',
@@ -44,15 +48,29 @@ export default {
           this.countDownTimer()
         }, 1000)
       }
+    },
+    sendEmail() {
+      console.log(this.userEmail)
+      axios
+        .post(
+          `http://${process.env.VUE_APP_ROOT_URL}/user/forgot?userEmail=${this.userEmail}`
+        )
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Check Your Email'
+          })
+          setTimeout(this.$router.push('/login'), 1500)
+        })
     }
   }
 }
 </script>
 <style scoped>
 .body {
+  height: 100vh;
   background-image: url('../../assets/nani.png');
   background-size: cover;
-  background-attachment: fixed;
   padding-top: 120px;
 }
 h1 {
@@ -70,5 +88,13 @@ input:focus {
 .countdown {
   font-size: 50px;
   letter-spacing: 3px;
+}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 30px;
+  }
+  .body {
+    padding-top: 50px;
+  }
 }
 </style>

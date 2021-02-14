@@ -84,6 +84,20 @@ const routes = [
       )
   },
   {
+    path: '/activate/:keys',
+    name: 'Activate',
+    meta: { requiresVisitor: true },
+    component: () =>
+      import(/* webpackChunkName: "activate" */ '../views/auth/Activate.vue')
+  },
+  {
+    path: '/password/:keys',
+    name: 'Password',
+    meta: { requiresVisitor: true },
+    component: () =>
+      import(/* webpackChunkName: "password" */ '../views/auth/Password.vue')
+  },
+  {
     path: '/landingpage',
     name: 'LandingPage',
     component: () =>

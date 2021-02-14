@@ -17,23 +17,8 @@ export default {
 }
 </script>
 <style>
-@font-face {
-  font-family: 'patrick_handregular';
-  src: url('./assets/font/patrickhand-regular-webfont.woff2') format('woff2'),
-    url('./assets/font/patrickhand-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'caveatregular';
-  src: url('./assets/font/caveat-variablefont_wght-webfont.woff2')
-      format('woff2'),
-    url('./assets/font/caveat-variablefont_wght-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 * {
-  font-family: 'patrick_handregular', cursive;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -68,9 +53,6 @@ button {
 button:focus {
   outline: none !important;
 }
-.caveat {
-  font-family: 'caveatregular';
-}
 .anka-card {
   margin: 20px;
   padding: 10px 20px;
@@ -79,9 +61,6 @@ button:focus {
 }
 .anka-title {
   color: #6a4029;
-  letter-spacing: 1px;
-  font-weight: 600;
-  font-family: 'caveatregular', cursive;
 }
 .anka-text-shadow {
   color: white;
@@ -92,9 +71,7 @@ button:focus {
   margin: 0 20px;
   color: white;
   font-family: 'patrick_handregular', cursive;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 18px;
   padding: 5px 35px;
   background-color: #6a4029;
 }
@@ -134,13 +111,14 @@ input.b-input:focus {
 }
 .logo {
   font-family: 'caveatregular', cursive;
-  font-size: 30px;
-  letter-spacing: 1px;
+  font-size: 25px;
+  font-weight: 700;
   color: rgb(100, 100, 100);
 }
 .authbg {
+  height: 100vh;
   background-image: url('./assets/background3.png');
-  background-size: 50%;
+  background-size: 57%;
   background-attachment: fixed;
 }
 .responsive {

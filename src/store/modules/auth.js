@@ -84,8 +84,8 @@ export default {
     updateProfile(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
-            `http://${process.env.VUE_APP_ROOT_URL}/prfile/${payload.id}`,
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/user/${payload.id}`,
             payload.data
           )
           .then(response => {

@@ -5,8 +5,11 @@ export default {
   state: {
     history: [],
     invoices: [],
-    chart: [],
-    dashboard: []
+    chartDaily: [],
+    chartMonthly: [],
+    dashboardDay: '',
+    dashboardMonth: '',
+    dashboardYear: ''
   },
   mutations: {
     setInvoices(state, payload) {
