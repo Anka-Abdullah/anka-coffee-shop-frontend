@@ -32,11 +32,11 @@
 </template>
 <style scoped>
 span {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin-left: 20px;
-  line-height: 24px;
-  border-radius: 30px;
+  line-height: 23px;
+  border-radius: 50%;
   background-color: #6a4029;
 }
 </style>

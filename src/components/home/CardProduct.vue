@@ -22,9 +22,9 @@
           ></b-icon></b-badge
       ></a>
 
-      <h4 class="card-item-title" @click="$emit('emit-product')">
+      <h5 class="card-item-title" @click="$emit('emit-product')">
         {{ data.productName }}
-      </h4>
+      </h5>
       <h6 class="anka-title">IDR {{ data.productPrice }}</h6>
     </div>
     <b-modal ref="my-modal" hide-footer title="Delete Prduct">
@@ -93,7 +93,7 @@ span:hover {
   margin: 50px 0px 40px 0px;
   border-radius: 30px;
   width: 140px;
-  height: 200px;
+  min-height: 200px;
   text-align: center;
   box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
     0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
@@ -117,7 +117,7 @@ span:hover {
   margin-left: 90px;
 }
 .card-item-title {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 800;
   font-family: 'caveatregular', cursive;
   margin-top: 12px;

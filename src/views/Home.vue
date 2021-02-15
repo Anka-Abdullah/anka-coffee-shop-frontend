@@ -4,19 +4,18 @@
 
     <b-container fluid style="padding-top: 100px">
       <b-row>
-        <b-col
-          lg="4"
-          sm="12"
-          class="border-right border-secondary"
-          style="padding-top: 20px"
+        <b-col lg="4" sm="12" style="padding-top: 20px"
           ><div style="text-align: center">
             <h4 class="anka-title">Promo Today</h4>
             <p>Coupons will be updated every weeks.<br />Check them out!</p>
           </div>
-          <Coupon
-            v-for="coupon in coupons"
-            :key="coupon.promoId"
-            :dataPromo="coupon"/>
+          <b-col class="col-coupon m-0 p-0">
+            <Coupon
+              v-for="coupon in coupons"
+              :key="coupon.promoId"
+              :dataPromo="coupon"
+            />
+          </b-col>
           <button class="chocolate one mt-3" style="width: 90%;">
             Apply Coupon
           </button>
@@ -167,11 +166,6 @@ import CardProduct from '../components/home/CardProduct'
 import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'Home',
-  data() {
-    return {
-      currentPage: 1
-    }
-  },
   components: {
     Navbar,
     Footbar,
@@ -194,15 +188,24 @@ export default {
       sort: 'setSort',
       asc: 'setAsc',
       user: 'dataUser'
-    })
+    }),
+    currentPage: {
+      get() {
+        return this.page
+      },
+      set(newPage) {
+        return newPage
+      }
+    }
   },
   methods: {
-    ...mapActions(['getProducts', 'getCoupons']),
+    ...mapActions(['getProducts', 'getCoupons', 'resetPages']),
     ...mapMutations(['setPage', 'setSearch', 'setSort', 'setAsc']),
     getProduct(search, sort, asc) {
       this.setSearch(search)
       this.setSort(sort)
       this.setAsc(asc)
+      this.resetPages()
       this.getProducts()
     },
     handelPageChange(e) {
@@ -220,6 +223,12 @@ export default {
 }
 </script>
 <style scoped>
+.col-coupon {
+  border-right: 1px solid rgb(184, 184, 184);
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 a.one:hover {
   color: white !important;
 }

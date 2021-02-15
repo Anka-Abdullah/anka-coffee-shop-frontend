@@ -65,6 +65,7 @@ input {
 input:focus {
   outline: none;
   background-color: rgb(231, 208, 178);
+  font-family: cursive;
 }
 @media (max-width: 600px) {
   h1 {

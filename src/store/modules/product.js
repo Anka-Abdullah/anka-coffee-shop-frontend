@@ -19,6 +19,10 @@ export default {
     setPage(state, payload) {
       state.page = payload
     },
+    resetPages(state) {
+      state.page = 1
+      console.log(state.page)
+    },
     setSearch(state, payload) {
       state.search = payload
     },

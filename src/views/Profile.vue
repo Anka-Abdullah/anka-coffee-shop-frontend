@@ -19,16 +19,14 @@
               width="200"
               class="rounded-circle"
             />
-            <h2 class="m-0">
+            <h4>
               <strong>{{ form.firstName + ' ' + form.lastName }}</strong>
-            </h2>
-            <h3 class="m-0">{{ form.userEmail }}</h3>
-            <form>
-              <input type="file" id="file-image" @change="handleFile" hidden />
-              <label for="file-image" class="chocolate yellow mt-5">
-                Choose Photo</label
-              >
-            </form>
+            </h4>
+            <h5 class="m-0">{{ form.userEmail }}</h5>
+            <input type="file" id="file-image" hidden @change="handleFile" />
+            <label for="file-image" class="chocolate yellow mt-5">
+              Choose Photo</label
+            >
             <br />
             <button class="chocolate mt-3">Remove Photo</button><br />
             <button class="chocolate putih my-4">
@@ -41,7 +39,7 @@
               >
             </h3>
 
-            <button class="chocolate yellow mt-5" @click="patchUser">
+            <button class="chocolate yellow mt-5" @click="editDataUser">
               Save cahnge</button
             ><br />
             <button class="chocolate my-3 w-50">Cancel</button><br />
@@ -52,50 +50,36 @@
           <b-col lg="8" sm="12">
             <b-card class="shadow border-0">
               <h3 class="mb-2"><strong>Contacts</strong></h3>
-              <form>
-                <b-row>
-                  <b-col lg="7" sm="12">
-                    <h5 class="text-secondary mt-5">Email adress :</h5>
-                    <input
-                      type="text"
-                      class="b-input"
-                      v-model="form.userEmail"/>
-                    <h5 class="text-secondary mt-5">Delivery Address :</h5>
-                    <input
-                      type="text"
-                      class="b-input"
-                      v-model="form.userAddress"
-                  /></b-col>
-                  <b-col lg="5" sm="12">
-                    <h5 class="text-secondary mt-5">Mobile number :</h5>
-                    <input
-                      type="number"
-                      class="b-input"
-                      v-model="form.userPhone"
-                  /></b-col>
-                </b-row>
-                <h3 class="mt-5 mb-3"><strong>Details</strong></h3>
-                <b-row>
-                  <b-col lg="7" sm="12">
-                    <h5 class="text-secondary mt-5">Display name :</h5>
-                    <input
-                      type="text"
-                      class="b-input"
-                      :value="form.firstName + ' ' + form.lastName"/>
-                    <h5 class="text-secondary mt-5">First name :</h5>
-                    <input
-                      type="text"
-                      class="b-input"
-                      v-model="form.firstName"/>
-                    <h5 class="text-secondary mt-5">Last name :</h5>
-                    <input type="text" class="b-input" v-model="form.lastName"
-                  /></b-col>
-                  <b-col lg="5" sm="12">
-                    <h5 class="text-secondary mt-5">DD/MM/YY</h5>
-                    <input type="date" class="b-input"
-                  /></b-col>
-                </b-row>
-              </form>
+              <b-row>
+                <b-col lg="7" sm="12">
+                  <h5 class="text-secondary mt-5">Email adress :</h5>
+                  <input type="text" class="b-input" v-model="form.userEmail"/>
+                  <h5 class="text-secondary mt-5">Delivery Address :</h5>
+                  <input type="text" class="b-input" v-model="form.userAddress"
+                /></b-col>
+                <b-col lg="5" sm="12">
+                  <h5 class="text-secondary mt-5">Mobile number :</h5>
+                  <input type="number" class="b-input" v-model="form.userPhone"
+                /></b-col>
+              </b-row>
+              <h3 class="mt-5 mb-3"><strong>Details</strong></h3>
+              <b-row>
+                <b-col lg="7" sm="12">
+                  <h5 class="text-secondary mt-5">Display name :</h5>
+                  <input
+                    type="text"
+                    class="b-input"
+                    :value="form.firstName + ' ' + form.lastName"/>
+                  <h5 class="text-secondary mt-5">First name :</h5>
+                  <input type="text" class="b-input" v-model="form.firstName"/>
+                  <h5 class="text-secondary mt-5">Last name :</h5>
+                  <input type="text" class="b-input" v-model="form.lastName"
+                /></b-col>
+                <b-col lg="5" sm="12">
+                  <h5 class="text-secondary mt-5">DD/MM/YY</h5>
+                  <input type="date" class="b-input"
+                /></b-col>
+              </b-row>
               <div class="my-5"></div>
             </b-card>
           </b-col> </b-row
@@ -129,14 +113,13 @@ export default {
   },
   created() {
     this.form = this.user
-    console.log(this.form)
   },
   computed: {
     ...mapGetters({ user: 'dataUser' })
   },
   methods: {
     ...mapActions(['logout', 'updateProfile']),
-    patchUser() {
+    editDataUser() {
       let formData = new FormData()
       formData.append('firstName', this.form.firstName)
       formData.append('lastName', this.form.lastName)
@@ -144,25 +127,24 @@ export default {
       formData.append('userAddress', this.form.userAddress)
       formData.append('userPhone', this.form.userPhone)
       formData.append('image', this.form.image)
-
       for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1])
       }
-      const payload = {
+      const data = {
         data: formData,
         id: this.user.userId
       }
-      this.updateProfile(payload)
+      this.updateProfile(data)
         .then(() => {
-          this.$router.replace('/')
+          // this.$router.replace('/')
         })
         .catch(err => {
           console.log(err)
         })
     },
     handleFile(e) {
-      console.log(e.target.files[0].name)
       this.form.image = e.target.files[0]
+      console.log(e.target.files[0])
     }
   }
 }
