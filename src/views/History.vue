@@ -36,11 +36,13 @@ export default {
     Card
   },
   created() {
-    this.getHistory()
+    this.getHistory(this.user.userId)
+    console.log(this.user.userId)
   },
   computed: {
     ...mapGetters({
-      history: 'setHistory'
+      history: 'setHistory',
+      user: 'dataUser'
     })
   },
   methods: {

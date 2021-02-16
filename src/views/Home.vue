@@ -175,7 +175,6 @@ export default {
   created() {
     this.getProducts()
     this.getCoupons()
-    console.log(this.user)
   },
   computed: {
     ...mapGetters({
@@ -216,7 +215,6 @@ export default {
       this.getProducts()
     },
     detailProduct(productId) {
-      console.log(productId)
       this.$router.push({ name: 'Product', params: { id: productId } })
     }
   }

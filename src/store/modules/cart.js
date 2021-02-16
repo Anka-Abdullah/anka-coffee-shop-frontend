@@ -9,7 +9,6 @@ export default {
   },
   actions: {
     addToCart({ commit, state }, payload) {
-      console.log(payload)
       let { carts } = state
 
       const checkId = carts.find(item => item.id === payload.id)
@@ -25,7 +24,6 @@ export default {
       } else {
         carts.push(payload)
       }
-      console.log(carts)
       commit('setCarts', carts)
     },
     deleteCartItem({ commit, state }, index) {

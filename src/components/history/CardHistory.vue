@@ -14,7 +14,7 @@
           <b-row>
             <Card
               class="mx-auto"
-              v-for="(item, index) in invoice"
+              v-for="(item, index) in data.products"
               :key="index"
               :data="item"
             />
@@ -52,7 +52,6 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import Card from './itemlist'
 export default {
   props: {
@@ -61,16 +60,7 @@ export default {
   components: {
     Card
   },
-  mounted() {
-    this.getInvoices(this.data.historyId)
-  },
-  computed: {
-    ...mapGetters({
-      invoice: 'setInvoices'
-    })
-  },
   methods: {
-    ...mapActions(['getInvoices']),
     showModal() {
       this.$refs['my-modal'].show()
     }

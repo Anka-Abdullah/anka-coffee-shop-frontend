@@ -21,7 +21,6 @@ export default {
     },
     resetPages(state) {
       state.page = 1
-      console.log(state.page)
     },
     setSearch(state, payload) {
       state.search = payload
@@ -50,7 +49,6 @@ export default {
           })
           .catch(err => {
             reject(err)
-            console.log(err)
           })
       })
     },
@@ -58,12 +56,11 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .delete(`http://${process.env.VUE_APP_ROOT_URL}/product/${payload}`)
-          .then(response => {
-            resolve(response)
+          .then(result => {
+            resolve(result)
           })
-          .catch(error => {
-            reject(error)
-            console.log(error)
+          .catch(err => {
+            reject(err)
           })
       })
     },
@@ -72,12 +69,10 @@ export default {
         axios
           .post(`http://${process.env.VUE_APP_ROOT_URL}/product`, payload)
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(err => {
             reject(err)
-            console.log(err)
           })
       })
     },
@@ -89,12 +84,10 @@ export default {
             payload.data
           )
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(err => {
             reject(err)
-            console.log(err)
           })
       })
     }

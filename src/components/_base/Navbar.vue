@@ -20,9 +20,7 @@
           <li><router-link to="/" class="aktip">Home</router-link></li>
           <li><router-link to="/cart">Your Cart</router-link></li>
           <li><router-link to="/history">History</router-link></li>
-          <li class="responsive">
-            <router-link to="#">Chat Room</router-link>
-          </li>
+          <li><router-link to="/dashboard">Dashboard</router-link></li>
           <li class="responsive">
             <router-link to="/profile">My Profile</router-link>
           </li>
@@ -52,21 +50,12 @@
             @keyup.prevent="getProduct()"
             required
           />
-          <button type="submit" @click="getProduct()">
+          <button type="submit" @click="getProduct">
             <b-icon icon="search" variant="dark" aria-hidden="true"></b-icon>
           </button>
         </form>
-        <router-link to="/about" class="desktop"
-          ><b-icon
-            class="mx-5"
-            icon="chat-dots"
-            scale="1.5"
-            variant="dark"
-            aria-hidden="true"
-          ></b-icon
-        ></router-link>
         <router-link to="/profile" class="desktop"
-          ><b-avatar src="https://placekitten.com/300/300"></b-avatar
+          ><b-avatar :src="`http://localhost:3765/${image}`"></b-avatar
         ></router-link>
       </nav>
     </nav>
@@ -83,19 +72,28 @@ export default {
       searchBtn: document.querySelector('.search-icon'),
       cancelBtn: document.querySelector('.cancel-icon'),
       items: document.querySelector('.nav-items'),
-      form: document.querySelector('form')
+      form: document.querySelector('form'),
+      image: null
     }
   },
+  created() {
+    this.getDataUser()
+  },
   computed: {
-    ...mapGetters({ page: 'pageProducts' })
+    ...mapGetters({ page: 'pageProducts', user: 'dataUser' })
   },
   methods: {
-    ...mapActions(['getProducts']),
+    ...mapActions(['getProducts', 'getUserByid']),
     ...mapMutations(['setSearch']),
     getProduct() {
       this.page = 1
       this.setSearch(this.searchData)
       this.getProducts()
+    },
+    getDataUser() {
+      this.getUserByid(this.user.userId).then(result => {
+        this.image = result.data.data[0].image
+      })
     },
     menu() {
       document.querySelector('.nav-items').classList.add('active')
@@ -145,12 +143,12 @@ nav .nav-items {
 }
 nav .nav-items li {
   list-style: none;
-  padding: 0 15px;
+  padding: 0 10px;
 }
 nav .nav-items li a {
   font-weight: 500;
-  font-size: 23px;
-  margin: 0 12.5px;
+  font-size: 20px;
+  margin: 0 10px;
   color: rgb(85, 84, 84) !important;
   letter-spacing: 1px;
 }
@@ -162,6 +160,7 @@ nav form {
   display: flex;
   height: 40px;
   padding: 2px;
+  margin-right: 20px;
   min-width: 18% !important;
   border-radius: 2px;
   background: white;

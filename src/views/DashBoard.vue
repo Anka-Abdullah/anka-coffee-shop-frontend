@@ -7,25 +7,29 @@
           ><b-card class="shadow bg-white">
             <h4 class="anka-title">today's income</h4>
             <h4>
-              <strong>IDR {{ price.toLocaleString() }}</strong>
+              <strong>IDR {{ getDay.toLocaleString() }}</strong>
             </h4>
           </b-card></b-col
         ><b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
             <h5 class="anka-title">this month's income</h5>
-            <h4>IDR 100000000</h4>
+            <h4>
+              <strong>IDR {{ getMonth.toLocaleString() }}</strong>
+            </h4>
           </b-card></b-col
         ><b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
             <h5 class="anka-title">this year's income</h5>
-            <h4>IDR 100000000</h4>
+            <h4>
+              <strong>IDR {{ getYear.toLocaleString() }}</strong>
+            </h4>
           </b-card></b-col
         >
       </b-row>
       <b-row>
         <button class="mx-auto mb-3 mt-5" @click="chart = !chart">
-          <h1 v-if="chart">View Dailyly Data</h1>
-          <h1 v-if="!chart">View Monthly Data</h1>
+          <h2 v-if="chart">View Daily Data</h2>
+          <h2 v-if="!chart">View Monthly Data</h2>
         </button>
       </b-row>
 
@@ -36,6 +40,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 import BarChartMonth from '../components/dashboard/BarChartMonth'
@@ -51,9 +56,61 @@ export default {
   data() {
     return {
       chart: true,
-      price: 1000000
+      price: 1000000,
+      getDay: 0,
+      getMonth: 0,
+      getYear: 0
     }
   },
-  methods: {}
+  created() {
+    this.daily()
+    this.monthly()
+    this.year()
+  },
+  computed: {
+    ...mapGetters({ user: 'dataUser' })
+  },
+  methods: {
+    ...mapActions(['getDashboard']),
+    daily() {
+      const data = {
+        userId: this.user.userId,
+        time: 'DAY'
+      }
+      this.getDashboard(data)
+        .then(result => {
+          this.getDay = result.data.data[0].Total
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    monthly() {
+      const data = {
+        userId: this.user.userId,
+        time: 'MONTH'
+      }
+      this.getDashboard(data)
+        .then(result => {
+          this.getMonth = result.data.data[0].Total
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    year() {
+      const data = {
+        userId: this.user.userId,
+        time: 'YEAR'
+      }
+      this.getDashboard(data)
+        .then(result => {
+          this.getYear = result.data.data[0].Total
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>

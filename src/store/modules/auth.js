@@ -95,6 +95,47 @@ export default {
             reject(error)
           })
       })
+    },
+    getUserByid(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://${process.env.VUE_APP_ROOT_URL}/user/${payload}`)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    patchImage(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://${process.env.VUE_APP_ROOT_URL}/user/image/${payload.id}`,
+            payload.data
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    deleteImage(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(
+            `http://${process.env.VUE_APP_ROOT_URL}/user/image/${payload}`
+          )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {

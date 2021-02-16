@@ -4,42 +4,52 @@ export default {
   modules: {},
   state: {
     history: [],
-    invoices: [],
-    chartDaily: [],
-    chartMonthly: [],
+    chart: [],
     dashboardDay: '',
     dashboardMonth: '',
     dashboardYear: ''
   },
   mutations: {
-    setInvoices(state, payload) {
-      state.invoices = payload.data
-    },
     setHistory(state, payload) {
       state.history = payload.data
+    },
+    setChart(state, payload) {
+      state.chart = payload.data
+    },
+    setDashboardDay(state, payload) {
+      state.dashboardDay = payload.data
+    },
+    setDashboardMonth(state, payload) {
+      state.dashboardMonth = payload.data
+    },
+    setDashboardYear(state, payload) {
+      state.dashboardYear = payload.data
     }
   },
   actions: {
-    getInvoices({ commit }, payload) {
+    getHistory({ commit }, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/history/${payload}`)
+          .get(
+            `http://${process.env.VUE_APP_ROOT_URL}/history/?userId=${payload}`
+          )
           .then(result => {
             resolve(result)
-            commit('setInvoices', result.data)
+            commit('setHistory', result.data)
           })
           .catch(err => {
             reject(err)
           })
       })
     },
-    getHistory({ commit }) {
+    getDashboard(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/history/b`)
+          .get(
+            `http://${process.env.VUE_APP_ROOT_URL}/history/dashboard/?userId=${payload.userId}&time=${payload.time}`
+          )
           .then(result => {
             resolve(result)
-            commit('setHistory', result.data)
           })
           .catch(err => {
             reject(err)
@@ -80,7 +90,7 @@ export default {
         axios
           .patch(
             `http://${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
-            payload.dataHistory
+            payload.data
           )
           .then(result => {
             resolve(result)
@@ -91,11 +101,24 @@ export default {
             alert('gagal post history')
           })
       })
+    },
+    getChart(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `http://${process.env.VUE_APP_ROOT_URL}/history/chart/?userId=${payload.userId}&time=${payload.time}`
+          )
+          .then(result => {
+            resolve(result)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     }
   },
   getters: {
     setHistory: state => state.history,
-    setInvoices: state => state.invoices,
     setChart: state => state.chart,
     setDashboard: state => state.dashboard
   }

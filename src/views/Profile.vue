@@ -11,11 +11,11 @@
               width="200"
               class="rounded-circle"
               id="user-image"
-              v-show="form.image === ''"
+              v-show="image === ''"
             />
             <img
-              v-show="form.image !== ''"
-              :src="`http://localhost:3765/${user.image}`"
+              v-show="image !== ''"
+              :src="`http://localhost:3765/${image}`"
               width="200"
               class="rounded-circle"
             />
@@ -23,12 +23,14 @@
               <strong>{{ form.firstName + ' ' + form.lastName }}</strong>
             </h4>
             <h5 class="m-0">{{ form.userEmail }}</h5>
-            <input type="file" id="file-image" hidden @change="handleFile" />
-            <label for="file-image" class="chocolate yellow mt-5">
+
+            <label class="chocolate yellow mt-5" @click="showModal">
               Choose Photo</label
             >
             <br />
-            <button class="chocolate mt-3">Remove Photo</button><br />
+            <button class="chocolate mt-3" @click="removeImage">
+              Remove Photo</button
+            ><br />
             <button class="chocolate putih my-4">
               Edit Password</button
             ><br />
@@ -86,10 +88,17 @@
       ></b-card>
     </b-container>
     <Footbar />
+    <b-modal centered ref="my-modal" hide-footer hide-header>
+      <div class="d-block text-center">
+        <input type="file" id="file-image" @change="handleFile" />
+        <button class="chocolate w-50" @click="updateImage">update</button>
+      </div></b-modal
+    >
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Swal from 'sweetalert2'
 import Navbar from '../components/_base/Navbar'
 import Footbar from '../components/_base/Footbar'
 export default {
@@ -100,51 +109,89 @@ export default {
   },
   data() {
     return {
-      userId: null,
       form: {
         firstName: '',
         lastName: '',
         userEmail: '',
         userAddress: '',
-        userPhone: '',
-        image: ''
-      }
+        userPhone: ''
+      },
+      image: ''
     }
   },
   created() {
-    this.form = this.user
+    this.getDataUser()
   },
   computed: {
     ...mapGetters({ user: 'dataUser' })
   },
   methods: {
-    ...mapActions(['logout', 'updateProfile']),
+    ...mapActions([
+      'logout',
+      'updateProfile',
+      'getUserByid',
+      'patchImage',
+      'deleteImage'
+    ]),
+    getDataUser() {
+      this.getUserByid(this.user.userId).then(result => {
+        this.form = result.data.data[0]
+        this.image = result.data.data[0].image
+      })
+    },
     editDataUser() {
-      let formData = new FormData()
-      formData.append('firstName', this.form.firstName)
-      formData.append('lastName', this.form.lastName)
-      formData.append('userEmail', this.form.userEmail)
-      formData.append('userAddress', this.form.userAddress)
-      formData.append('userPhone', this.form.userPhone)
-      formData.append('image', this.form.image)
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1])
-      }
       const data = {
-        data: formData,
+        data: this.form,
         id: this.user.userId
       }
       this.updateProfile(data)
         .then(() => {
-          // this.$router.replace('/')
+          this.getDataUser()
         })
         .catch(err => {
           console.log(err)
         })
     },
     handleFile(e) {
-      this.form.image = e.target.files[0]
+      this.image = e.target.files[0]
       console.log(e.target.files[0])
+    },
+    removeImage() {
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.deleteImage(this.user.userId)
+            .then(() => {
+              Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+            })
+            .catch(() => {
+              Swal.fire('error')
+            })
+        }
+      })
+    },
+    updateImage() {
+      let formData = new FormData()
+      formData.append('image', this.image)
+      const data = {
+        data: formData,
+        id: this.user.userId
+      }
+      this.patchImage(data)
+      this.hideModal()
+      this.getDataUser()
+    },
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
     }
   }
 }

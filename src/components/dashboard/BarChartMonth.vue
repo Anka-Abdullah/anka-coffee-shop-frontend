@@ -1,8 +1,42 @@
 <script>
 import { Bar } from 'vue-chartjs'
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
   extends: Bar,
+  data() {
+    return {
+      dataDashboard: []
+    }
+  },
+  created() {
+    this.getDataMonth()
+  },
+  computed: {
+    ...mapGetters({ user: 'dataUser' })
+  },
+  methods: {
+    ...mapActions(['getChart']),
+    getDataMonth() {
+      const data = {
+        userId: this.user.userId,
+        time: 'MONTH'
+      }
+      this.getChart(data)
+        .then(result => {
+          const value = result.data.data
+          value.map(
+            x =>
+              (this.dataDashboard[
+                x.historyCreatedAt.slice(5, 7) - 1
+              ] = parseInt(x.Total))
+          )
+          console.log(this.dataDashboard)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
   mounted() {
     this.renderChart(
       {
@@ -24,7 +58,7 @@ export default {
           {
             label: 'Monthly',
             backgroundColor: '#f87979',
-            data: [40, 20, 12, 39, 110, 40, 39, 80, 40, 20, 12, 11]
+            data: this.dataDashboard
           }
         ]
       },
