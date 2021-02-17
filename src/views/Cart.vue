@@ -67,9 +67,14 @@
                 <b-list-group-item>+62 81348287878</b-list-group-item>
               </b-list-group>
             </b-col>
-            <h5 class="anka-text-shadow Input Comt-5">Select Cupon Code</h5>
+            <h5 class="anka-text-shadow Input mt-5">Select Cupon Code</h5>
             <b-col xl="12">
-              <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
+              <b-dropdown
+                id="dropdown-1"
+                text="Dropdown Button"
+                variant="warning"
+                class="m-md-2"
+              >
                 <div v-for="coupon in coupons" :key="coupon.promoId">
                   <b-dropdown-item
                     v-model="discount"
