@@ -210,6 +210,7 @@ export default {
       this.setSearch(search)
       this.setSort(sort)
       this.setAsc(asc)
+      this.setPage(1)
       this.resetPages()
       this.getProducts()
     },
