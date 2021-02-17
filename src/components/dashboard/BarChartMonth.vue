@@ -30,40 +30,37 @@ export default {
                 x.historyCreatedAt.slice(5, 7) - 1
               ] = parseInt(x.Total))
           )
-          console.log(this.dataDashboard)
+          this.renderChart(
+            {
+              labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+              ],
+              datasets: [
+                {
+                  label: 'Monthly',
+                  backgroundColor: '#f87979',
+                  data: this.dataDashboard
+                }
+              ]
+            },
+            { responsive: true, maintainAspectRatio: false }
+          )
         })
         .catch(err => {
           console.log(err)
         })
     }
-  },
-  mounted() {
-    this.renderChart(
-      {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December'
-        ],
-        datasets: [
-          {
-            label: 'Monthly',
-            backgroundColor: '#f87979',
-            data: this.dataDashboard
-          }
-        ]
-      },
-      { responsive: true, maintainAspectRatio: false }
-    )
   }
 }
 </script>

@@ -67,13 +67,17 @@
                 <b-list-group-item>+62 81348287878</b-list-group-item>
               </b-list-group>
             </b-col>
-            <h4 class="anka-text-shadow mt-5">Input Coupon Code</h4>
+            <h5 class="anka-text-shadow Input Comt-5">Select Cupon Code</h5>
             <b-col xl="12">
-              <input
-                type="text"
-                style="width: 100%"
-                placeholder="Input Coupon Code"
-              />
+              <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
+                <div v-for="coupon in coupons" :key="coupon.promoId">
+                  <b-dropdown-item
+                    v-model="discount"
+                    @click="useDiscount(coupon.promoPercent)"
+                    >{{ coupon.promoCode }}</b-dropdown-item
+                  >
+                </div>
+              </b-dropdown>
             </b-col>
             <h5 class="anka-text-shadow mt-3">Delivery Method :</h5>
             <b-col xl="12">
@@ -197,11 +201,25 @@ export default {
   },
   created() {
     this.countTotal()
-    console.log(this.user)
+    this.getCoupons().then(() => {
+      console.log(this.coupons)
+    })
   },
-  computed: { ...mapGetters({ user: 'dataUser', cart: 'dataCarts' }) },
+  computed: {
+    ...mapGetters({
+      user: 'dataUser',
+      cart: 'dataCarts',
+      coupons: 'dataCoupons'
+    })
+  },
   methods: {
-    ...mapActions(['createInvoice', 'getPostKey', 'postHistory', 'emptyCart']),
+    ...mapActions([
+      'createInvoice',
+      'getPostKey',
+      'postHistory',
+      'emptyCart',
+      'getCoupons'
+    ]),
     countTotal() {
       let x = 0
       for (var i in this.cart) {
@@ -211,44 +229,40 @@ export default {
       this.tax = x * 0.1
       this.total = x - this.discount + this.tax
     },
+    useDiscount(e) {
+      this.discount = (this.subTotal * e) / 100
+    },
     confirmAndPay() {
       if (this.paymentMethod === '' && this.deliveryMethod === '') {
         alert(`Don't forget to choose a Payment Method!! & Delivery Method`)
       } else {
-        this.getPostKey()
-          .then(result => {
-            for (var i in this.cart) {
-              console.log('data ke: ' + [i])
-              const dataInvoice = {
-                historyId: result,
-                productId: this.cart[i].productId,
-                productQty: this.cart[i].qty,
-                size: this.cart[i].size
-              }
-              console.log(dataInvoice)
-              this.createInvoice(dataInvoice)
+        this.getPostKey().then(result => {
+          for (var i in this.cart) {
+            const dataInvoice = {
+              historyId: result,
+              productId: this.cart[i].productId,
+              productQty: this.cart[i].qty,
+              size: this.cart[i].size
             }
-            const id = result
-            const dataHistory = {
-              userId: this.user.userId,
-              discount: this.discount,
-              tax: this.tax,
-              subTotal: this.subTotal,
-              total: this.total,
-              paymentMethod: this.paymentMethod,
-              deliveryMethod: this.deliveryMethod
-            }
-            const payload = {
-              id,
-              dataHistory
-            }
-            console.log(payload)
-            this.postHistory(payload)
-            this.emptyCart()
-          })
-          .catch(err => {
-            console.log(err)
-          })
+            this.createInvoice(dataInvoice)
+          }
+          const id = result
+          const dataHistory = {
+            userId: this.user.userId,
+            discount: this.discount,
+            tax: this.tax,
+            subTotal: this.subTotal,
+            total: this.total,
+            paymentMethod: this.paymentMethod,
+            deliveryMethod: this.deliveryMethod
+          }
+          const payload = {
+            id,
+            dataHistory
+          }
+          this.postHistory(payload)
+          this.emptyCart()
+        })
       }
     }
   }
@@ -327,15 +341,15 @@ input[type='radio']:checked:after {
 }
 input[type='text'] {
   border: none;
-  padding: 3px;
+  padding: 10px;
+  border: 2px solid #6a4029;
 }
 select {
   border: none;
   padding: 10px;
+  border: 2px solid #6a4029;
 }
-select:focus {
-  outline: none;
-}
+select:focus,
 input[type='text']:focus {
   outline: none;
   background-color: #ffca38;

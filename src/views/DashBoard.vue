@@ -7,21 +7,21 @@
           ><b-card class="shadow bg-white">
             <h4 class="anka-title">today's income</h4>
             <h4>
-              <strong>IDR {{ getDay.toLocaleString() }}</strong>
+              <strong>IDR {{ getDay }}</strong>
             </h4>
           </b-card></b-col
         ><b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
             <h5 class="anka-title">this month's income</h5>
             <h4>
-              <strong>IDR {{ getMonth.toLocaleString() }}</strong>
+              <strong>IDR {{ getMonth }}</strong>
             </h4>
           </b-card></b-col
         ><b-col lg="4" sm="6"
           ><b-card class="shadow bg-white">
             <h5 class="anka-title">this year's income</h5>
             <h4>
-              <strong>IDR {{ getYear.toLocaleString() }}</strong>
+              <strong>IDR {{ getYear }}</strong>
             </h4>
           </b-card></b-col
         >
@@ -35,6 +35,7 @@
 
       <BarChartMonth v-if="chart" />
       <BarChartDay v-if="!chart" />
+      <div id="myfirstchart" style="height: 250px;"></div>
     </b-container>
     <Footbar />
   </div>
@@ -79,7 +80,7 @@ export default {
       }
       this.getDashboard(data)
         .then(result => {
-          this.getDay = result.data.data[0].Total
+          this.getDay = parseInt(result.data.data[0].Total).toLocaleString()
         })
         .catch(err => {
           console.log(err)
@@ -92,7 +93,7 @@ export default {
       }
       this.getDashboard(data)
         .then(result => {
-          this.getMonth = result.data.data[0].Total
+          this.getMonth = parseInt(result.data.data[0].Total).toLocaleString()
         })
         .catch(err => {
           console.log(err)
@@ -105,7 +106,7 @@ export default {
       }
       this.getDashboard(data)
         .then(result => {
-          this.getYear = result.data.data[0].Total
+          this.getYear = parseInt(result.data.data[0].Total).toLocaleString()
         })
         .catch(err => {
           console.log(err)

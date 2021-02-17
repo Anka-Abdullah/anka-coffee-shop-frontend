@@ -90,15 +90,13 @@ export default {
         axios
           .patch(
             `http://${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
-            payload.data
+            payload.dataHistory
           )
           .then(result => {
             resolve(result)
-            alert('success post history')
           })
           .catch(err => {
             reject(err)
-            alert('gagal post history')
           })
       })
     },

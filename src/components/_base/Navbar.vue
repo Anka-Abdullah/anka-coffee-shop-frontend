@@ -55,7 +55,7 @@
           </button>
         </form>
         <router-link to="/profile" class="desktop"
-          ><b-avatar :src="`http://localhost:3765/${image}`"></b-avatar
+          ><b-avatar :src="image"></b-avatar
         ></router-link>
       </nav>
     </nav>
@@ -92,7 +92,7 @@ export default {
     },
     getDataUser() {
       this.getUserByid(this.user.userId).then(result => {
-        this.image = result.data.data[0].image
+        this.image = `http://localhost:3765/${result.data.data[0].image}`
       })
     },
     menu() {
