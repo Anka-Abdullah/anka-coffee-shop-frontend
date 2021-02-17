@@ -198,8 +198,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getProducts', 'getCoupons', 'resetPages']),
-    ...mapMutations(['setPage', 'setSearch', 'setSort', 'setAsc']),
+    ...mapActions(['getProducts', 'getCoupons']),
+    ...mapMutations([
+      'setPage',
+      'setSearch',
+      'setSort',
+      'setAsc',
+      'resetPages'
+    ]),
     getProduct(search, sort, asc) {
       this.setSearch(search)
       this.setSort(sort)
