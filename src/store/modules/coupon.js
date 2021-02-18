@@ -14,7 +14,7 @@ export default {
     getCoupons(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/promo`)
+          .get(`https://${process.env.VUE_APP_ROOT_URL}/promo`)
           .then(response => {
             resolve(response)
             context.commit('setCoupons', response.data)
@@ -27,7 +27,7 @@ export default {
     deleteCoupon(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`http://${process.env.VUE_APP_ROOT_URL}/promo/${payload}`)
+          .delete(`https://${process.env.VUE_APP_ROOT_URL}/promo/${payload}`)
           .then(response => {
             resolve(response)
           })
@@ -39,7 +39,7 @@ export default {
     createCoupon(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/promo`, payload)
+          .post(`https://${process.env.VUE_APP_ROOT_URL}/promo`, payload)
           .then(response => {
             resolve(response)
           })
@@ -52,7 +52,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/promo/${payload.id}`,
+            `https://${process.env.VUE_APP_ROOT_URL}/promo/${payload.id}`,
             payload.data
           )
           .then(response => {

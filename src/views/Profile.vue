@@ -15,7 +15,7 @@
             />
             <img
               v-show="image !== ''"
-              :src="`http://localhost:3765/${image}`"
+              :src="image"
               width="200"
               class="rounded-circle"
             />
@@ -136,7 +136,7 @@ export default {
     getDataUser() {
       this.getUserByid(this.user.userId).then(result => {
         this.form = result.data.data[0]
-        this.image = result.data.data[0].image
+        this.image = `https://${process.env.VUE_APP_ROOT_URL}/${result.data.data[0].image}`
       })
     },
     editDataUser() {

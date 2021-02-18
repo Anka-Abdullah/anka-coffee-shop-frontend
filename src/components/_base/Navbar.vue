@@ -92,7 +92,7 @@ export default {
     },
     getDataUser() {
       this.getUserByid(this.user.userId).then(result => {
-        this.image = `http://localhost:3765/${result.data.data[0].image}`
+        this.image = `https://${process.env.VUE_APP_ROOT_URL}/${result.data.data[0].image}`
       })
     },
     menu() {

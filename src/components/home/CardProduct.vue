@@ -52,7 +52,7 @@ export default {
     data: Object
   },
   data() {
-    return { url: `http://localhost:3765/${this.data.image}` }
+    return { url: `https://${process.env.VUE_APP_ROOT_URL}/${this.data.image}` }
   },
   computed: { ...mapGetters({ user: 'dataUser' }) },
   methods: {

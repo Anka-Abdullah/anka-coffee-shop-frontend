@@ -31,7 +31,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://${process.env.VUE_APP_ROOT_URL}/history/?userId=${payload}`
+            `https://${process.env.VUE_APP_ROOT_URL}/history/?userId=${payload}`
           )
           .then(result => {
             resolve(result)
@@ -46,7 +46,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://${process.env.VUE_APP_ROOT_URL}/history/dashboard/?userId=${payload.userId}&time=${payload.time}`
+            `https://${process.env.VUE_APP_ROOT_URL}/history/dashboard/?userId=${payload.userId}&time=${payload.time}`
           )
           .then(result => {
             resolve(result)
@@ -60,7 +60,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .post(
-            `http://${process.env.VUE_APP_ROOT_URL}/history/invoice`,
+            `https://${process.env.VUE_APP_ROOT_URL}/history/invoice`,
             payload
           )
           .then(result => {
@@ -76,7 +76,7 @@ export default {
     getPostKey() {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/history/id`)
+          .post(`https://${process.env.VUE_APP_ROOT_URL}/history/id`)
           .then(result => {
             resolve(result.data.data)
           })
@@ -89,7 +89,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
+            `https://${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
             payload.dataHistory
           )
           .then(result => {
@@ -104,7 +104,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://${process.env.VUE_APP_ROOT_URL}/history/chart/?userId=${payload.userId}&time=${payload.time}`
+            `https://${process.env.VUE_APP_ROOT_URL}/history/chart/?userId=${payload.userId}&time=${payload.time}`
           )
           .then(result => {
             resolve(result)

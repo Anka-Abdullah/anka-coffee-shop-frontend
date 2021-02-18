@@ -20,7 +20,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/user/login`, payload)
+          .post(`https://${process.env.VUE_APP_ROOT_URL}/user/login`, payload)
           .then(result => {
             resolve(result)
             context.commit('setUser', result.data.data)
@@ -34,7 +34,10 @@ export default {
     register(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(`http://${process.env.VUE_APP_ROOT_URL}/user/register`, payload)
+          .post(
+            `https://${process.env.VUE_APP_ROOT_URL}/user/register`,
+            payload
+          )
           .then(result => {
             resolve(result)
           })
@@ -85,7 +88,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/user/${payload.id}`,
+            `https://${process.env.VUE_APP_ROOT_URL}/user/${payload.id}`,
             payload.data
           )
           .then(response => {
@@ -99,7 +102,7 @@ export default {
     getUserByid(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://${process.env.VUE_APP_ROOT_URL}/user/${payload}`)
+          .get(`https://${process.env.VUE_APP_ROOT_URL}/user/${payload}`)
           .then(response => {
             resolve(response)
           })
@@ -112,7 +115,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://${process.env.VUE_APP_ROOT_URL}/user/image/${payload.id}`,
+            `https://${process.env.VUE_APP_ROOT_URL}/user/image/${payload.id}`,
             payload.data
           )
           .then(response => {
@@ -127,7 +130,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .delete(
-            `http://${process.env.VUE_APP_ROOT_URL}/user/image/${payload}`
+            `https://${process.env.VUE_APP_ROOT_URL}/user/image/${payload}`
           )
           .then(response => {
             resolve(response)

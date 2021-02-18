@@ -6,12 +6,7 @@
         style="background: #f5c361; display: flex;"
       >
         <div class="img-card p-0 pl-1">
-          <img
-            :src="`http://localhost:3765/${dataPromo.image}`"
-            class="rounded-pill"
-            alt="sunday"
-            width="60"
-          />
+          <img :src="img" class="rounded-pill" alt="sunday" width="60" />
           <b-navbar
             class="bg-light p-0 mx-2 py-1 rounded-pill mt-1"
             v-show="this.user.roleId === 1"
@@ -73,6 +68,11 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   props: {
     dataPromo: Object
+  },
+  data() {
+    return {
+      img: `https://${process.env.VUE_APP_ROOT_URL}/${this.dataPromo.image}`
+    }
   },
   created() {
     this.getCoupons()

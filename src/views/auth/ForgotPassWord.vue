@@ -53,7 +53,7 @@ export default {
       console.log(this.userEmail)
       axios
         .post(
-          `http://${process.env.VUE_APP_ROOT_URL}/user/forgot?userEmail=${this.userEmail}`
+          `https://${process.env.VUE_APP_ROOT_URL}/user/forgot?userEmail=${this.userEmail}`
         )
         .then(() => {
           Swal.fire({

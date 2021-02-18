@@ -18,7 +18,7 @@
             </b-row>
             <img
               v-show="form.image !== ''"
-              :src="`http://localhost:3765/${form.image}`"
+              :src="img"
               width="200"
               class="rounded-circle"
             />
@@ -246,7 +246,8 @@ export default {
         productTakeAway: false,
         image: '',
         productDescription: ''
-      }
+      },
+      img: `https://${process.env.VUE_APP_ROOT_URL}/${this.form.image}`
     }
   },
   created() {

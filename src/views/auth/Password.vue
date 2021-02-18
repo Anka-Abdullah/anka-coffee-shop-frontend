@@ -35,7 +35,7 @@ export default {
       console.log(this.form)
       axios
         .patch(
-          `http://${process.env.VUE_APP_ROOT_URL}/user/password`,
+          `https://${process.env.VUE_APP_ROOT_URL}/user/password`,
           this.form
         )
         .then(() => {

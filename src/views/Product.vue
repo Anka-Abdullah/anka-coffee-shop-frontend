@@ -109,10 +109,12 @@ export default {
     ...mapActions(['addToCart']),
     getProductById(id) {
       axios
-        .get(`http://${process.env.VUE_APP_ROOT_URL}/product/${id}`)
+        .get(`https://${process.env.VUE_APP_ROOT_URL}/product/${id}`)
         .then(response => {
           this.product = response.data.data[0]
-          this.url = 'http://localhost:3765/' + response.data.data[0].image
+          this.url =
+            `https://${process.env.VUE_APP_ROOT_URL}/` +
+            response.data.data[0].image
         })
         .catch(error => {
           console.log(error)

@@ -8,18 +8,19 @@
       <h5 style="text-align: center" class="text-white mb-5">
         Select item to delete
       </h5>
-      <b-row>
-        <b-col lg="3" sm="12">
-          <b-row
-            ><Card
-              class="mx-auto"
-              v-for="(item, index) in history"
-              :key="index"
-              :data="item"
-          /></b-row> </b-col
-        >></b-row
-      ></b-container
-    >
+      <b-container>
+        <b-row>
+          <b-col
+            lg="3"
+            sm="12"
+            class="mb-4"
+            v-for="(item, index) in history"
+            :key="index"
+          >
+            <Card class="mx-auto" :data="item"/></b-col
+        ></b-row>
+      </b-container>
+    </b-container>
     <Footbar />
   </div>
 </template>

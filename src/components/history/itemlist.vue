@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     url(x) {
-      return 'http://localhost:3765/' + x
+      return `http://${process.env.VUE_APP_ROOT_URL}/` + x
     }
   }
 }
