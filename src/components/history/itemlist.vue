@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     url(x) {
-      return `http://${process.env.VUE_APP_ROOT_URL}/` + x
+      return `${process.env.VUE_APP_ROOT_URL}/` + x
     }
   }
 }

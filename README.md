@@ -1,6 +1,6 @@
 <h1 align='center'>Vue JS - CoffeShop</h1>
   <p align="center">
-    <a href="link_deploy">View Demo</a>
+    <a href="https://ankacoffee.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/Anka-Abdullah/anka-coffee-shop-frontend">Report Bug</a>
     ·

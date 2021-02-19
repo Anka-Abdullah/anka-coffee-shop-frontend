@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      img: `https://${process.env.VUE_APP_ROOT_URL}/${this.dataPromo.image}`
+      img: `${process.env.VUE_APP_ROOT_URL}/${this.dataPromo.image}`
     }
   },
   created() {

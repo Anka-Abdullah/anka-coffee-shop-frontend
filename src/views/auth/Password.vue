@@ -34,10 +34,7 @@ export default {
     changePassword() {
       console.log(this.form)
       axios
-        .patch(
-          `https://${process.env.VUE_APP_ROOT_URL}/user/password`,
-          this.form
-        )
+        .patch(`${process.env.VUE_APP_ROOT_URL}/user/password`, this.form)
         .then(() => {
           Swal.fire({
             icon: 'success',

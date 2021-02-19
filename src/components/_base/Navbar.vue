@@ -73,7 +73,7 @@ export default {
       cancelBtn: document.querySelector('.cancel-icon'),
       items: document.querySelector('.nav-items'),
       form: document.querySelector('form'),
-      image: null
+      image: ''
     }
   },
   created() {

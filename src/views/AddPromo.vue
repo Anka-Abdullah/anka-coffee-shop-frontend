@@ -150,7 +150,7 @@ export default {
         promoMaxLimit: '',
         image: ''
       },
-      img: `https://${process.env.VUE_APP_ROOT_URL}/${this.form.image}`
+      img: `${process.env.VUE_APP_ROOT_URL}/${this.form.image}`
     }
   },
   created() {

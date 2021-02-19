@@ -42,7 +42,7 @@ export default {
   methods: {
     ...mapActions(['deleteCartItem']),
     url(x) {
-      return 'http://localhost:3765/' + x
+      return `${process.env.VUE_APP_ROOT_URL}/` + x
     }
   }
 }

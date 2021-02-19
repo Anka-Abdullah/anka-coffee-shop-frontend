@@ -14,7 +14,7 @@ export default {
     activate() {
       axios
         .patch(
-          `https://${process.env.VUE_APP_ROOT_URL}/user/active/${this.$route.params.keys}`
+          `${process.env.VUE_APP_ROOT_URL}/user/active/${this.$route.params.keys}`
         )
         .then(() => {
           Swal.fire({

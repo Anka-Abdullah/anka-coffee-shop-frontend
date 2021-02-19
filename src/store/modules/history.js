@@ -30,9 +30,7 @@ export default {
     getHistory({ commit }, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(
-            `https://${process.env.VUE_APP_ROOT_URL}/history/?userId=${payload}`
-          )
+          .get(`${process.env.VUE_APP_ROOT_URL}/history/?userId=${payload}`)
           .then(result => {
             resolve(result)
             commit('setHistory', result.data)
@@ -46,7 +44,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `https://${process.env.VUE_APP_ROOT_URL}/history/dashboard/?userId=${payload.userId}&time=${payload.time}`
+            `${process.env.VUE_APP_ROOT_URL}/history/dashboard/?userId=${payload.userId}&time=${payload.time}`
           )
           .then(result => {
             resolve(result)
@@ -59,10 +57,7 @@ export default {
     createInvoice(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
-            `https://${process.env.VUE_APP_ROOT_URL}/history/invoice`,
-            payload
-          )
+          .post(`${process.env.VUE_APP_ROOT_URL}/history/invoice`, payload)
           .then(result => {
             resolve(result)
             alert('success post data')
@@ -76,7 +71,7 @@ export default {
     getPostKey() {
       return new Promise((resolve, reject) => {
         axios
-          .post(`https://${process.env.VUE_APP_ROOT_URL}/history/id`)
+          .post(`${process.env.VUE_APP_ROOT_URL}/history/id`)
           .then(result => {
             resolve(result.data.data)
           })
@@ -89,7 +84,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `https://${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
+            `${process.env.VUE_APP_ROOT_URL}/history/${payload.id}`,
             payload.dataHistory
           )
           .then(result => {
@@ -104,7 +99,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `https://${process.env.VUE_APP_ROOT_URL}/history/chart/?userId=${payload.userId}&time=${payload.time}`
+            `${process.env.VUE_APP_ROOT_URL}/history/chart/?userId=${payload.userId}&time=${payload.time}`
           )
           .then(result => {
             resolve(result)
