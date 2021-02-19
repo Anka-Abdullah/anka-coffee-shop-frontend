@@ -17,12 +17,12 @@
                 ></b-icon
               ></b-badge>
             </b-row> -->
-            <img
+            <!-- <img
               v-if="form.image !== ''"
               :src="`${process.env.VUE_APP_ROOT_URL}/${form.image}`"
               width="200"
               class="rounded-circle"
-            />
+            /> -->
             <b-row>
               <input type="file" id="file-image" hidden @change="handleFile" />
               <label
@@ -172,7 +172,7 @@ export default {
       for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1])
       }
-      this.createCoupon(this.formData)
+      this.createCoupon(formData)
         .then(() => {
           this.getProducts()
           this.$router.replace('/')
