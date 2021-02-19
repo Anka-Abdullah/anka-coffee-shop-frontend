@@ -198,7 +198,7 @@ export default {
       }
       console.log(data)
       this.updateCoupon(data)
-      // this.$router.replace('/')
+      this.$router.replace('/')
     },
     handleFile(e) {
       console.log(e.target.files[0].name)
