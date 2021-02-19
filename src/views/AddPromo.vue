@@ -7,7 +7,7 @@
         <span style="color: #6a4029">> Add New Promo</span>
         <b-row>
           <b-col lg="6" sm="12">
-            <b-row v-if="form.image === ''">
+            <!-- <b-row v-if="form.image === ''">
               <b-badge class="camera mt-5 mx-auto"
                 ><b-icon
                   icon="camera-fill"
@@ -16,10 +16,10 @@
                   variant="secondary"
                 ></b-icon
               ></b-badge>
-            </b-row>
+            </b-row> -->
             <img
               v-if="form.image !== ''"
-              :src="img"
+              :src="`${process.env.VUE_APP_ROOT_URL}/${form.image}`"
               width="200"
               class="rounded-circle"
             />
@@ -149,8 +149,7 @@ export default {
         promoDescription: '',
         promoMaxLimit: '',
         image: ''
-      },
-      img: `${process.env.VUE_APP_ROOT_URL}/${this.form.image}`
+      }
     }
   },
   created() {

@@ -6,7 +6,7 @@
         Favorite and Promo <span style="color: #6a4029">> Add New Product</span>
         <b-row>
           <b-col lg="6" sm="12" class="text-center">
-            <b-row v-show="form.image === ''">
+            <!-- <b-row v-show="form.image === ''">
               <b-badge class="camera mt-5 mx-auto"
                 ><b-icon
                   icon="camera-fill"
@@ -15,10 +15,10 @@
                   variant="secondary"
                 ></b-icon
               ></b-badge>
-            </b-row>
+            </b-row> -->
             <img
-              v-show="form.image !== ''"
-              :src="img"
+              v-if="form.image !== ''"
+              :src="`${process.env.VUE_APP_ROOT_URL}/${form.image}`"
               width="200"
               class="rounded-circle"
             />
@@ -246,8 +246,7 @@ export default {
         productTakeAway: false,
         image: '',
         productDescription: ''
-      },
-      img: `${process.env.VUE_APP_ROOT_URL}/${this.form.image}`
+      }
     }
   },
   created() {
