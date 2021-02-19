@@ -55,7 +55,7 @@
           </button>
         </form>
         <router-link to="/profile" class="desktop"
-          ><b-avatar :src="image"></b-avatar
+          ><b-avatar></b-avatar
         ></router-link>
       </nav>
     </nav>
@@ -75,9 +75,6 @@ export default {
       form: document.querySelector('form'),
       image: ''
     }
-  },
-  created() {
-    this.getDataUser()
   },
   computed: {
     ...mapGetters({ page: 'pageProducts', user: 'dataUser' })
