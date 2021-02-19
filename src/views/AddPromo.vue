@@ -144,10 +144,10 @@ export default {
       form: {
         promoName: '',
         promoPercent: '',
-        promoMinPurchase: '',
+        promoMinPurchase: null,
         promoCode: '',
         promoDescription: '',
-        promoMaxLimit: '',
+        promoMaxLimit: null,
         image: ''
       }
     }
@@ -166,6 +166,7 @@ export default {
       formData.append('promoName', this.form.promoName)
       formData.append('promoPercent', this.form.promoPercent)
       formData.append('promoMinPurchase', this.form.promoMinPurchase)
+      formData.append('promoMaxLimit', this.form.promoMaxLimit)
       formData.append('promoCode', this.form.promoCode)
       formData.append('promoDescription', this.form.promoDescription)
       formData.append('image', this.form.image)
