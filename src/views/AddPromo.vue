@@ -7,7 +7,7 @@
         <span style="color: #6a4029">> Add New Promo</span>
         <b-row>
           <b-col lg="6" sm="12">
-            <b-row v-show="form.image === ''">
+            <b-row v-if="form.image === ''">
               <b-badge class="camera mt-5 mx-auto"
                 ><b-icon
                   icon="camera-fill"
@@ -18,7 +18,7 @@
               ></b-badge>
             </b-row>
             <img
-              v-show="form.image !== ''"
+              v-if="form.image !== ''"
               :src="img"
               width="200"
               class="rounded-circle"
